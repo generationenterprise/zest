@@ -1,0 +1,89 @@
+<div class="container">
+    <div layout="row" layout-sm="column" layout-align="center" layout-margin layout-fill layout-padding>
+        <div layout="column" layout-align="center">
+            <div>
+                <h2>Home Cleaning</h2></div>
+            <div layout="row" layout-sm="column" layout-wrap hide-sm>
+                <div class="checklist">
+                    <p>Bedrooms
+                        <ul>
+                            <li>Dust all accessible surfaces</li>
+                            <li>Wipe down all mirrors and glass fixtures</li>
+                            <li>Clean all floor surfaces</li>
+                            <li>Take out garbage and recycling</li>
+                        </ul>
+                    </p>
+                </div>
+                <div class="checklist">
+                    <p>Bathrooms
+                        <ul>
+                            <li>Wash and sanitize the toilet, shower, tub, and sink</li>
+                            <li>Dust all accessible surfaces</li>
+                            <li>Wipe down all mirrors and glass fixtures</li>
+                            <li>Clean all floor surfaces</li>
+                            <li>Take out garbage and recycling</li>
+                        </ul>
+                    </p>
+                </div>
+                <div class="checklist">
+                    <p>Kitchen
+                        <ul>
+                            <li>Dust all accessible surfaces</li>
+                            <li>Empty sink and load up dishwasher with dirty dishes</li>
+                            <li>Wipe down exterior of stove, oven and fridge</li>
+                            <li>Clean all floor surfaces</li>
+                            <li>Take out garbage and recycling</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="booking-form-container">
+            <div class="form-item">
+                <h-number value="bedrooms" min="1" max="10" step="1" singular="bedroom" plural="bedrooms"></h-number>
+            </div>
+            <div class="form-item">
+                <h-number value="bathrooms" min="1" max="10" step="1" singular="bathroom" plural="bathrooms"></h-number>
+            </div>
+            <div class="form-item">
+                <div layout="row" layout-sm="row" layout-wrap flex class="extras" layout-align="center center" xng-repeat="item in extras">
+                    <div ng-repeat="item in extras">
+                        <div class="extra-item" flex="25">
+                            <img src="assets/extras/{{item.icon}}"> {{item.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                We recommend <b>{{recommended()}}</b>
+                <p class="comment">It's better to book more time rather than less. You're only charge for the actual lenght of cleaning.</p>
+                <h-number value="hours" min="2" max="10" step="0.5" singular="hour" plural="hours"></h-number>
+            </div>
+            <div class="form-item">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">&nbsp;<span class="fa fa-envelope-o" />&nbsp;</div>
+                        <input type="text" class="form-control" ng-model="email" placeholder="Email Address">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <div class="input-group-addon">&nbsp;&nbsp;<span class="fa fa-phone" />&nbsp;</div>
+                        <input type="text" class="form-control" ng-model="mobile" placeholder="Mobile Phone Number">
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                Do you have any pets?
+                <div class="btn-group" style="width:100%">
+                    <label class="btn btn-primary" ng-model="pets.cats" btn-checkbox style="width:34%">Cats</label>
+                    <label class="btn btn-primary" ng-model="pets.dogs" btn-checkbox style="width:34%">Dogs</label>
+                    <label class="btn btn-primary" ng-model="pets.other" btn-checkbox style="width:32%">Other</label>
+                </div>
+                <input ng-if="pets.cats || pets.dogs || pets.other" type="text" class="form-control pets-describe" ng-model="pets.describe" placeholder="Describe eg. White cat, black cat">
+            </div>
+        </div>
+    </div>
+</div>
+<div layout="column" layout-align="center center" class="profile-continue">
+    <md-button class="md-raised md-primary" ng-click="continue()">Schedule</md-button>
+</div>

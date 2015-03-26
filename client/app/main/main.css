@@ -1,10 +1,7 @@
-.thing-form {
-    margin: 20px 0;
-}
-
 #banner {
     border-bottom: none;
     margin-top: -20px;
+    background: url(../../assets/images/hero.jpg) no-repeat;
 }
 
 #banner h1 {
@@ -28,3 +25,33 @@
     margin-top: 70px;
     border-top: 1px solid #E5E5E5;
 }
+
+.packages md-card {
+    padding: 20px;
+    text-align: center;
+}
+
+.priced md-card {
+    padding-top: 5px;
+}
+
+.packages.values md-card{
+    height: 300px;
+}
+
+.packages.commercial md-card{
+    height: 450px;
+}
+
+.packages.home md-card{
+    height: 450px;
+}
+
+.packages img {
+    width: 220px;
+    height: 158px;
+}
+
+ h2.price{
+    color: green;
+ }

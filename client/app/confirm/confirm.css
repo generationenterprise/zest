@@ -1,0 +1,85 @@
+md-card.external-account-login {
+    padding: 15px;
+    height: 190px;
+    font-size: 10px;
+}
+md-card.external-account-login .md-tile-left {
+    margin-right: 15px;
+}
+md-card.external-account-login .alert {
+    width: 70px;
+    padding: 5px;
+    position: relative;
+    top: 10px
+}
+md-card.external-account-login .face {
+    border: 0px solid black;
+    height: 100px;
+    width: 100px;
+    margin-bottom: 5px
+}
+md-card.external-account-login .username {
+    position: relative;
+    top: -10px;
+    font-size: 13px;
+}
+md-card.external-account-login .password {
+    position: relative;
+    top: -10px;
+    font-size: 13px;
+}
+md-card.external-account-login .md-button {
+    position: relative;
+    bottom:-2px;
+}
+md-card.other-external-account-login {
+    height: 190px;
+    font-size: 10px;
+}
+md-card.other-external-account-login img {
+    margin:5px;
+    height: 50px;
+    width: 60px;
+    margin-left: 20px;
+    border: 0px solid black;
+}
+md-card.other-external-account-login .md-primary {
+    margin-left: 20px;
+    line-height: 15px;
+}
+md-card.other-external-account-login .other-label {
+    width: 80px;
+    border: 0px solid black;
+    padding: 20px;
+    padding-left: 30px;
+    font-size: 14px;
+    font-weight: bold
+}
+.profile-continue{
+    padding:15px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.container h2.header {
+    margin-bottom: 0px;
+    margin-left: 30px;
+    padding-bottom: 10px;
+}
+
+.container h2.subheader {
+    color: #666;
+    font-size: 15px;
+    font-weight: normal;
+    border-bottom: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #ccc;
+    margin-bottom: 0px;
+    margin-left: 30px;
+    padding-bottom: 15px;
+}
+
+.social-accounts button, .financial-accounts button, .profile-continue button {
+  float: right;
+  padding: 10px;
+}
