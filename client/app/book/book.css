@@ -22,6 +22,11 @@
     line-height: 15px;
 }
 
+.booking-form-container .submit{
+    width:95%;
+    margin-top: 20px;
+}
+
 .extra-item{
     border: 1px solid black;
     margin: 2px;
