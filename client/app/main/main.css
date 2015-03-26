@@ -37,6 +37,7 @@
 
 .packages.values md-card{
     height: 300px;
+    width: 260px;
 }
 
 .packages.commercial md-card{
