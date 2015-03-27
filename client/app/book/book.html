@@ -13,7 +13,7 @@
                 <h-number value="bathrooms" min="1" max="10" step="1" singular="bathroom" plural="bathrooms"></h-number>
             </div>
             <div class="form-item">
-                <div layout="row" layout-sm="row" layout-wrap flex class="extras" layout-align="center center" xng-repeat="item in extras">
+                <div layout="row" layout-sm="row" layout-wrap flex class="extras" layout-align="center center">
                     <div ng-repeat="item in extras">
                         <div class="extra-item" flex="25">
                             <img src="assets/images/extras/{{item.icon}}"> {{item.name}}
@@ -53,7 +53,7 @@
                 </div>
                 <input ng-if="pets.cats || pets.dogs || pets.other" type="text" class="form-control pets-describe" ng-model="pets.describe" placeholder="Describe eg. White cat, black cat">
             </div>
-            <md-button class="md-raised md-primary submit" ng-click="continue()">Schedule</md-button>
+            <button type="button" class="btn btn-primary submit" ng-click="continue()">Schedule</button>
         </div>
     </div>
 </div>

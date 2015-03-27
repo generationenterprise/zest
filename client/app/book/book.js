@@ -15,8 +15,6 @@ angular.module('zestCleaningApp')
           return $scope.recommendedHours + " hour" + (($scope.recommendedHours === 1) ? "" : "s");
         }
 
-        $scope.email = "me@yahoo.com";
-
         $scope.extras = [{
           name: "Carpets", 
           icon:"carpets.png"
