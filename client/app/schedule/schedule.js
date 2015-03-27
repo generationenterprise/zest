@@ -64,6 +64,6 @@ angular.module('zestCleaningApp')
         })();
 
         $scope.continue = function() {
-            $state.go('checkout');
+            $state.go('confirm');
         };
     });

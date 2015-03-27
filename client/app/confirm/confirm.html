@@ -1,13 +1,37 @@
-<div class="container financial-accounts">
-    <h2 class="header">Booking Completed</h2>
-    <h2 class="subheader">We'll be in touch soon!</h2>
-    <div layout="row" layout-margin layout-fill layout-padding>
-        <div flex>
-            <md-card class="external-account-login">
-            Receipt<br>
-            Contact Us<br>
-            Other<br>
-            </md-card>
+<div class="container page">
+    <div layout="row" layout-sm="column" layout-align="center" layout-margin layout-fill layout-padding>
+        <div layout="column" layout-align="top">
+            <div>
+                <h2>Confirm Your Booking</h2></div>
+            <div class="schedule-estimate-container" layout="column">
+                <div>
+                    <span class="pull-left">{{booking.hours}} {{booking.unit}} cleaning, {{booking.currency}}{{booking.rate}}/{{booking.unit}}</span>
+                    <span class="pull-right">{{booking.currency}}{{booking.hours*booking.rate}}
+                </div>
+                <div ng-repeat="extra in booking.extras">
+                    <span class="pull-left">+{{extra.name}}</span>
+                    <span class="pull-right">{{booking.currency}}{{extra.price}}</span>
+                </div>
+                <div>
+                    <span class="pull-left">TOTAL</span>
+                    <span class="pull-right">{{booking.total()}}</span>
+                </div>
+            </div>
+        </div>
+        <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="confirm-form-container">
+            <div class="form-item full-width">
+                <input type="text" class="form-control" ng-model="card.number" placeholder="Credit Card Number">
+                <br>
+                <select ng-model="card.month" ng-options="month for month in card.months" class="width-48 pull-left">
+                </select>
+                <select ng-model="card.year" ng-options="year for year in card.years" class="width-48 pull-right">
+                </select>
+            </div>
+            <div class="form-item full-width">
+                <p class="comment"><span class="fa fa-lock display-inline" />&nbsp;&nbsp; For your protection we have secured this form with 256-bit SSL encryption.</p>
+                <p class="comment"><span class="fa fa-check display-inline" />&nbsp;&nbsp; You will not be charged until your appointment is complete.</p>
+            </div>
+            <button type="button" class="btn btn-primary submit" ng-click="continue()">Book</button>
         </div>
     </div>
 </div>
