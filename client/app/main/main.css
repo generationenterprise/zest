@@ -70,7 +70,8 @@
 
 .packages img {
     max-width: 220px;
-    max-height: 158px;
+    max-height: 147px;
+    min-height: 147px;
     margin-left: auto;
     margin-right: auto
 }
