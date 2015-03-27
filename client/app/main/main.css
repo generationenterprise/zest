@@ -29,30 +29,62 @@
 .packages md-card {
     padding: 20px;
     text-align: center;
+    z-index: 99999;
 }
 
 .priced md-card {
     padding-top: 5px;
 }
 
-.packages.values md-card{
+.priced md-card button {
+    text-transform: uppercase;
+}
+
+.packages.values md-card p {
+    height: 50px;
+}
+
+.packages.values md-card {
     height: 300px;
     max-width: 260px;
+    min-width: 250px;
 }
 
-.packages.commercial md-card{
+.packages.commercial md-card p {
+    height: 110px;
+}
+
+.packages.commercial md-card {
+    height: 450px;
+    max-width: 260px;
+    min-width: 250px;
+}
+
+.packages.home md-card {
     height: 450px;
 }
 
-.packages.home md-card{
-    height: 450px;
+.packages.home md-card p {
+    height: 70px;
 }
 
 .packages img {
     width: 220px;
     height: 158px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
- h2.price{
+h2.price {
     color: green;
- }
+}
+
+.z-99 {
+    z-index: 99;
+    background: #fff;
+}
+
+.z-999 {
+    z-index: 999;
+    background: #fff;
+}

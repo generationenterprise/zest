@@ -1,0 +1,9 @@
+.schedule-estimate-container{
+    border: 1px solid black;
+    min-width: 300px;
+    margin-bottom: 15px;
+}
+.schedule-form-container{
+    border: 1px solid black;
+    min-width: 300px;
+}
