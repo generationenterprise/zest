@@ -6,42 +6,44 @@
             <div class="schedule-estimate-container">Something</div>
         </div>
         <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="schedule-form-container">
-            <div class="form-item">
-                <select selectpicker="" ng-model="model" toggle-dropdown data-toggle="dropdown">
-                    <option value="">Select one</option>
-                    <option>Mustard</option>
-                    <option>Ketchup</option>
-                    <option>Relish</option>
+            <div class="form-item full-width">
+                <select>
+                    <option ng-repeat="option in frequency.options">
+                        {{option.name}} ({{option.currency}}{{option.rate}}/{{option.unit}})
+                    </option>
                 </select>
             </div>
-            <div class="form-item">
+            <br>
+            <div class="form-item full-width">
+                <select class="width-48 pull-left">
+                    <option>Date</option>
+                    <option ng-repeat="date in dates">
+                        {{date | date:'EEE M/d'}}
+                    </option>
+                </select>
+                <select class="width-48 pull-right">
+                    <option>Time</option>
+                    <option ng-repeat="time in times">
+                        {{time | date:'HH:mm'}}
+                    </option>
+                </select>
             </div>
-            <div class="form-item">
-            </div>
-            <div class="form-item">
-                We recommend <b>{{recommended()}}</b>
-                <p class="comment">It's better to book more time rather than less. You're only charge for the actual lenght of cleaning.</p>
-                <h-number value="hours" min="2" max="10" step="0.5" singular="hour" plural="hours"></h-number>
-            </div>
-            <div class="form-item">
+            <br>
+            <div class="form-item full-width">
                 <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">&nbsp;<span class="fa fa-user" />&nbsp;</div>
-                        <input type="text" class="form-control" ng-model="fullName" placeholder="Your Full Name">
-                    </div>
+                        <input type="text" class="form-control" ng-model="address.street" placeholder="Street Address">
                     <br>
-                    <div class="input-group">
-                        <div class="input-group-addon">&nbsp;<span class="fa fa-envelope-o" />&nbsp;</div>
-                        <input type="text" class="form-control" ng-model="email" placeholder="Email Address">
-                    </div>
+                        <input type="text" class="form-control" ng-model="adress.street2" placeholder="Address Line 2">
                     <br>
-                    <div class="input-group">
-                        <div class="input-group-addon">&nbsp;&nbsp;<span class="fa fa-phone" />&nbsp;</div>
-                        <input type="text" class="form-control" ng-model="mobile" placeholder="Mobile Phone Number">
-                    </div>
+                        <input type="text" class="form-control" ng-model="adress.city" placeholder="City">
                 </div>
             </div>
-            <md-button class="md-raised md-primary submit" ng-click="continue()">Schedule</md-button>
+            <div class="form-item full-width">
+                <input type="text" class="form-control display-inline pull-left width-48" ng-model="adress.state" placeholder="State">
+                <input type="text" class="form-control display-inline pull-right width-48" ng-model="adress.code" placeholder="Code">
+            </div>
+            <br>
+            <button type="button" class="btn btn-primary submit" ng-click="continue()">Confirm</button>
         </div>
     </div>
 </div>

@@ -1,25 +1,53 @@
 'use strict';
 
 angular.module('zestCleaningApp')
-  .config(function($stateProvider) {
-    $stateProvider
-      .state('schedule', {
-        url: '/schedule',
-        templateUrl: 'app/schedule/schedule.html',
-        controller: 'ScheduleCtrl'
-      });
-  })
-  .controller('ScheduleCtrl', function($scope, $state) {
+    .config(function($stateProvider) {
+        $stateProvider
+            .state('schedule', {
+                url: '/schedule',
+                templateUrl: 'app/schedule/schedule.html',
+                controller: 'ScheduleCtrl'
+            });
+    })
+    .controller('ScheduleCtrl', function($scope, $state) {
 
-    $scope.users = [
-        { id: 1, name: 'Scooby Doo' },
-        { id: 2, name: 'Shaggy Rodgers' },
-        { id: 3, name: 'Fred Jones' },
-        { id: 4, name: 'Daphne Blake' },
-        { id: 5, name: 'Velma Dinkley' },
-      ];
+        $scope.frequency = {
+          set: function($event){
+            console.log($event);
+          },
+          selected: "Frequency",
+          options: [{
+            id: 1,
+            name: "Once",
+            currency: "N",
+            rate: 35,
+            unit: "hr"
+          },{
+            id: 2,
+            name: "Weekly",
+            currency: "N",
+            rate: 30,
+            unit: "hr"
+          }]
+        };
 
-    $scope.continue = function(){
-      $state.go('checkout');
-    };
-  });
+        $scope.dates = (function(){
+          var m = moment(), d = [];
+          for(var i = 0; i < 15; i++){
+            d.push(new Date(m.month(m.month()+1).day(i)));
+          }
+          return d;
+        })();
+
+        $scope.times = (function(){
+          var m = moment(), t = [];
+          for (var i = 0; i < 15; i++){
+            t.push(new Date(m.hour(i)));
+          }
+          return t;
+        })();
+
+        $scope.continue = function() {
+            $state.go('checkout');
+        };
+    });

@@ -7,3 +7,12 @@
     border: 1px solid black;
     min-width: 300px;
 }
+
+.full-width, .full-width * {
+	width:100%;
+	text-align: center;
+}
+
+.width-48 {
+	width:48%;
+}
