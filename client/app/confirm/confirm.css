@@ -9,13 +9,21 @@
 .confirm-form-container{
     border: 1px solid black;
     min-width: 300px;
-    min-height: 370px;
+    max-width: 600px;
+    z-index: 999;
+    background: #fff;
+}
+
+.confirm-form-container .form-item{
+    padding: 10px;
+    text-align: center;
+    width: 100%;
 }
 
 .confirm-form-container .form-item .comment{
     text-align: left;
     padding-top: 10px;
-    line-height: 20px;
+    line-height: 15px;
 }
 
 .confirm-form-container .submit{
