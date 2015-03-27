@@ -8,7 +8,9 @@ angular.module('zestCleaningApp',  [
   'ui.bootstrap',
   'ngMaterial',
   'ngMessages',
-  'angularNumberPicker'
+  'angularNumberPicker',
+  'angular-bootstrap-select',
+  'ui.bootstrap'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
     $urlRouterProvider

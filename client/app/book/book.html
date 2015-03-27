@@ -23,11 +23,16 @@
             </div>
             <div class="form-item">
                 We recommend <b>{{recommended()}}</b>
-                <p class="comment">It's better to book more time rather than less. You're only charge for the actual lenght of cleaning.</p>
+                <p class="comment">It's better to book more time rather than less. You're only charged for the actual lenght of cleaning.</p>
                 <h-number value="hours" min="2" max="10" step="0.5" singular="hour" plural="hours"></h-number>
             </div>
             <div class="form-item">
                 <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">&nbsp;<span class="fa fa-user" />&nbsp;</div>
+                        <input type="text" class="form-control" ng-model="fullName" placeholder="Your Full Name">
+                    </div>
+                    <br>
                     <div class="input-group">
                         <div class="input-group-addon">&nbsp;<span class="fa fa-envelope-o" />&nbsp;</div>
                         <input type="text" class="form-control" ng-model="email" placeholder="Email Address">
