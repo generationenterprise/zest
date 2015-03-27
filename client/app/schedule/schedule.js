@@ -11,6 +11,22 @@ angular.module('zestCleaningApp')
     })
     .controller('ScheduleCtrl', function($scope, $state) {
 
+        $scope.booking = {
+          hours: 3,
+          unit: 'hour',
+          currency: 'N',
+          rate: 35,
+          extras: [{
+            name: "Garden", 
+            price: 20
+          }],
+          total: (function(_){            
+            return function(){
+              return this.currency+''+((this.hours*this.rate)+_.sum(_.pluck(this.extras, 'price')));
+            }
+          })(_)
+        };
+
         $scope.frequency = {
           set: function($event){
             console.log($event);

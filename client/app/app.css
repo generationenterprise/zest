@@ -42,3 +42,7 @@ select {
 .schedule-form-container .submit{
     width: 100%;
 }
+
+.container.page{
+    margin-top: -35px
+}

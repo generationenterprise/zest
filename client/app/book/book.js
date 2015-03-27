@@ -33,7 +33,6 @@ angular.module('zestCleaningApp')
         }];
 
         $scope.continue = function() {
-            console.log('schedule=',$scope.email);
             $state.go('schedule');
         };
     });
