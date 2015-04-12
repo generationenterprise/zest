@@ -26,7 +26,7 @@ var all = {
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
-    session: 'zest-cleaning-secret'
+    session: 'zest-services-secret'
   },
 
   // List of user roles
