@@ -18,9 +18,11 @@
     "method-override": "~1.0.0",
     "mongoose": "~3.8.8",
     "morgan": "~1.0.0",
-    "mysql": "^2.6.0",
+    "mysql": "^2.6.1",
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
+    "pg": "^4.3.0",
+    "sequelize": "^2.0.5",
     "serve-favicon": "~2.0.1"
   },
   "devDependencies": {
