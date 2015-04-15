@@ -17,7 +17,8 @@ mongoose.connect(config.mongo.uri, config.mongo.options);
 
 // Populate DB with sample data
 if (config.seedDB) {
-    require('./config/seed');
+    require('./seed/mongo');
+    require('./seed/sql')(db);
 }
 
 // Setup server
