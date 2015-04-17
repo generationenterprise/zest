@@ -9,6 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Booking.belongsTo(models.Customer);
+        Booking.belongsTo(models.BookingType);
+        Booking.belongsTo(models.Frequency);
+        Booking.belongsTo(models.Checkout);
+        Booking.belongsTo(models.Employee);
+        Booking.hasMany(models.Extra);
       }
     }
   });

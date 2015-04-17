@@ -1,13 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
   var Extra = sequelize.define("Extra", {
-  	price: DataTypes.DECIMAL,
-  	description: DataTypes.STRING,
+  	name: DataTypes.STRING,
+    description: DataTypes.STRING,
   	icon: DataTypes.STRING,
+    price: DataTypes.DECIMAL,
     notes: DataTypes.TEXT
   }, {
     classMethods: {
       associate: function(models) {
-        //Extra.belongsTo(models.Customer);
+        Extra.hasMany(models.Booking);
       }
     }
   });
