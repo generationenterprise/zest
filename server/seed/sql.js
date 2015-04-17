@@ -1,9 +1,64 @@
 module.exports = function(db) {
-    var bt = db.BookingType.create({
+    db.BookingType.create({
         name: 'cleaning',
-        description: 'Cleaning'
-    }).success(function(bt) {
-        var customer = db.Customer.create({
+        description: 'Cleaning service'
+    });
+    db.BookingType.create({
+        name: 'fumigation',
+        description: 'Fumigation service'
+    });
+
+    db.Frequency.create({
+        name: 'weekly',
+        description: 'Weekly'
+    });
+    db.Frequency.create({
+        name: 'bi-weekly',
+        description: 'Bi-Weekly'
+    });
+    db.Frequency.create({
+        name: 'monthly',
+        description: 'Monthly'
+    });
+
+    db.Extra.create({
+        name: 'laundry',
+        icon: 'laundry',
+        price: 5,
+        description: 'Laundry Wash & Dry'
+    });
+    db.Extra.create({
+        name: 'fridge',
+        icon: 'fridge',
+        price: 15,
+        description: 'Inside Fridge'
+    });
+    db.Extra.create({
+        name: 'over',
+        icon: 'over',
+        price: 25,
+        description: 'Inside Overn'
+    });
+    db.Extra.create({
+        name: 'cabinets',
+        icon: 'cabinets',
+        price: 35,
+        description: 'Inside Cabinets'
+    });
+    db.Extra.create({
+        name: 'windows',
+        name: 'windows',
+        price: 45,
+        description: 'Interior Windows'
+    });
+    db.Extra.create({
+        name: 'walls',
+        icon: 'walls',
+        price: 55,
+        description: 'Interior Walls'
+    });
+
+    /*var customer = db.Customer.create({
             username: 'brices@gmail.com',
             password: 'somethingsecret',
             firstName: 'Samuel',
@@ -41,7 +96,5 @@ module.exports = function(db) {
 
                 c.setBookings([b]);
             });
-        });
-
-    });
+        });*/
 };
