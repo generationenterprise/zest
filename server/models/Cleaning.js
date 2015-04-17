@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     instructions: DataTypes.STRING,
     notes: DataTypes.TEXT
   }, {
+    paranoid: true,
     classMethods: {
       associate: function(models) {
         Cleaning.belongsTo(models.Booking);

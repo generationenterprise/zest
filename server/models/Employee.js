@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     postcode: DataTypes.STRING,
     notes: DataTypes.TEXT
   }, {
+    paranoid: true,
     classMethods: {
       associate: function(models) {
         //Employee.hasMany(models.Booking)

@@ -15,6 +15,7 @@ module.exports = function(sequelize, DataTypes) {
     referrer: DataTypes.STRING,
     notes: DataTypes.TEXT
   }, {
+    paranoid: true,
     classMethods: {
       associate: function(models) {
         Customer.hasMany(models.Booking)

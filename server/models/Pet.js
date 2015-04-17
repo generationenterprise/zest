@@ -1,18 +1,16 @@
 module.exports = function(sequelize, DataTypes) {
-  var Extra = sequelize.define("Extra", {
-  	name: DataTypes.STRING,
+  var Pet = sequelize.define("Pet", {
+  	type: DataTypes.ENUM('Dogs', 'Cats', 'Other'),
     description: DataTypes.STRING,
-  	icon: DataTypes.STRING,
-    price: DataTypes.DECIMAL,
     notes: DataTypes.TEXT
   }, {
     paranoid: true,
     classMethods: {
       associate: function(models) {
-        Extra.hasMany(models.Booking);
+        Pet.hasMany(models.Booking);
       }
     }
   });
 
-  return Extra;
+  return Pet;
 };

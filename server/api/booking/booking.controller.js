@@ -3,14 +3,48 @@
 var db = require('../../models');
 
 exports.index = function(req, res) {
-    db.Booking.findAll().then(function(customers) {
-        res.json(200, customers);
+    db.Booking.findAll().then(function(bookings) {
+        res.json(200, bookings);
+    });
+};
+
+exports.show = function(req, res) {
+    db.Booking.find(req.params.id).then(function(booking) {
+        res.json(200, booking);
+    });
+};
+
+exports.create = function(req, res) {
+    db.Booking.create(req.body).success(function(booking) {
+        return res.json(200, booking)
+    }).error(function(error) {
+        return res.json(500, error);
     });
 };
 
 exports.types = function(req, res) {
     db.BookingType.findAll().then(function(types) {
         res.json(200, types);
+    });
+};
+
+exports.update = function(req, res) {
+    db.Booking.find(req.body.id).then(function(booking) {
+        booking.updateAttributes(req.body).success(function(booking) {
+            return res.json(200, booking);
+        }).error(function(error) {
+            return res.json(500, error);
+        })
+    });
+};
+
+exports.destroy = function(req, res) {
+    db.Booking.find(req.body.id).then(function(booking) {
+        booking.destroy(req.body).success(function(booking) {
+            return res.json(200, booking);
+        }).error(function(error) {
+            return res.json(500, error);
+        })
     });
 };
 

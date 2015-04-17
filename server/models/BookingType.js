@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
   	description: DataTypes.STRING,
     notes: DataTypes.TEXT
   }, {
+    paranoid: true,
     classMethods: {
       associate: function(models) {
         //BookingType.belongsTo(models.Customer);

@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes) {
     hours: DataTypes.DECIMAL,
     notes: DataTypes.TEXT
   }, {
+    paranoid: true,
     classMethods: {
       associate: function(models) {
         Booking.belongsTo(models.Customer);
@@ -14,6 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         Booking.belongsTo(models.Checkout);
         Booking.belongsTo(models.Employee);
         Booking.hasMany(models.Extra);
+        Booking.hasMany(models.Pet);
       }
     }
   });

@@ -9,28 +9,15 @@ angular.module('zestServicesApp')
                 controller: 'BookCtrl'
             });
     })
-    .controller('BookCtrl', function($scope, $state) {
-        $scope.recommendedHours = 2;
-        $scope.recommended = function(){
-          return $scope.recommendedHours + ' hour' + (($scope.recommendedHours === 1) ? '' : 's');
-        };
+    .controller('BookCtrl', function($scope, $state, Extras) {
+        Extras.query(function(extras) {
+            $scope.extras = extras;
+        });
 
-        $scope.extras = [{
-          name: 'Carpets', 
-          icon:'carpets.png'
-        }, {
-          name: 'Closet',
-          icon: 'closet.png'
-        }, {
-          name: 'Cofee',
-          icon: 'cofee.png'
-        }, {
-          name: 'Garden',
-          icon: 'garden.png'
-        }, {
-          name: 'Dishes',
-          icon: 'dishes.png'
-        }];
+        $scope.recommendedHours = 2;
+        $scope.recommended = function() {
+            return $scope.recommendedHours + ' hour' + (($scope.recommendedHours === 1) ? '' : 's');
+        };
 
         $scope.continue = function() {
             $state.go('schedule');

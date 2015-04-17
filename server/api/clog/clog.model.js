@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     findOrCreate = require('mongoose-findorcreate');
     
 var ClogSchema = new Schema({
-    date: Date,
+    moment: String,
     customer_id: Number,
     ip: String,
     user_agent: Boolean
