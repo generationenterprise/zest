@@ -1,6 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
   var Pet = sequelize.define("Pet", {
-  	type: DataTypes.ENUM('Dogs', 'Cats', 'Other'),
+    dogs: DataTypes.BOOLEAN,
+    cats: DataTypes.BOOLEAN,
+    other: DataTypes.BOOLEAN,
     description: DataTypes.STRING,
     notes: DataTypes.TEXT
   }, {

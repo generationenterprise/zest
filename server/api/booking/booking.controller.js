@@ -22,12 +22,6 @@ exports.create = function(req, res) {
     });
 };
 
-exports.types = function(req, res) {
-    db.BookingType.findAll().then(function(types) {
-        res.json(200, types);
-    });
-};
-
 exports.update = function(req, res) {
     db.Booking.find(req.body.id).then(function(booking) {
         booking.updateAttributes(req.body).success(function(booking) {
@@ -48,6 +42,12 @@ exports.destroy = function(req, res) {
     });
 };
 
+exports.types = function(req, res) {
+    db.BookingType.findAll().then(function(types) {
+        res.json(200, types);
+    });
+};
+
 exports.frequencies = function(req, res) {
     db.Frequency.findAll().then(function(frequencies) {
         res.json(200, frequencies);
@@ -57,5 +57,11 @@ exports.frequencies = function(req, res) {
 exports.extras = function(req, res) {
     db.Extra.findAll().then(function(extras) {
         res.json(200, extras);
+    });
+};
+
+exports.pets = function(req, res) {
+    db.Pet.findAll().then(function(pets) {
+        res.json(200, pets);
     });
 };
