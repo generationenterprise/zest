@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zestCleaningApp',  [
+angular.module('zestServicesApp',  [
   'ngCookies',
   'ngResource',
   'ngMessages',

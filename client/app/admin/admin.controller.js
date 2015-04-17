@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zestCleaningApp')
+angular.module('zestServicesApp')
   .controller('AdminCtrl', function ($scope, $http, Auth, User) {
 
     // Use the User $resource to fetch all users

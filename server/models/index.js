@@ -28,7 +28,7 @@ if (!global.hasOwnProperty('db')) {
 
     Object.keys(global.db).forEach(function(modelName) {
         if ("associate" in global.db[modelName]) {
-            global.db[modelName].associate(db);
+            global.db[modelName].associate(global.db);
         }
     });
 }

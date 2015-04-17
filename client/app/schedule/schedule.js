@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zestCleaningApp')
+angular.module('zestServicesApp')
     .config(function($stateProvider) {
         $stateProvider
             .state('schedule', {
@@ -17,13 +17,13 @@ angular.module('zestCleaningApp')
           currency: 'N',
           rate: 35,
           extras: [{
-            name: "Garden", 
+            name: 'Garden', 
             price: 20
           }],
           total: (function(_){            
             return function(){
               return this.currency+''+((this.hours*this.rate)+_.sum(_.pluck(this.extras, 'price')));
-            }
+            };
           })(_)
         };
 
@@ -31,19 +31,19 @@ angular.module('zestCleaningApp')
           set: function($event){
             console.log($event);
           },
-          selected: "Frequency",
+          selected: 'Frequency',
           options: [{
             id: 1,
-            name: "Once",
-            currency: "N",
+            name: 'Once',
+            currency: 'N',
             rate: 35,
-            unit: "hr"
+            unit: 'hr'
           },{
             id: 2,
-            name: "Weekly",
-            currency: "N",
+            name: 'Weekly',
+            currency: 'N',
             rate: 30,
-            unit: "hr"
+            unit: 'hr'
           }]
         };
 
