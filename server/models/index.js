@@ -4,15 +4,9 @@ if (!global.hasOwnProperty('db')) {
         fs = require("fs"),
         path = require("path");
 
-    if (process.env.HEROKU_POSTGRESQL_COPPER_URL) {
+    if (process.env.DATABASE_URL) {
         // the application is executed on Heroku ... use the postgres database
-        sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_COPPER_URL, {
-            dialect: 'postgres',
-            protocol: 'postgres',
-            port: match[4],
-            host: match[3],
-            logging: true //false
-        })
+        sequelize = new Sequelize(process.env.DATABASE_URL)
     } else {
         // the application is executed on the local machine ... use mysql
         sequelize = new Sequelize('ZestServices', 'root', 'qwerty')
@@ -34,7 +28,7 @@ if (!global.hasOwnProperty('db')) {
 
     Object.keys(global.db).forEach(function(modelName) {
         if ("associate" in global.db[modelName]) {
-            global.db[modelName].associate(db);
+            global.db[modelName].associate(global.db);
         }
     });
 }

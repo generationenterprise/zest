@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zestCleaningApp')
+angular.module('zestServicesApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('main', {
@@ -8,4 +8,6 @@ angular.module('zestCleaningApp')
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });
+  })
+  .controller('MainCtrl', function() {
   });

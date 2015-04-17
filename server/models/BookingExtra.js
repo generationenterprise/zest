@@ -1,13 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
-  var BookingExtras = sequelize.define("BookingExtras", {
+  var BookingExtra = sequelize.define("BookingExtra", {
     notes: DataTypes.TEXT
   }, {
     classMethods: {
       associate: function(models) {
-        //BookingExtras.belongsTo(models.Customer);
+        //BookingExtra.belongsTo(models.Customer);
       }
     }
   });
 
-  return BookingExtras;
+  return BookingExtra;
 };

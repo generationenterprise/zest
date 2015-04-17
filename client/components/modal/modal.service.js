@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zestCleaningApp')
+angular.module('zestServicesApp')
   .factory('Modal', function ($rootScope, $modal) {
     /**
      * Opens a modal

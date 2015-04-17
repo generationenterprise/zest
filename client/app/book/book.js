@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zestCleaningApp')
+angular.module('zestServicesApp')
     .config(function($stateProvider) {
         $stateProvider
             .state('book', {
@@ -12,24 +12,24 @@ angular.module('zestCleaningApp')
     .controller('BookCtrl', function($scope, $state) {
         $scope.recommendedHours = 2;
         $scope.recommended = function(){
-          return $scope.recommendedHours + " hour" + (($scope.recommendedHours === 1) ? "" : "s");
-        }
+          return $scope.recommendedHours + ' hour' + (($scope.recommendedHours === 1) ? '' : 's');
+        };
 
         $scope.extras = [{
-          name: "Carpets", 
-          icon:"carpets.png"
+          name: 'Carpets', 
+          icon:'carpets.png'
         }, {
-          name: "Closet",
-          icon: "closet.png"
+          name: 'Closet',
+          icon: 'closet.png'
         }, {
-          name: "Cofee",
-          icon: "cofee.png"
+          name: 'Cofee',
+          icon: 'cofee.png'
         }, {
-          name: "Garden",
-          icon: "garden.png"
+          name: 'Garden',
+          icon: 'garden.png'
         }, {
-          name: "Dishes",
-          icon: "dishes.png"
+          name: 'Dishes',
+          icon: 'dishes.png'
         }];
 
         $scope.continue = function() {

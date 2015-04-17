@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Extras = sequelize.define("Extras", {
+  var Extra = sequelize.define("Extra", {
   	price: DataTypes.DECIMAL,
   	description: DataTypes.STRING,
   	icon: DataTypes.STRING,
@@ -7,10 +7,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        //Extras.belongsTo(models.Customer);
+        //Extra.belongsTo(models.Customer);
       }
     }
   });
 
-  return Extras;
+  return Extra;
 };

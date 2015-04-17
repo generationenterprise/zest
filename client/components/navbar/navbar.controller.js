@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zestCleaningApp')
+angular.module('zestServicesApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     /*$scope.menu = [{
       'title': 'Home',
