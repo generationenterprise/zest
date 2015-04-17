@@ -8,4 +8,6 @@ angular.module('zestServicesApp')
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });
+  })
+  .controller('MainCtrl', function() {
   });
