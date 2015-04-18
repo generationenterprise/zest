@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   	name: DataTypes.STRING,
     description: DataTypes.STRING,
   	icon: DataTypes.STRING,
-    price: DataTypes.DECIMAL,
+    rate: DataTypes.DECIMAL(10,2),
     notes: DataTypes.TEXT
   }, {
     paranoid: true,

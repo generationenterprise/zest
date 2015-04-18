@@ -1,32 +1,83 @@
 'use strict';
 
 angular.module('zestServicesApp')
-    .factory('Cleanings', function($resource) {
+    .factory('BookingService', function Auth($location, $rootScope, $http, Customer, Cleaning, $cookieStore, $q, $localStorage, BookingType) {
+
+        var bookingTypes = BookingType.query();
+
+        return {
+            contains: function(customer) {
+                var deferred = $q.defer();
+
+                $http.post('/api/customers/contains', customer).
+                success(function(data) {
+                    deferred.resolve(data);
+                }).
+                error(function(err) {
+                    deferred.reject(err);
+                }.bind(this));
+
+                return deferred.promise;
+            },
+
+            register: function(options) {
+                var deferred = $q.defer();
+
+                $http.post('/api/bookings/register', options).
+                success(function(data) {
+                    deferred.resolve(data);
+                }).
+                error(function(err) {
+                    deferred.reject(err);
+                }.bind(this));
+
+                return deferred.promise;
+            },
+
+            setCurrentBookingId: function(id) {
+                $localStorage.currentBookingId = id;
+            },
+
+            getCurrentBookingId: function() {
+                return $localStorage.currentBookingId;
+            },
+
+            findCleaningByBookingId: function(bookingId) {
+                return $http.get('/api/cleanings/booking/'+bookingId);
+            }
+        };
+    })
+    .factory('Customer', function($resource) {
+        return $resource('/api/customers/:id', {
+            id: '@_id'
+        });
+    })
+    .factory('Cleaning', function($resource) {
         return $resource('/api/cleanings/:id', {
             id: '@_id'
         });
     })
-    .factory('Bookings', function($resource) {
+    .factory('Booking', function($resource) {
         return $resource('/api/bookings/:id', {
             id: '@_id'
         });
     })
-    .factory('Extras', function($resource) {
+    .factory('Extra', function($resource) {
         return $resource('/api/bookings/extras/:id', {
             id: '@_id'
         });
     })
-    .factory('BookingTypes', function($resource) {
+    .factory('BookingType', function($resource) {
         return $resource('/api/bookings/types/:id', {
             id: '@_id'
         });
     })
-    .factory('Frequencies', function($resource) {
+    .factory('Frequency', function($resource) {
         return $resource('/api/bookings/frequencies/:id', {
             id: '@_id'
         });
     })
-    .factory('Pets', function($resource) {
+    .factory('Pet', function($resource) {
         return $resource('/api/bookings/pets/:id', {
             id: '@_id'
         });

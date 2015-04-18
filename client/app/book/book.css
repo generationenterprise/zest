@@ -42,6 +42,18 @@
     margin-right: auto
 }
 
+.extra-item .fa-spinner {
+    line-height: 90px;
+}
+
+.extra-item.selected{
+    color: red;
+}
+
 .pets-describe{
     margin-top: 10px;
+}
+
+.submit .fa-caret-right{
+    margin-top:3px;
 }

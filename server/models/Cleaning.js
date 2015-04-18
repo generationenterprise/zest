@@ -1,9 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
   var Cleaning = sequelize.define("Cleaning", {
-    bedrooms: DataTypes.DECIMAL,
-    bathrooms: DataTypes.DECIMAL,
-    kitchens: DataTypes.DECIMAL,
-    others: DataTypes.DECIMAL,
+    bedrooms: DataTypes.DECIMAL(10,2),
+    bathrooms: DataTypes.DECIMAL(10,2),
+    kitchens: DataTypes.DECIMAL(10,2),
+    others: DataTypes.DECIMAL(10,2),
     instructions: DataTypes.STRING,
     notes: DataTypes.TEXT
   }, {

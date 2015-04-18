@@ -3,6 +3,7 @@
 angular.module('zestServicesApp',  [
   'ngCookies',
   'ngResource',
+  'ngStorage',
   'ngMessages',
   'ui.bootstrap',
   'angularNumberPicker',

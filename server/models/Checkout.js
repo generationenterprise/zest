@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var Checkout = sequelize.define("Checkout", {
-    price: DataTypes.DECIMAL,
+    price: DataTypes.DECIMAL (10,2),
     description: DataTypes.STRING,
     notes: DataTypes.TEXT
   }, {

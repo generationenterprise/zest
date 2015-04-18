@@ -3,7 +3,21 @@
 var db = require('../../models');
 
 exports.index = function(req, res) {
-    db.Customer.findAll().then(function(customers) {
+    db.Customer.findAll({
+        include: [db.Booking]
+    }).then(function(customers) {
+        res.json(200, customers);
+    });
+};
+
+exports.contains = function(req, res){
+    db.Customer.find({
+        where: db.Sequelize.or({
+            email: req.body.email
+        },{
+            mobilePhone: req.body.mobilePhone
+        })
+    }).then(function(customers){
         res.json(200, customers);
     });
 };

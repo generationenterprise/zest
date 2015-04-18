@@ -1,20 +1,14 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./booking.controller');
+var controller = require('./cleaning.controller');
 var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
-router.get('/types', controller.types);
-router.get('/frequencies', controller.frequencies);
-router.get('/extras', controller.extras);
-router.get('/pets', controller.pets);
-
-router.post('/register', controller.register);
-
 router.get('/', controller.index);
 router.post('/', controller.create);
+router.get('/booking/:id', controller.booking);
 router.get('/:id', controller.show);
 router.put('/:id', controller.update);
 router.delete('/:id', controller.destroy);
