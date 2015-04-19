@@ -21,11 +21,29 @@ angular.module('zestServicesApp')
         });
         Qs.push($scope.booking);
 
+        $scope.selected = {
+            name: 'aSubItem'
+        };
+        $scope.values = [{
+            id: 1,
+            label: 'aLabel',
+            subItem: {
+                name: 'aSubItem'
+            }
+        }, {
+            id: 2,
+            label: 'bLabel',
+            subItem: {
+                name: 'bSubItem'
+            }
+        }];
+
 
         $scope.frequencies = Frequency.query(function(frequencies) {
             _.each(frequencies, function(frequency) {
                 frequency.label = frequency.description + ' (N' + frequency.rate + '/hr)';
             });
+            $scope.frequency = frequencies[0];
             $scope.frequencies = frequencies;
             $scope.loading = false;
         });
