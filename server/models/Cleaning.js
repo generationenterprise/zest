@@ -10,7 +10,10 @@
     paranoid: true,
     classMethods: {
       associate: function(models) {
+        Cleaning.belongsTo(models.Frequency);
         Cleaning.belongsTo(models.Booking);
+        Cleaning.hasMany(models.Extra);
+        Cleaning.hasMany(models.Pet);
       }
     }
   });

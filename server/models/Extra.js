@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     paranoid: true,
     classMethods: {
       associate: function(models) {
-        Extra.hasMany(models.Booking);
+        Extra.hasMany(models.Cleaning);
       }
     }
   });

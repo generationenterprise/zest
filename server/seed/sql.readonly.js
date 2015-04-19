@@ -17,22 +17,22 @@ module.exports = function(db) {
     db.Frequency.create({
         name: 'once',
         description: 'Once',
-        discount: 0.00
+        rate: 50
     });
     db.Frequency.create({
         name: 'weekly',
         description: 'Weekly',
-        discount: 0.95
+        rate: 45
     });
     db.Frequency.create({
         name: 'bi-weekly',
         description: 'Bi-Weekly',
-        discount: 0.85
+        rate: 40
     });
     db.Frequency.create({
         name: 'monthly',
         description: 'Monthly',
-        discount: 0.80
+        rate: 35
     });
 
     // --------------  Extras
