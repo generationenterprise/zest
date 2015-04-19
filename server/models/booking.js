@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     day: DataTypes.ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
     time: DataTypes.INTEGER,
     hours: DataTypes.DECIMAL(10,2),
+    rate: DataTypes.DECIMAL(10,2),
     notes: DataTypes.TEXT
   }, {
     paranoid: true,

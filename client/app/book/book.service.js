@@ -43,7 +43,12 @@ angular.module('zestServicesApp')
             },
 
             findCleaningByBookingId: function(bookingId) {
-                return $http.get('/api/cleanings/booking/'+bookingId);
+                var deferred = $q.defer();
+                return $http.get('/api/cleanings/booking/'+bookingId).success(function(){
+                    
+                });
+
+                return deferred.promise;
             }
         };
     })
