@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     paranoid: true,
     classMethods: {
       associate: function(models) {
-        Pet.belongsTo(models.Cleaning);
+        Pet.belongsTo(models.Cleaning); 
       }
     }
   });

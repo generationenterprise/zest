@@ -3,7 +3,6 @@ module.exports = function(sequelize, DataTypes) {
   var Customer = sequelize.define("Customer", {
     uid: DataTypes.STRING,
     username: DataTypes.STRING,
-    password: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     company: DataTypes.STRING,

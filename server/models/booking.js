@@ -14,6 +14,7 @@ module.exports = function(sequelize, DataTypes) {
         Booking.belongsTo(models.BookingType);
         Booking.belongsTo(models.Checkout);
         Booking.belongsTo(models.Employee);
+        Booking.hasOne(models.Cleaning);
       }
     }
   });

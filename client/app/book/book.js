@@ -83,7 +83,7 @@ angular.module('zestServicesApp')
         };
 
         $scope.continue = function() {
-            $scope.booking.extras = _.where($scope.extras, {
+            $scope.cleaning.extras = _.where($scope.extras, {
                 selected: true
             });
             BookingService.contains($scope.customer).then(function(data) {

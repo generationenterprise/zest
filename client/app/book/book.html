@@ -50,11 +50,11 @@
             <div class="form-item">
                 Do you have any pets?
                 <div class="btn-group" style="width:100%">
-                    <label class="btn btn-primary" ng-model="booking.pets.cats" btn-checkbox style="width:34%">Cats</label>
-                    <label class="btn btn-primary" ng-model="booking.pets.dogs" btn-checkbox style="width:34%">Dogs</label>
-                    <label class="btn btn-primary" ng-model="booking.pets.other" btn-checkbox style="width:32%">Other</label>
+                    <label class="btn btn-primary" ng-model="cleaning.pets.cats" btn-checkbox style="width:34%">Cats</label>
+                    <label class="btn btn-primary" ng-model="cleaning.pets.dogs" btn-checkbox style="width:34%">Dogs</label>
+                    <label class="btn btn-primary" ng-model="cleaning.pets.other" btn-checkbox style="width:32%">Other</label>
                 </div>
-                <input ng-if="booking.pets.cats || booking.pets.dogs || booking.pets.other" type="text" class="form-control pets-describe" ng-model="booking.pets.description" placeholder="Describe eg. Black cat, white cat">
+                <input ng-if="cleaning.pets.cats || cleaning.pets.dogs || cleaning.pets.other" type="text" class="form-control pets-describe" ng-model="cleaning.pets.description" placeholder="Describe eg. Black cat, white cat">
             </div>
             <button type="button" class="btn btn-primary submit" ng-click="continue()" ng-disabled="validator.disable()">
                 <span ng-if="!validator.disable()">Schedule</span>
