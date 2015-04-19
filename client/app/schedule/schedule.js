@@ -12,53 +12,28 @@ angular.module('zestServicesApp')
     .controller('ScheduleCtrl', function($scope, $state, BookingService, Booking, Frequency, $q) {
 
         $scope.loading = true;
-        var Qs = [],
-            bookingId = BookingService.getCurrentBookingId();
+        var Qs = [];
 
         $scope.booking = Booking.get({
-            id: bookingId
+            id: BookingService.getCurrentBookingId()
+        }, function(booking) {
+            $scope.booking = booking;
         });
         Qs.push($scope.booking);
 
-        $scope.cleaning = BookingService.findCleaningByBookingId(bookingId);
-        Qs.push($scope.cleaning);
 
-        $scope.frequencies = Frequency.query();
+        $scope.frequencies = Frequency.query(function(frequencies) {
+            _.each(frequencies, function(frequency) {
+                frequency.label = frequency.description + ' (N' + frequency.rate + '/hr)';
+            });
+            $scope.frequencies = frequencies;
+            $scope.loading = false;
+        });
         Qs.push($scope.frequencies);
 
-        $q.all(Qs).then(function(qs){
-          console.log('all finished');
-          console.log($scope.booking);
-          console.log($scope.frequencies);
-          console.log($scope.cleaning);
-          $scope.loading = false;
+        $q.all(Qs).then(function(qs) {
+            $scope.loading = false;
         });
-
-        $scope.BookingSheet = {
-            description: function() {
-                return '3 hour cleaning, N35/hour';
-            },
-            rate: function() {
-                var hour = $scope.booking.hours,
-                    bRate = $scope.booking.BookingType.baseRate,
-                    mRate = $scope.booking.BookingType.marginalRate,
-                    beds = ($scope.cleaning.beds-1),
-                    baths = ($scope.cleaning.bath-1);
-                return (bRate + beds + baths)*hour;
-            },
-            extras: [],
-            total: function() {
-                var total = this.rate() + ss.sum(_.pluck(this.extras, 'rate'));
-                return 'N' + total;
-            }
-        };
-        $scope.BookingSheet.extras = [{
-            name: 'Pets',
-            rate: 30
-        }, {
-            name: 'Laundry Wash & Dry',
-            rate: 30
-        }];
 
         $scope.dates = (function() {
             var m = moment(),

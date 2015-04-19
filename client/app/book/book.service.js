@@ -40,15 +40,6 @@ angular.module('zestServicesApp')
 
             getCurrentBookingId: function() {
                 return $localStorage.currentBookingId;
-            },
-
-            findCleaningByBookingId: function(bookingId) {
-                var deferred = $q.defer();
-                return $http.get('/api/cleanings/booking/'+bookingId).success(function(){
-                    
-                });
-
-                return deferred.promise;
             }
         };
     })
