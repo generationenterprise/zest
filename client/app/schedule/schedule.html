@@ -26,33 +26,39 @@
             <select ng-model="booking.frequency" ng-options="frequency as frequency.label for frequency in frequencies track by frequency.id"></select>
             </div>
             <div class="form-item full-width">
-                <select class="width-48 pull-left">
+                <select class="width-48 pull-left" ng-model="booking.date">
                     <option>Date</option>
                     <option ng-repeat="date in dates">
                         {{date | date:'EEE M/d'}}
                     </option>
                 </select>
-                <select class="width-48 pull-right">
+                <select class="width-48 pull-right" ng-model="booking.time">
                     <option>Time</option>
                     <option ng-repeat="time in times">
                         {{time | date:'HH:mm'}}
                     </option>
                 </select>
             </div>
+            {{booking.date}}
+            {{booking.time}}
             <div class="form-item full-width">
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="address.street" placeholder="Street Address">
+                    <input type="text" class="form-control" ng-model="customer.address" placeholder="Street Address">
                     <br>
-                    <input type="text" class="form-control" ng-model="adress.street2" placeholder="Address Line 2">
+                    <input type="text" class="form-control" ng-model="customer.city" placeholder="City">
                     <br>
-                    <input type="text" class="form-control" ng-model="adress.city" placeholder="City">
-                    <br>
-                    <input type="text" class="form-control display-inline pull-left width-48" ng-model="adress.state" placeholder="State">
-                    <input type="text" class="form-control display-inline pull-right width-48" ng-model="adress.code" placeholder="Code">
+                    <input type="text" class="form-control display-inline pull-left width-48" ng-model="customer.state" placeholder="State">
+                    <input type="text" class="form-control display-inline pull-right width-48" ng-model="customer.postcode" placeholder="Code">
                 </div>
             </div>
             <br>
-            <button type="button" class="btn btn-primary submit" ng-click="continue()">Confirm</button>
+            <button type="button" class="btn btn-primary submit" disabled ng-if="submitting">
+                <span class="fa fa-spinner fa-spin"></span> Scheduling...
+            </button>
+            <button type="button" class="btn btn-primary submit" ng-click="continue()" ng-disabled="validator.disable()" ng-if="!submitting">
+                <span ng-if="!validator.disable()">Confirm</span>
+                <span ng-if="validator.disable()">{{validator.message()}}</span>
+            </button>
         </div>
     </div>
 </div>
