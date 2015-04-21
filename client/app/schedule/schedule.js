@@ -12,45 +12,24 @@ angular.module('zestServicesApp')
     .controller('ScheduleCtrl', function($scope, $state, BookingService, Booking, Frequency, $q) {
 
         $scope.loading = true;
-        var Qs = [];
 
         $scope.booking = Booking.get({
             id: BookingService.getCurrentBookingId()
         }, function(booking) {
             $scope.booking = booking;
-        });
-        Qs.push($scope.booking);
+            $scope.booking.total = function(){
+                var extras = _.sum(_.pluck($scope.booking.Cleaning.Extras, 'rate'));
+                return ($scope.booking.hours * $scope.booking.frequency.rate) + extras;
+            };
 
-        $scope.selected = {
-            name: 'aSubItem'
-        };
-        $scope.values = [{
-            id: 1,
-            label: 'aLabel',
-            subItem: {
-                name: 'aSubItem'
-            }
-        }, {
-            id: 2,
-            label: 'bLabel',
-            subItem: {
-                name: 'bSubItem'
-            }
-        }];
-
-
-        $scope.frequencies = Frequency.query(function(frequencies) {
-            _.each(frequencies, function(frequency) {
-                frequency.label = frequency.description + ' (N' + frequency.rate + '/hr)';
+            $scope.frequencies = Frequency.query(function(frequencies) {
+                _.each(frequencies, function(frequency) {
+                    frequency.label = frequency.description + ' (N' + frequency.rate + '/hr)';
+                });
+                $scope.booking.frequency = frequencies[1];
+                $scope.frequencies = frequencies;
+                $scope.loading = false;
             });
-            $scope.frequency = frequencies[0];
-            $scope.frequencies = frequencies;
-            $scope.loading = false;
-        });
-        Qs.push($scope.frequencies);
-
-        $q.all(Qs).then(function(qs) {
-            $scope.loading = false;
         });
 
         $scope.dates = (function() {

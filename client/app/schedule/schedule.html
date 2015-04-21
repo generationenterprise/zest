@@ -2,19 +2,19 @@
     <div layout="row" layout-sm="column" layout-align="center" layout-margin layout-fill layout-padding>
         <div layout="column" layout-align="top">
             <div>
-                <h2>Date and Time ({{frequency}})</h2></div>
+                <h2>Date and Time</h2></div>
             <div class="schedule-estimate-container" layout="column">
                 <div ng-if="!loading">
-                    <span class="pull-left">{{booking.hours}} hour booking (N{{frequency.rate}}/hour)</span>
-                    <span class="pull-right">N{{booking.hours*frequency.rate}}</span>
+                    <span class="pull-left">{{booking.hours}} hour booking (N{{booking.frequency.rate}}/hour)</span>
+                    <span class="pull-right">N{{(booking.hours*booking.frequency.rate).toFixed(1)}}</span>
                 </div>
-                <div ng-repeat="extra in extras" ng-if="!loading">
-                    <span class="pull-left">+{{extra.name}}</span>
-                    <span class="pull-right">N{{extra.rate}}</span>
+                <div ng-repeat="extra in booking.Cleaning.Extras" ng-if="!loading">
+                    <span class="pull-left">+{{extra.description}}</span>
+                    <span class="pull-right">N{{extra.rate.toFixed(1)}}</span>
                 </div>
                 <div ng-if="!loading">
                     <span class="pull-left">TOTAL</span>
-                    <span class="pull-right">{{}}</span>
+                    <span class="pull-right">N{{booking.total().toFixed(1)}}</span>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
         </div>
         <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="schedule-form-container" ng-if="!loading">
             <div class="form-item full-width">
-            <select ng-model="frequency" ng-options="frequency as frequency.label for frequency in frequencies track by frequency.id"></select>
+            <select ng-model="booking.frequency" ng-options="frequency as frequency.label for frequency in frequencies track by frequency.id"></select>
             </div>
             <div class="form-item full-width">
                 <select class="width-48 pull-left">
