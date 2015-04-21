@@ -16,6 +16,7 @@ angular.module('zestServicesApp')
         $scope.booking = Booking.get({
             id: BookingService.getCurrentBookingId()
         }, function(booking) {
+            console.log('found booking=',booking);
             $scope.booking = booking;
             $scope.booking.total = function(){
                 var extras = _.sum(_.pluck($scope.booking.Cleaning.Extras, 'rate'));

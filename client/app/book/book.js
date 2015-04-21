@@ -11,6 +11,8 @@ angular.module('zestServicesApp')
     })
     .controller('BookCtrl', function($scope, $state, BookingService, Extra) {
 
+        $scope.submitting = false;
+
         $scope.customer = {
             email: 'brices@gmail.com',
             fullName: 'Sam Brice',
@@ -83,6 +85,7 @@ angular.module('zestServicesApp')
         };
 
         $scope.continue = function() {
+            $scope.submitting = true;
             $scope.cleaning.extras = _.where($scope.extras, {
                 selected: true
             });
@@ -99,6 +102,7 @@ angular.module('zestServicesApp')
                     }).then(function(booking) {
                         BookingService.setCurrentBookingId(booking.id);
                         $state.go('schedule');
+                        $scope.submitting = true;
                     }).catch(function() {
                         //ERROR
                     })
