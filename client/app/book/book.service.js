@@ -55,6 +55,10 @@ angular.module('zestServicesApp')
     .factory('Cleaning', function($resource) {
         return $resource('/api/cleanings/:id', {
             id: '@_id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
         });
     })
     .factory('Booking', function($resource) {

@@ -13,6 +13,7 @@ angular.module('zestServicesApp')
 
         $scope.submitting = false;
 
+        // TODO: Remove all
         $scope.customer = {
             email: 'brices@gmail.com',
             fullName: 'Sam Brice',

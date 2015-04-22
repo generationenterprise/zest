@@ -57,7 +57,7 @@
                 <input ng-if="cleaning.pets.cats || cleaning.pets.dogs || cleaning.pets.other" type="text" class="form-control pets-describe" ng-model="cleaning.pets.description" placeholder="Describe eg. Black cat, white cat">
             </div>
             <button type="button" class="btn btn-primary submit" disabled ng-if="submitting">
-                <span class="fa fa-spinner fa-spin"></span> Submitting...
+                <span class="fa fa-spinner fa-spin"></span> Registering...
             </button>
             <button type="button" class="btn btn-primary submit" ng-click="continue()" ng-disabled="validator.disable()" ng-if="!submitting">
                 <span ng-if="!validator.disable()">Schedule</span>

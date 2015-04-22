@@ -12,19 +12,21 @@ angular.module('zestServicesApp')
     .controller('ScheduleCtrl', function($scope, $state, BookingService, Booking, Frequency, Customer, $q) {
 
         $scope.loading = true;
+        $scope.submitting = false;
 
         $scope.booking = Booking.get({
             id: BookingService.getCurrentBookingId()
         }, function(booking) {
 
             $scope.customer = booking.Customer;
-            
+
             $scope.booking = booking;
             $scope.booking.date = 'Date';
             $scope.booking.time = 'Time';
-            $scope.booking.total = function(){
+            
+            $scope.booking.total = function() {
                 var extras = 0;
-                if($scope.booking.Cleaning.Extras){
+                if ($scope.booking.Cleaning.Extras) {
                     extras = _.sum(_.pluck($scope.booking.Cleaning.Extras, 'rate'));
                 }
                 return ($scope.booking.hours * $scope.booking.frequency.rate) + extras;
@@ -58,7 +60,7 @@ angular.module('zestServicesApp')
             return t;
         })();
 
-        var isValidDateTime = function(){
+        var isValidDateTime = function() {
             return $scope.booking.date !== 'Date' && $scope.booking.time !== 'Time';
         };
 
@@ -96,7 +98,7 @@ angular.module('zestServicesApp')
                 if (!isValidAddress()) {
                     msg = 'Enter your street address.';
                 }
-                if(!isValidDateTime()){
+                if (!isValidDateTime()) {
                     msg = 'Select a Date and Time.';
                 }
                 return msg;
@@ -109,13 +111,15 @@ angular.module('zestServicesApp')
             $scope.booking._id = $scope.booking.id;
             $scope.booking.time = 900;
             $scope.booking.day = 'Monday';
-            debugger;
+
             var c = Customer.update($scope.customer),
                 b = Booking.update($scope.booking);
-                $q.all([c,b]).then(function(){
-                    console.log('all done');
-                });
-            
+
+            $q.all([c, b]).then(function() {
+                console.log('all done');
+                $scope.submitting = false;
+            });
+
             //$state.go('confirm');
         };
     });
