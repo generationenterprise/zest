@@ -2,15 +2,11 @@ module.exports = function(db) {
 	// --------------  Booking Types
     db.BookingType.create({
         name: 'cleaning',
-        description: 'Cleaning service',
-        baseRate: 36,
-        marginalRate: 12
+        description: 'Cleaning service'
     });
     db.BookingType.create({
         name: 'fumigation',
-        description: 'Fumigation service',
-        baseRate: 50,
-        marginalRate: 20
+        description: 'Fumigation service'
     });
 
     // --------------  Frequencies
