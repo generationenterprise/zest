@@ -1,7 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
     var Booking = sequelize.define("Booking", {
-        active: DataTypes.BOOLEAN,
-        paid: DataTypes.BOOLEAN,
+        active: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        paid: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         day: {
             type: DataTypes.INTEGER,
             validate: {
@@ -12,15 +18,15 @@ module.exports = function(sequelize, DataTypes) {
         time: {
             type: DataTypes.INTEGER,
             validate: {
-                min: 0,
-                max: 2400
+                min: 800,
+                max: 1800
             }
         },
         hours: {
-            type: DataTypes.DECIMAL(10,2),
+            type: DataTypes.DECIMAL(10, 2),
             validate: {
                 min: 0,
-                max: 12
+                max: 10
             }
         },
         notes: DataTypes.TEXT
