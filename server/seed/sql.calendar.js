@@ -1,6 +1,49 @@
 var moment = require('moment');
 
 module.exports = function(db) {
+    // Bi-Monthly
+
+    db.ScheduledBiMonthlyBooking.create({
+        EmployeeId: 1,
+        week: 1,
+        day: 2,
+        time: 900,
+        hours: 1
+    });
+
+    db.ScheduledBiMonthlyBooking.create({
+        EmployeeId: 1,
+        week: 1,
+        day: 5,
+        time: 1200,
+        hours: 4
+    });
+
+    db.ScheduledBiMonthlyBooking.create({
+        EmployeeId: 1,
+        week: 2,
+        day: 2,
+        time: 900,
+        hours: 1
+    });
+
+    // ------ Weekly
+
+    db.ScheduledWeeklyBooking.create({
+        EmployeeId: 1,
+        day: 1,
+        time: 1100,
+        hours: 1
+    });
+
+    db.ScheduledWeeklyBooking.create({
+        EmployeeId: 1,
+        day: 4,
+        time: 1200,
+        hours: 3
+    });
+
+    // ------ Once
 	
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,

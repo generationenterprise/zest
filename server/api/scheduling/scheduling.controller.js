@@ -6,12 +6,12 @@ var db = require('../../models'),
     moment = require('moment');
 
 exports.index = function(req, res) {
-    var year = req.params.year,
-        month = (req.params.month - 1),
-        hours = req.params.hours;
+    var YEAR = req.params.year,
+        MONTH = (req.params.month - 1),
+        HOURS = req.params.hours;
 
     var now = moment(),
-        start = moment().year(year).month(month).add(3, 'days'),
+        start = moment().year(YEAR).month(MONTH).add(3, 'days'),
         end = moment(start).add(1, 'months').date(1);
 
     if (start < now) {
@@ -59,17 +59,79 @@ exports.index = function(req, res) {
                 var date = moment(booking.date).format("YYYY-MM-DD"),
                     time = booking.time,
                     hours = booking.hours;
-                    
+
                 var i = employee.openings[date].indexOf(time);
-                console.log(date+'=>'+employee.openings[date].join(","));
-                employee.openings[date].splice(i, hours*2);
-                console.log(date+'=>'+employee.openings[date].join(","));
-
-                res.json(employee.openings[date]);
-
+                if (i !== -1) {
+                    console.log('=======> One time booking on ' + date + ', t=' + time + ', h=' + hours);
+                    employee.openings[date].splice(i, hours * 2);
+                } else {
+                    console.error('=======> Trying to schedule OnceBooking at a time not available.');
+                }
             });
-            //return res.json(employee);
+            removeScheduledWeeklyBookings(employee);
         });
+    };
+
+    var removeScheduledWeeklyBookings = function(employee) {
+        db.sequelize.query('SELECT * FROM ScheduledWeeklyBookings WHERE EmployeeId = ' + employee.id).then(function(rows) {
+            //res.json(rows[0]);
+            _.each(rows[0], function(booking) {
+                var runner = moment().day(booking.day),
+                    time = booking.time,
+                    hours = booking.hours;
+
+                var days = [];
+                days.push(booking);
+                while (runner.month() <= MONTH) {
+                    var date = runner.format("YYYY-MM-DD");
+                    if (employee.openings[date] === undefined) {
+                        runner.add(7, 'days');
+                        continue;
+                    }
+
+                    var i = employee.openings[date].indexOf(time);
+                    if (i !== -1) {
+                        console.log('=======> Weekly booking on ' + date + ', t=' + time + ', h=' + hours);
+                        employee.openings[date].splice(i, hours * 2);
+                    } else {
+                        console.error('=======> Trying to schedule WeeklyBooking at a time not available.');
+                    }
+                    runner.add(7, 'days');
+                }
+            });
+            removeScheduledBiMonthlyBookings(employee);
+        });
+    };
+
+    var removeScheduledBiMonthlyBookings = function(employee){
+        db.sequelize.query('SELECT * FROM ScheduledBiMonthlyBookings WHERE EmployeeId = ' + employee.id).then(function(rows) {
+            _.each(rows[0], function(booking) {
+                var runner = moment().day(booking.day),
+                    time = booking.time,
+                    hours = booking.hours;
+                    
+                var days = [];
+                days.push(booking);
+                while (runner.month() <= MONTH) {
+                    var date = runner.format("YYYY-MM-DD");
+                    if (employee.openings[date] === undefined) {
+                        runner.add(7, 'days');
+                        continue;
+                    }
+
+                    var i = employee.openings[date].indexOf(time);
+                    if (i !== -1) {
+                        console.log('=======> Weekly booking on ' + date + ', t=' + time + ', h=' + hours);
+                        employee.openings[date].splice(i, hours * 2);
+                    } else {
+                        console.error('=======> Trying to schedule WeeklyBooking at a time not available.');
+                    }
+                    runner.add(7, 'days');
+                }
+            });
+            res.json(employee);
+        });
+
     };
 
 
