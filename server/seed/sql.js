@@ -1,5 +1,6 @@
 module.exports = function(db) {
     require('./sql.readonly')(db);
+    require('./sql.calendar')(db);
 
     /*var customer = db.Customer.create({
             username: 'brices@gmail.com',
