@@ -34,7 +34,7 @@ angular.module('zestServicesApp')
 
             $scope.frequencies = Frequency.query(function(frequencies) {
                 _.each(frequencies, function(frequency) {
-                    frequency.label = frequency.description + ' (N' + frequency.rate + '/hr)';
+                    frequency.label = frequency.description + ' (₦' + frequency.rate + '/hr)';
                 });
                 $scope.booking.frequency = frequencies[1];
                 $scope.frequencies = frequencies;
