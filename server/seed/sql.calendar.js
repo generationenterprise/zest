@@ -47,7 +47,7 @@ module.exports = function(db) {
 	
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
-        date: moment().date(29),
+        date: moment().date(3),
         time: 800,
         hours: 2
     });

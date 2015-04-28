@@ -5,6 +5,9 @@ var db = require('../../models'),
     Q = require('q'),
     moment = require('moment');
 
+/**
+ * Given the {YEAR} {MONTH} and {HOURS} this endpoint returns all openings in {MONTH} for bookings of {HOURS} long.
+ */
 exports.index = function(req, res) {
     var YEAR = req.params.year,
         MONTH = (req.params.month - 1),
@@ -23,7 +26,7 @@ exports.index = function(req, res) {
     }
 
     var getHours = function(day) {
-        var hours = [800, 830, 900, 930, 1000, 1030, 1100, 1130, 1200, 1230, 1300, 1330, 1400, 1430, 1500, 1530, 1600, 1630, 1700, 1730, 1800];
+        var hours = [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450, 1500, 1550, 1600, 1650, 1700, 1750, 1800, 1850];
         return hours;
     };
 
@@ -42,10 +45,13 @@ exports.index = function(req, res) {
 
 
     db.sequelize.query('SELECT id, nickName FROM Employees WHERE deletedAt IS NULL').then(function(employees) {
-        _.each(employees[0], function(employee) {
+        /*_.each(employees[0], function(employee) {
             employee.openings = getOpenings();
             removeScheduledOnceBookings(employee);
-        });
+        });*/
+        var employee = employees[0][0];
+        employee.openings = getOpenings();
+        removeScheduledOnceBookings(employee);
     });
 
     var findOpenings = function(employee) {
