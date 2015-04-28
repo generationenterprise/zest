@@ -32,14 +32,14 @@ module.exports = function(db) {
     db.ScheduledWeeklyBooking.create({
         EmployeeId: 1,
         day: 1,
-        time: 1100,
+        etime: 1050,
         hours: 1
     });
 
     db.ScheduledWeeklyBooking.create({
         EmployeeId: 1,
         day: 4,
-        time: 1200,
+        etime: 1150,
         hours: 3
     });
 
@@ -48,63 +48,63 @@ module.exports = function(db) {
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
         date: moment().date(3),
-        time: 800,
+        etime: 750,
         hours: 2
     });
 
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
         date: moment().add(1,'months').date(16),
-        time: 1000,
+        etime: 950,
         hours: 1
     });
 
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
         date: moment().add(1,'months').date(11),
-        time: 900,
+        etime: 850,
         hours: 4
     });
 
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
         date: moment().add(1,'months').date(15),
-        time: 1100,
+        etime: 1050,
         hours: 2
     });
 
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
         date: moment().add(1,'months').date(19),
-        time: 1200,
+        etime: 1150,
         hours: 2
     });
 
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
         date: moment().add(1,'months').date(20),
-        time: 1300,
+        etime: 1250,
         hours: 2
     });
 
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
         date: moment().add(1,'months').date(25),
-        time: 1000,
+        etime: 950,
         hours: 3
     });
 
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
         date: moment().add(1,'months').date(25),
-        time: 1500,
+        etime: 1450,
         hours: 3
     });
 
     db.ScheduledOnceBooking.create({
         EmployeeId: 1,
         date: moment().add(2,'months').date(20),
-        time: 1000,
+        etime: 950,
         hours: 2.5
     });
 };
