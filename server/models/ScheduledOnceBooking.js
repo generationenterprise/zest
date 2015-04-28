@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
                 max: 31
             }
         },
-        time: {
+        etime: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 800,
