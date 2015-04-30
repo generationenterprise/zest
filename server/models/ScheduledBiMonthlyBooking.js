@@ -1,5 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
     var ScheduledBiMonthlyBooking = sequelize.define("ScheduledBiMonthlyBooking", {
+        active: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        },
         week: {
             type: DataTypes.INTEGER,
             validate: {
@@ -17,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
         etime: {
             type: DataTypes.INTEGER,
             validate: {
-                min: 800,
+                min: 750,
                 max: 1800
             }
         },
@@ -32,8 +36,14 @@ module.exports = function(sequelize, DataTypes) {
         paranoid: true,
         classMethods: {
             associate: function(models) {
-                ScheduledBiMonthlyBooking.belongsTo(models.Booking);
-                ScheduledBiMonthlyBooking.belongsTo(models.Employee);
+                ScheduledBiMonthlyBooking.belongsTo(models.Booking, {
+                    onDelete: 'RESTRICT',
+                    onUpdate: 'RESTRICT'
+                });
+                ScheduledBiMonthlyBooking.belongsTo(models.Employee, {
+                    onDelete: 'RESTRICT',
+                    onUpdate: 'RESTRICT'
+                });
             }
         }
     });

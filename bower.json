@@ -20,7 +20,8 @@
     "simple-statistics": "~0.9.0",
     "angular-bootstrap-select": "~0.0.5",
     "angular-number-picker": "~1.2.0",
-    "ngstorage": "~0.3.0"
+    "ngstorage": "~0.3.0",
+    "angular-bootstrap-datetimepicker": "~0.3.12"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

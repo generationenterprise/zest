@@ -20,10 +20,22 @@
          paranoid: true,
          classMethods: {
              associate: function(models) {
-                 Cleaning.belongsTo(models.Frequency);
-                 Cleaning.belongsTo(models.Booking);
-                 Cleaning.hasMany(models.Extra);
-                 Cleaning.hasMany(models.Pet);
+                 Cleaning.belongsTo(models.Frequency, {
+                    onDelete: 'RESTRICT',
+                    onUpdate: 'RESTRICT'
+                });
+                 Cleaning.belongsTo(models.Booking, {
+                    onDelete: 'RESTRICT',
+                    onUpdate: 'RESTRICT'
+                });
+                 Cleaning.hasMany(models.Extra, {
+                    onDelete: 'CASCADE',
+                    onUpdate: 'CASCADE'
+                });
+                 Cleaning.hasMany(models.Pet, {
+                    onDelete: 'CASCADE',
+                    onUpdate: 'CASCADE'
+                });
              }
          }
      });

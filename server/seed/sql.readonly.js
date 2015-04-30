@@ -1,11 +1,4 @@
 module.exports = function(db) {
-	// --------------  Employees
-    db.Employee.create({
-        nickName: "Sam"
-    });
-    db.Employee.create({
-        nickName: "Liz"
-    });
     // --------------  Booking Types
     db.BookingType.create({
         name: 'cleaning',

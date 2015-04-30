@@ -19,6 +19,6 @@ exports.create = function(req, res) {
         if (err) {
             return res.json(500, err);
         }
-        return res.json(200, clogs);
+        return res.json(200, clog);
     });
 };
