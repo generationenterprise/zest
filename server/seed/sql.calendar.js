@@ -52,7 +52,7 @@ module.exports = function(db) {
         week: 5,
         day: 2,
         etime: 750,
-        hours: 1
+        hours: 1.5
     });
 
     // ------ Weekly
@@ -72,7 +72,7 @@ module.exports = function(db) {
         CustomerId: Math.floor(Math.random() * 6) + 1,
         day: 4,
         etime: 1150,
-        hours: 3
+        hours: 3.5
     });
 
     // ------ Once
