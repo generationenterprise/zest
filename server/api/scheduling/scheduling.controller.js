@@ -74,8 +74,8 @@ exports.index = function(req, res) {
         schedule.splice(i, 2 * hours);
     };
 
-    var doBook = function(type, date, schedule, etime, hours, week, day) {
-        console.log('=======> Booking out time for ' + type + ': ' + moment(date).format('YYYY-MM-DD (ddd)') + ', et=' + etime + ', h=' + hours + ', w=' + week + ', d=' + day);
+    var doBook = function(employee, type, date, schedule, etime, hours, week, day) {
+        console.log('=======> Booking out time for '+employee.nickName+' ' + type + ': ' + moment(date).format('YYYY-MM-DD (ddd)') + ', et=' + etime + ', h=' + hours + ', w=' + week + ', d=' + day);
         if (isOpen(schedule, etime, hours)) {
             closeOpening(schedule, etime, hours)
             console.log('+++++++> Done');
@@ -117,7 +117,7 @@ exports.index = function(req, res) {
                     hours = booking.hours;
 
                 var schedule = employee.openings[date];
-                doBook('OnceBooking', date, schedule, etime, hours);
+                doBook(employee, 'OnceBooking', date, schedule, etime, hours);
 
             });
             deferred.resolve(employee);
@@ -141,7 +141,7 @@ exports.index = function(req, res) {
                 while (runner.month() < end.month()) {
                     var date = runner.format("YYYY-MM-DD");
                     var schedule = employee.openings[date];
-                    doBook('WeeklyBooking', date, schedule, etime, hours);
+                    doBook(employee, 'WeeklyBooking', date, schedule, etime, hours);
                     runner.add(7, 'days');
                 }
             });
@@ -169,7 +169,7 @@ exports.index = function(req, res) {
 
                 var date = runner.format("YYYY-MM-DD");
                 var schedule = employee.openings[date];
-                doBook('MonthlyBooking', date, schedule, etime, hours, week, day);
+                doBook(employee, 'MonthlyBooking', date, schedule, etime, hours, week, day);
             });
             deferred.resolve(employee);
         });
@@ -195,13 +195,13 @@ exports.index = function(req, res) {
                 }
                 var date = runner.format("YYYY-MM-DD");
                 var schedule = employee.openings[date];
-                doBook('BiMonthlyBooking', date, schedule, etime, hours, week, day);
+                doBook(employee, 'BiMonthlyBooking', date, schedule, etime, hours, week, day);
                 runToDay(runner, day);
                 runner.add(1, 'days');
                 runToDay(runner, day);
                 date = runner.format("YYYY-MM-DD");
                 schedule = employee.openings[date];
-                doBook('BiMonthlyBooking', date, schedule, etime, hours, week, day);
+                doBook(employee, 'BiMonthlyBooking', date, schedule, etime, hours, week, day);
             });
             deferred.resolve(employee);
         });
