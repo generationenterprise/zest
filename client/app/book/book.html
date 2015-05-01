@@ -25,10 +25,14 @@
                 </div>
             </div>
             <div class="form-item">
+                Your cleaning will take approximately <b>{{recommendation()}}</b>.
+                <p class="comment">Don't worry. You're only charged for the actual lenght of cleaning.</p>
+            </div>
+            <!--div class="form-item">
                 We recommend <b>{{recommendation()}}</b>
                 <p class="comment">It's better to book more time rather than less. You're only charged for the actual lenght of cleaning.</p>
                 <h-number value="booking.hours" min="2" max="10" step="0.5" singular="hour" plural="hours" change="booking.manual = true"></h-number>
-            </div>
+            </div-->
             <div class="form-item">
                 <div class="form-group">
                     <div class="input-group">
