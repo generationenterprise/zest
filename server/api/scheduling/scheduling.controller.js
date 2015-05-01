@@ -196,6 +196,7 @@ exports.index = function(req, res) {
                 var date = runner.format("YYYY-MM-DD");
                 var schedule = employee.openings[date];
                 doBook(employee, 'BiMonthlyBooking', date, schedule, etime, hours, week, day);
+                runner.add(1, 'days');
                 runToDay(runner, day);
                 runner.add(1, 'days');
                 runToDay(runner, day);
