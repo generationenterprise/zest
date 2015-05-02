@@ -209,7 +209,7 @@ exports.index = function(req, res) {
         return deferred.promise;
     };
 
-    // Remove openings than cannot accomodate the HOURS needed
+    // Remove openings that cannot accomodate the HOURS needed
     var removeInvalidOpenings = function(employee) {
         _.each(_.keys(employee.openings), function(date) {
             var schedule = employee.openings[date];

@@ -14,6 +14,8 @@ angular.module('zestServicesApp')
         $scope.loading = true;
         $scope.submitting = false;
 
+        $scope.frequency = 1;
+
         $scope.booking = Booking.get({
             id: BookingService.getCurrentBookingId()
         }, function(booking) {
@@ -23,7 +25,7 @@ angular.module('zestServicesApp')
             $scope.booking = booking;
             $scope.booking.date = 'Date';
             $scope.booking.time = 'Time';
-            
+
             $scope.booking.total = function() {
                 var extras = 0;
                 if ($scope.booking.Cleaning.Extras) {
@@ -42,23 +44,22 @@ angular.module('zestServicesApp')
             });
         });
 
-        $scope.dates = (function() {
-            var m = moment(),
-                d = [];
-            for (var i = 0; i < 15; i++) {
-                d.push(new Date(m.month(m.month() + 1).day(i)));
-            }
-            return d;
-        })();
+        $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate){
+            console.log('v=',$view);
+            console.log('d=', $dates);
+            console.log('l=', $leftDate);
+            console.log('u=', $upDate);
+            console.log('r=', $rightDate);
+        };
 
-        $scope.times = (function() {
-            var m = moment(),
-                t = [];
-            for (var i = 0; i < 15; i++) {
-                t.push(new Date(m.hour(i)));
-            }
-            return t;
-        })();
+        $scope.onSetTime = function(date){
+            console.log('s.d=',date);
+        };
+
+        $scope.dateTimeConfig = {
+            minView: 'minute',
+            minuteStep: 30
+        };
 
         var isValidDateTime = function() {
             return $scope.booking.date !== 'Date' && $scope.booking.time !== 'Time';
