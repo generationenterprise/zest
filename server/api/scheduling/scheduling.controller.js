@@ -103,8 +103,8 @@ exports.index = function(req, res) {
         employee.openings = createMomthlyShchedule();
         return removeScheduledOnceBookings(employee)
             .then(removeScheduledWeeklyBookings)
+            .then(removeScheduledBiWeeklyBookings)
             .then(removeScheduledMonthlyBookings)
-            .then(removeScheduledBiMonthlyBookings)
             .then(removeInvalidOpenings);
     };
 
@@ -176,9 +176,9 @@ exports.index = function(req, res) {
         return deferred.promise;
     };
 
-    var removeScheduledBiMonthlyBookings = function(employee) {
+    var removeScheduledBiWeeklyBookings = function(employee) {
         var deferred = Q.defer();
-        db.sequelize.query('SELECT * FROM ScheduledBiMonthlyBookings WHERE EmployeeId = ' + employee.id).then(function(rows) {
+        db.sequelize.query('SELECT * FROM ScheduledBiWeeklyBookings WHERE EmployeeId = ' + employee.id).then(function(rows) {
             _.each(rows[0], function(booking) {
                 var runner = moment(start).date(1),
                     week = booking.week,
@@ -195,14 +195,14 @@ exports.index = function(req, res) {
                 }
                 var date = runner.format("YYYY-MM-DD");
                 var schedule = employee.openings[date];
-                doBook(employee, 'BiMonthlyBooking', date, schedule, etime, hours, week, day);
+                doBook(employee, 'BiWeeklyBooking', date, schedule, etime, hours, week, day);
                 runner.add(1, 'days');
                 runToDay(runner, day);
                 runner.add(1, 'days');
                 runToDay(runner, day);
                 date = runner.format("YYYY-MM-DD");
                 schedule = employee.openings[date];
-                doBook(employee, 'BiMonthlyBooking', date, schedule, etime, hours, week, day);
+                doBook(employee, 'BiWeeklyBooking', date, schedule, etime, hours, week, day);
             });
             deferred.resolve(employee);
         });

@@ -47,3 +47,23 @@ select option{
 .xcontainer.page{
     margin-top: -35px
 }
+
+.btn-primary {
+    background: #233140;
+    border:0px ;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus{
+    background: #2c3e50;
+    border:0px;
+}
+
+.btn-primary.active{
+    background:#2c3e50;
+    font-weight: bold;
+    color: #fba819;
+}
+
+.btn-primary[disabled]{
+    background:#2c3e50;
+}

@@ -1,13 +1,21 @@
 #banner {
     border-bottom: none;
     margin-top: -20px;
-    background: url(../../assets/images/hero.jpg) no-repeat;
+    background: url(../../assets/images/living-room-1280x808.jpg) no-repeat;
 }
 
 #banner h1 {
     font-size: 60px;
     line-height: 1;
     letter-spacing: -1px;
+}
+
+#banner button{
+    padding:15px;
+    font-size: 20px;
+    width: 250px;
+    font-weight: normal;
+    xbackground: #fba819;
 }
 
 .hero-unit {
@@ -17,6 +25,12 @@
     text-align: center;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
     background: #4393B9;
+    height:650px;
+}
+
+.lead {
+    font-weight: bold;
+    font-size: 25px;
 }
 
 .footer {

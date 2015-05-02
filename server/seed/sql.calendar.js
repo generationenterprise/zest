@@ -1,9 +1,9 @@
 var moment = require('moment');
 
 module.exports = function(db) {
-    // Bi-Monthly
+    // Bi-Weekly
 
-    db.ScheduledBiMonthlyBooking.create({
+    db.ScheduledBiWeeklyBooking.create({
         EmployeeId: 2,
         BookingId: 1,
         CustomerId: Math.floor(Math.random() * 6) + 1,
@@ -13,7 +13,7 @@ module.exports = function(db) {
         hours: 1
     });
 
-    db.ScheduledBiMonthlyBooking.create({
+    db.ScheduledBiWeeklyBooking.create({
         EmployeeId: 2,
         BookingId: 2,
         CustomerId: Math.floor(Math.random() * 6) + 1,
@@ -23,7 +23,7 @@ module.exports = function(db) {
         hours: 4
     });
 
-    db.ScheduledBiMonthlyBooking.create({
+    db.ScheduledBiWeeklyBooking.create({
         EmployeeId: 2,
         BookingId: 3,
         CustomerId: Math.floor(Math.random() * 6) + 1,

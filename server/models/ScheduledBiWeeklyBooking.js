@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var ScheduledBiMonthlyBooking = sequelize.define("ScheduledBiMonthlyBooking", {
+    var ScheduledBiWeeklyBooking = sequelize.define("ScheduledBiWeeklyBooking", {
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
@@ -36,11 +36,11 @@ module.exports = function(sequelize, DataTypes) {
         paranoid: true,
         classMethods: {
             associate: function(models) {
-                ScheduledBiMonthlyBooking.belongsTo(models.Booking, {
+                ScheduledBiWeeklyBooking.belongsTo(models.Booking, {
                     onDelete: 'RESTRICT',
                     onUpdate: 'RESTRICT'
                 });
-                ScheduledBiMonthlyBooking.belongsTo(models.Employee, {
+                ScheduledBiWeeklyBooking.belongsTo(models.Employee, {
                     onDelete: 'RESTRICT',
                     onUpdate: 'RESTRICT'
                 });
@@ -48,5 +48,5 @@ module.exports = function(sequelize, DataTypes) {
         }
     });
 
-    return ScheduledBiMonthlyBooking;
+    return ScheduledBiWeeklyBooking;
 };
