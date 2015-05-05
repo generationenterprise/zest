@@ -8,6 +8,13 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        hours: {
+            type: DataTypes.DECIMAL(10,2),
+            validate: {
+                min: 1,
+                max: 10
+            }
+        },
         notes: DataTypes.TEXT
     }, {
         paranoid: true,

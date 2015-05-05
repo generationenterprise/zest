@@ -37,3 +37,8 @@
 .width-48 {
 	width:48%;
 }
+
+.datetimepicker{
+    width: 320px;
+    height: 296px;
+}

@@ -45,11 +45,26 @@ angular.module('zestServicesApp')
         });
 
         $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate){
+            var now = moment();
             console.log('v=',$view);
             console.log('d=', $dates);
             console.log('l=', $leftDate);
             console.log('u=', $upDate);
             console.log('r=', $rightDate);
+            if($view === 'month'){
+                $leftDate.selectable = false;
+                $upDate.selectable = false;
+                $rightDate.selectable = false;
+                _.each($dates, function(date){
+                    var m = moment(date.utcDateValue).month();
+                    date.selectable =  (m >= now.month()-1 &&  m <= now.month()+1);
+                });
+            }else if($view === 'day'){
+                _.each($dates, function(date){
+                    var d = moment(date.utcDateValue);
+                    date.selectable =  ((d > moment(now).add(3,'days')) && (d.day() !== 6) && (now.diff(d, 'months') >= -1));
+                });
+            }
         };
 
         $scope.onSetTime = function(date){

@@ -5,7 +5,7 @@
                 <h2>Date and Time</h2></div>
             <div class="schedule-estimate-container md-card-shadow" layout="column">
                 <div ng-if="!loading">
-                    <span class="pull-left">{{booking.hours}} hour booking (₦{{booking.frequency.rate}}/hour)</span>
+                    <span class="pull-left">{{booking.hours}} hour cleaning (₦{{booking.frequency.rate}}/hour)</span>
                     <span class="pull-right">₦{{(booking.hours*booking.frequency.rate).toFixed(1)}}</span>
                 </div>
                 <div ng-repeat="extra in booking.Cleaning.Extras" ng-if="!loading">
@@ -53,6 +53,8 @@
             </div-->
             <div class="form-item full-width">
                 <div class="form-group">
+                    <input type="text" class="form-control" ng-model="frequency.description" placeholder="Clean once." disabled>
+                    <br>
                     <input type="text" class="form-control" ng-model="customer.address" placeholder="Street Address">
                     <br>
                     <input type="text" class="form-control" ng-model="customer.city" placeholder="City">
