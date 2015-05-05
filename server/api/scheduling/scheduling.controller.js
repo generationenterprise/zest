@@ -117,7 +117,7 @@ exports.index = function(req, res) {
                     hours = booking.hours;
 
                 var schedule = employee.openings[date];
-                doBook(employee, 'OnceBooking', date, schedule, etime, hours);
+                doBook(employee, 'OnceBooking', date, schedule, etime, hours, null, null);
 
             });
             deferred.resolve(employee);
@@ -141,7 +141,7 @@ exports.index = function(req, res) {
                 while (runner.month() < end.month()) {
                     var date = runner.format("YYYY-MM-DD");
                     var schedule = employee.openings[date];
-                    doBook(employee, 'WeeklyBooking', date, schedule, etime, hours);
+                    doBook(employee, 'WeeklyBooking', date, schedule, etime, hours, null, day);
                     runner.add(7, 'days');
                 }
             });

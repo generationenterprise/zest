@@ -15,7 +15,8 @@ angular.module('zestServicesApp')
                 reqs.push($http.get('/api/scheduling/'+now.year()+'/'+(now.month()+2)+'/'+hours));
 
                 $q.all(reqs).then(function(resps){
-                	deferred.resolve(_.pluck(resps,'data'));
+                	var months = _.pluck(resps,'data');
+                	deferred.resolve(months);
                 })
 
                 return deferred.promise;
