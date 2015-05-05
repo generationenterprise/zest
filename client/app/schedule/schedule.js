@@ -55,10 +55,14 @@ angular.module('zestServicesApp')
             var reqs = [$scope.frequencies, SchedulingService.fetchOpenings($scope.booking.hours)];
 
             $q.all(reqs).then(function(resps) {
-                console.log('dates=', resps[1]);
+                $scope.months = resps[1];
                 $scope.loading = false;
             });
         });
+
+        $scope.parseMonths = function(openings){
+
+        };
 
         $scope.describeFrequency = function() {
             if (!$scope.dateTimePicked){
@@ -81,7 +85,12 @@ angular.module('zestServicesApp')
             } else if ($view === 'day') {
                 _.each($dates, function(date) {
                     var d = moment(date.utcDateValue);
-                    date.selectable = ((d > moment(now).add(3, 'days')) && (d.day() !== 6) && (now.diff(d, 'months') >= -1));
+                    date.selectable = ((d > moment(now).add(2, 'days')) && (d.day() !== 6) && (now.diff(d, 'months') >= -1));
+                });
+            }else if($view === 'hour'){
+                console.log('date=',$dates);
+                _.each($dates, function(date){
+                    date.selectable = false;
                 });
             }
         };
