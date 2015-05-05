@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('zestServicesApp')
-    .factory('BookingService', function Auth($location, $rootScope, $http, Customer, Cleaning, $cookieStore, $q, $localStorage, BookingType) {
+    .factory('BookingService', function Auth($location, $rootScope, $http, Customer, Cleaning, $cookieStore, $q, $localStorage) {
 
-        var bookingTypes = BookingType.query();
+        //var bookingTypes = BookingType.query();
 
         return {
             contains: function(customer) {

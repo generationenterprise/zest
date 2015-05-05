@@ -7,8 +7,8 @@ angular.module('zestServicesApp',  [
   'ngMessages',
   'ui.bootstrap',
   'angularNumberPicker',
-  'angular-bootstrap-select',
   'ngSanitize',
+  'ui.bootstrap.datetimepicker',
   'ui.router'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

@@ -2,10 +2,10 @@
     <div layout="row" layout-sm="column" layout-align="center" layout-margin layout-fill layout-padding>
         <div layout="column" layout-align="top">
             <div>
-                <h2>Home Cleaning</h2></div>
+                <h1>Home Cleaning</h1></div>
             <div ng-include="'app/book/checklists.html'" hide-sm></div>
         </div>
-        <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="booking-form-container">
+        <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="booking-form-container md-card-shadow">
             <div class="form-item">
                 <h-number value="cleaning.bedrooms" min="1" max="10" step="1" singular="bedroom" plural="bedrooms"></h-number>
             </div>
@@ -25,10 +25,14 @@
                 </div>
             </div>
             <div class="form-item">
+                Your cleaning will take approximately <b>{{recommendation()}}</b>.<br>
+                Don't worry. You're only charged for the actual lenght of cleaning.
+            </div>
+            <!--div class="form-item">
                 We recommend <b>{{recommendation()}}</b>
                 <p class="comment">It's better to book more time rather than less. You're only charged for the actual lenght of cleaning.</p>
                 <h-number value="booking.hours" min="2" max="10" step="0.5" singular="hour" plural="hours" change="booking.manual = true"></h-number>
-            </div>
+            </div-->
             <div class="form-item">
                 <div class="form-group">
                     <div class="input-group">

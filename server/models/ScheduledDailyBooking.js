@@ -1,15 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
-    var ScheduledOnceBooking = sequelize.define("ScheduledOnceBooking", {
+    var ScheduledDailyBooking = sequelize.define("ScheduledDailyBooking", {
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
-        },
-        date: {
-            type: DataTypes.DATE,
-            validate: {
-                min: 1,
-                max: 31
-            }
         },
         etime: {
             type: DataTypes.INTEGER,
@@ -29,11 +22,11 @@ module.exports = function(sequelize, DataTypes) {
         paranoid: true,
         classMethods: {
             associate: function(models) {
-                ScheduledOnceBooking.belongsTo(models.Booking, {
+                ScheduledDailyBooking.belongsTo(models.Booking, {
                     onDelete: 'RESTRICT',
                     onUpdate: 'RESTRICT'
                 });
-                ScheduledOnceBooking.belongsTo(models.Employee, {
+                ScheduledDailyBooking.belongsTo(models.Employee, {
                     onDelete: 'RESTRICT',
                     onUpdate: 'RESTRICT'
                 });
@@ -41,5 +34,5 @@ module.exports = function(sequelize, DataTypes) {
         }
     });
 
-    return ScheduledOnceBooking;
+    return ScheduledDailyBooking;
 };
