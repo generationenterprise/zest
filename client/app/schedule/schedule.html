@@ -24,10 +24,10 @@
         <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="schedule-form-container md-card-shadow" ng-if="!loading">
             <div class="form-item full-width">
                 <div class="btn-group" tyle="width:100%">
-                    <label class="btn btn-primary" ng-model="frequency" btn-radio="1" style="width:20%" ng-change="setFrequency(1)">Once</label>
-                    <label class="btn btn-primary" ng-model="frequency" btn-radio="3" style="width:25%" ng-change="setFrequency(3)">Weekly</label>
-                    <label class="btn btn-primary" ng-model="frequency" btn-radio="4" style="width:30%" ng-change="setFrequency(4)">Bi-Monthly</label>
-                    <label class="btn btn-primary" ng-model="frequency" btn-radio="5" style="width:25%" ng-change="setFrequency(5)">Monthly</label>
+                    <label class="btn btn-primary" ng-model="frequency" btn-radio="1" style="width:20%" ng-change="setFrequency('once')">Once</label>
+                    <label class="btn btn-primary" ng-model="frequency" btn-radio="2" style="width:25%" ng-change="setFrequency('weekly')">Weekly</label>
+                    <label class="btn btn-primary" ng-model="frequency" btn-radio="3" style="width:30%" ng-change="setFrequency('bi-monthly')">Bi-Monthly</label>
+                    <label class="btn btn-primary" ng-model="frequency" btn-radio="4" style="width:25%" ng-change="setFrequency('monthly')">Monthly</label>
                 </div>
             </div>
             <datetimepicker data-datetimepicker-config="dateTimeConfig"
@@ -53,8 +53,8 @@
             </div-->
             <div class="form-item full-width">
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="frequency.description" placeholder="{{describeFrequency()}}" disabled>
-                    <br>
+                    <b>{{describeFrequency()}}</b>
+                    <br><br>
                     <input type="text" class="form-control" ng-model="customer.address" placeholder="Street Address">
                     <br>
                     <input type="text" class="form-control" ng-model="customer.city" placeholder="City">

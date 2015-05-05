@@ -18,9 +18,10 @@ angular.module('zestServicesApp')
 
         $scope.setFrequency = function(val) {
             $scope.frequencySelected = _.findWhere($scope.frequencies, {
-                id: val
+                name: val
             });
         };
+        $scope.setFrequency('once');;
 
         $scope.booking = Booking.get({
             id: BookingService.getCurrentBookingId()
@@ -64,14 +65,6 @@ angular.module('zestServicesApp')
 
         };
 
-        $scope.describeFrequency = function() {
-            if (!$scope.dateTimePicked){
-                return '...';
-            }else {
-                return $scope.dateTimePicked;
-            }
-        };
-
         $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate) {
             var now = moment();
             if ($view === 'month') {
@@ -89,9 +82,6 @@ angular.module('zestServicesApp')
                 });
             }else if($view === 'hour'){
                 console.log('date=',$dates);
-                _.each($dates, function(date){
-                    date.selectable = false;
-                });
             }
         };
 
@@ -105,8 +95,25 @@ angular.module('zestServicesApp')
             minuteStep: 30
         };
 
+        $scope.describeFrequency = function(){
+            if(!$scope.dateTimePicked){
+                return '...'
+            }
+            console.log('fq=',$scope.frequencySelected.name);
+            var dtp = moment($scope.dateTimePicked);
+            if($scope.frequencySelected.name === 'once'){
+                return 'Once, on '+dtp.format('dddd, MMMM Do YYYY, HH:mm');
+            }else if($scope.frequencySelected.name === 'weekly'){
+                return 'Weekly on '+dtp.format('dddd')+'s at '+dtp.format('HH:mm');
+            }else if('bi-monthly'){
+                return 'Bi-Monthly, 1st and 3rd '+dtp.format('dddd')+'s ~'+dtp.format('HH:mm');
+            }else if('monthly'){
+                return 'Monthly, 1st '+dtp.format('dddd')+' ~'+dtp.format('HH:mm');
+            }
+        }
+
         var isValidDateTime = function() {
-            return $scope.booking.date !== 'Date' && $scope.booking.time !== 'Time';
+            return $scope.dateTimePicked;
         };
 
         var isValidAddress = function() {
