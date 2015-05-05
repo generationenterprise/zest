@@ -9,12 +9,18 @@ angular.module('zestServicesApp')
                 controller: 'ScheduleCtrl'
             });
     })
-    .controller('ScheduleCtrl', function($scope, $state, BookingService, Booking, Frequency, Customer, $q) {
+    .controller('ScheduleCtrl', function($scope, $state, BookingService, SchedulingService, Booking, Frequency, Customer, $q) {
 
         $scope.loading = true;
         $scope.submitting = false;
 
         $scope.frequency = 1;
+
+        $scope.setFrequency = function(val) {
+            $scope.frequencySelected = _.findWhere($scope.frequencies, {
+                id: val
+            });
+        };
 
         $scope.booking = Booking.get({
             id: BookingService.getCurrentBookingId()
@@ -26,49 +32,63 @@ angular.module('zestServicesApp')
             $scope.booking.date = 'Date';
             $scope.booking.time = 'Time';
 
+
             $scope.booking.total = function() {
                 var extras = 0;
                 if ($scope.booking.Cleaning.Extras) {
                     extras = _.sum(_.pluck($scope.booking.Cleaning.Extras, 'rate'));
+                    _.each($scope.booking.Cleaning.Extras, function(extra) {
+                        extra.rate = parseInt(extra.rate);
+                    });
                 }
-                return ($scope.booking.hours * $scope.booking.frequency.rate) + extras;
+                return ($scope.booking.hours * $scope.frequencySelected.rate) + extras;
             };
 
             $scope.frequencies = Frequency.query(function(frequencies) {
                 _.each(frequencies, function(frequency) {
                     frequency.label = frequency.description + ' (₦' + frequency.rate + '/hr)';
                 });
-                $scope.booking.frequency = frequencies[1];
                 $scope.frequencies = frequencies;
+                $scope.frequencySelected = $scope.frequencies[0];
+            });
+
+            var reqs = [$scope.frequencies, SchedulingService.fetchOpenings($scope.booking.hours)];
+
+            $q.all(reqs).then(function(resps) {
+                console.log('dates=', resps[1]);
                 $scope.loading = false;
             });
         });
 
-        $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate){
+        $scope.describeFrequency = function() {
+            if (!$scope.dateTimePicked){
+                return '...';
+            }else {
+                return $scope.dateTimePicked;
+            }
+        };
+
+        $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate) {
             var now = moment();
-            console.log('v=',$view);
-            console.log('d=', $dates);
-            console.log('l=', $leftDate);
-            console.log('u=', $upDate);
-            console.log('r=', $rightDate);
-            if($view === 'month'){
+            if ($view === 'month') {
                 $leftDate.selectable = false;
                 $upDate.selectable = false;
                 $rightDate.selectable = false;
-                _.each($dates, function(date){
+                _.each($dates, function(date) {
                     var m = moment(date.utcDateValue).month();
-                    date.selectable =  (m >= now.month()-1 &&  m <= now.month()+1);
+                    date.selectable = (m >= now.month() - 1 && m <= now.month() + 1);
                 });
-            }else if($view === 'day'){
-                _.each($dates, function(date){
+            } else if ($view === 'day') {
+                _.each($dates, function(date) {
                     var d = moment(date.utcDateValue);
-                    date.selectable =  ((d > moment(now).add(3,'days')) && (d.day() !== 6) && (now.diff(d, 'months') >= -1));
+                    date.selectable = ((d > moment(now).add(3, 'days')) && (d.day() !== 6) && (now.diff(d, 'months') >= -1));
                 });
             }
         };
 
-        $scope.onSetTime = function(date){
-            console.log('s.d=',date);
+        $scope.onSetTime = function(newDate, oldDate) {
+            console.log('onsettime=>',newDate);
+            $scope.dateTimePicked = newDate;
         };
 
         $scope.dateTimeConfig = {
