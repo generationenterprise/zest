@@ -102,13 +102,13 @@ angular.module('zestServicesApp')
             console.log('fq=',$scope.frequencySelected.name);
             var dtp = moment($scope.dateTimePicked);
             if($scope.frequencySelected.name === 'once'){
-                return 'Once, on '+dtp.format('dddd, MMMM Do YYYY, HH:mm');
+                return dtp.format('dddd, MMMM Do YYYY, HH:mm');
             }else if($scope.frequencySelected.name === 'weekly'){
-                return 'Weekly on '+dtp.format('dddd')+'s at '+dtp.format('HH:mm');
+                return dtp.format('dddd')+'s at around '+dtp.format('HH:mm');
             }else if('bi-monthly'){
-                return 'Bi-Monthly, 1st and 3rd '+dtp.format('dddd')+'s ~'+dtp.format('HH:mm');
+                return '1st and 3rd '+dtp.format('dddd')+'s at around '+dtp.format('HH:mm');
             }else if('monthly'){
-                return 'Monthly, 1st '+dtp.format('dddd')+' ~'+dtp.format('HH:mm');
+                return '1st '+dtp.format('dddd')+'s at around '+dtp.format('HH:mm');
             }
         }
 
