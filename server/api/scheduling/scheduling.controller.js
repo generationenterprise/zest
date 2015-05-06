@@ -86,7 +86,7 @@ exports.index = function(req, res) {
 
 
 
-    db.sequelize.query('SELECT id, nickName FROM Employees WHERE deletedAt IS NULL').then(function(employees) {
+    db.sequelize.query('SELECT "id", "nickName" FROM "Employees" WHERE "deletedAt" IS NULL').then(function(employees) {
 
         var promises = [];
 
@@ -110,7 +110,7 @@ exports.index = function(req, res) {
 
     var removeScheduledOnceBookings = function(employee) {
         var deferred = Q.defer();
-        db.sequelize.query('SELECT * FROM ScheduledOnceBookings WHERE date >= \'' + start.format('YYYY/MM/DD') + '\' AND date < \'' + end.format('YYYY/MM/DD') + '\' AND EmployeeId = ' + employee.id).then(function(rows) {
+        db.sequelize.query('SELECT * FROM "ScheduledOnceBookings" WHERE "date" >= \'' + start.format('YYYY/MM/DD') + '\' AND "date" < \'' + end.format('YYYY/MM/DD') + '\' AND "EmployeeId" = ' + employee.id).then(function(rows) {
             _.each(rows[0], function(booking) {
                 var date = moment(booking.date).format("YYYY-MM-DD"),
                     etime = booking.etime,
@@ -127,7 +127,7 @@ exports.index = function(req, res) {
 
     var removeScheduledWeeklyBookings = function(employee) {
         var deferred = Q.defer();
-        db.sequelize.query('SELECT * FROM ScheduledWeeklyBookings WHERE EmployeeId = ' + employee.id).then(function(rows) {
+        db.sequelize.query('SELECT * FROM "ScheduledWeeklyBookings" WHERE "EmployeeId" = ' + employee.id).then(function(rows) {
             _.each(rows[0], function(booking) {
                 var runner = moment(start),
                     day = booking.day,
@@ -152,7 +152,7 @@ exports.index = function(req, res) {
 
     var removeScheduledMonthlyBookings = function(employee) {
         var deferred = Q.defer();
-        db.sequelize.query('SELECT * FROM ScheduledMonthlyBookings WHERE EmployeeId = ' + employee.id).then(function(rows) {
+        db.sequelize.query('SELECT * FROM "ScheduledMonthlyBookings" WHERE "EmployeeId" = ' + employee.id).then(function(rows) {
             _.each(rows[0], function(booking) {
                 var runner = moment(start).date(1),
                     week = booking.week,
@@ -178,7 +178,7 @@ exports.index = function(req, res) {
 
     var removeScheduledBiWeeklyBookings = function(employee) {
         var deferred = Q.defer();
-        db.sequelize.query('SELECT * FROM ScheduledBiWeeklyBookings WHERE EmployeeId = ' + employee.id).then(function(rows) {
+        db.sequelize.query('SELECT * FROM "ScheduledBiWeeklyBookings" WHERE "EmployeeId" = ' + employee.id).then(function(rows) {
             _.each(rows[0], function(booking) {
                 var runner = moment(start).date(1),
                     week = booking.week,
