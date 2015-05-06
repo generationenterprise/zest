@@ -39,38 +39,32 @@ module.exports = function(db) {
     // --------------  Extras
     db.Extra.create({
         name: 'laundry',
-        icon: 'laundry.png',
+        icon: 'circle_laundry.png',
         rate: 5,
         description: 'Laundry Wash & Dry'
     });
     db.Extra.create({
         name: 'fridge',
-        icon: 'fridge.png',
+        icon: 'circle_fridge.png',
         rate: 15,
         description: 'Inside Fridge'
     });
     db.Extra.create({
         name: 'oven',
-        icon: 'oven.png',
+        icon: 'circle_oven.png',
         rate: 25,
         description: 'Inside Oven'
     });
     db.Extra.create({
         name: 'cabinets',
-        icon: 'cabinets.png',
+        icon: 'circle_cabinets.png',
         rate: 35,
         description: 'Inside Cabinets'
     });
     db.Extra.create({
         name: 'windows',
-        icon: 'windows.png',
+        icon: 'circle_windows.png',
         rate: 45,
         description: 'Interior Windows'
-    });
-    db.Extra.create({
-        name: 'walls',
-        icon: 'walls.png',
-        rate: 55,
-        description: 'Interior Walls'
     });
 };
