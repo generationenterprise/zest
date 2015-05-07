@@ -2,7 +2,7 @@ module.exports = function(db) {
     // --------------  Employees
     db.Employee.create({
         nickName: 'Sam',
-        active: true
+        active: false
     });
     db.Employee.create({
         nickName: 'Liz',
@@ -14,7 +14,7 @@ module.exports = function(db) {
     });
     db.Employee.create({
         nickName: 'Bunmi',
-        active: true
+        active: false
     });
     // --------------  Customer
     for (var i = 0; i < 7; i++) {

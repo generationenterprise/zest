@@ -7,16 +7,10 @@ angular.module('zestServicesApp')
 
         return {
             fetchOpenings: function(hours) {
-                var deferred = $q.defer(),
-                	reqs = [],
-                	now = moment();
+                var deferred = $q.defer();
 
-                reqs.push($http.get('/api/scheduling/'+now.year()+'/'+(now.month()+1)+'/'+hours));
-                reqs.push($http.get('/api/scheduling/'+now.year()+'/'+(now.month()+2)+'/'+hours));
-
-                $q.all(reqs).then(function(resps){
-                	var months = _.pluck(resps,'data');
-                	deferred.resolve(months);
+                $http.get('/api/scheduling/openings/'+hours).then(function(resp){
+                	deferred.resolve(resp.data);
                 })
 
                 return deferred.promise;

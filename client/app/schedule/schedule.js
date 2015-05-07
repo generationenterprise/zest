@@ -51,20 +51,48 @@ angular.module('zestServicesApp')
                 $scope.frequencySelected = $scope.frequencies[0];
             });
 
-            var reqs = [$scope.frequencies, SchedulingService.fetchOpenings($scope.booking.hours)];
+            $scope.openings = SchedulingService.fetchOpenings($scope.booking.hours).then(function(openings) {
+                $scope.openings = openings;
+            });
+
+            var reqs = [$scope.frequencies, $scope.openings];
 
             $q.all(reqs).then(function(resps) {
-                $scope.months = parseMonths(resps);
                 $scope.loading = false;
             });
         });
 
-        $scope.parseMonths = function(resps){
-            console.log('resps=',resps);
+        $scope.parseMonths = function(resps) {
+            console.log('resps=', resps);
         };
 
         $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate) {
             var now = moment();
+            var DISPLAY_MAP = {
+                "8:00 AM": 800,
+                "8:30 AM": 850,
+                "9:00 AM": 900,
+                "9:30 AM": 950,
+                "10:00 AM": 1000,
+                "10:30 AM": 1050,
+                "11:00 AM": 1100,
+                "11:30 AM": 1150,
+                "12:00 PM": 1200,
+                "12:30 PM": 1250,
+                "1:00 PM": 1300,
+                "1:30 PM": 1350,
+                "2:00 PM": 1400,
+                "2:30 PM": 1450,
+                "3:00 PM": 1500,
+                "3:30 PM": 1550,
+                "4:00 PM": 1600,
+                "4:30 PM": 1650,
+                "5:00 PM": 1700,
+                "5:30 PM": 1750,
+                "6:00 PM": 1800,
+                "6:30 PM": 1850
+            };
+
             if ($view === 'month') {
                 $leftDate.selectable = false;
                 $upDate.selectable = false;
@@ -78,13 +106,33 @@ angular.module('zestServicesApp')
                     var d = moment(date.utcDateValue);
                     date.selectable = ((d > moment(now).add(2, 'days')) && (d.day() !== 6) && (now.diff(d, 'months') >= -1));
                 });
-            }else if($view === 'hour'){
-                console.log('date=',$dates);
+            } else if ($view === 'hour') {
+                _.each($dates, function(date) {
+                    var d = new Date();
+                    d.setTime(date.utcDateValue);
+                    d = moment(d);
+
+                    var dt = d.format('YYYY-MM-DD');
+                    var ctime = DISPLAY_MAP[date.display];
+
+                    date.selectable = $scope.openings[dt] && (!_.isEmpty($scope.openings[dt][(ctime - 50)]) || !_.isEmpty($scope.openings[dt][ctime]));                    
+                });
+            }else if($view === 'minute'){
+                _.each($dates, function(date) {
+                    var d = new Date();
+                    d.setTime(date.utcDateValue);
+                    d = moment(d);
+
+                    var dt = d.format('YYYY-MM-DD');
+                    var ctime = DISPLAY_MAP[date.display];
+
+                    date.selectable = $scope.openings[dt] && !_.isEmpty($scope.openings[dt][(ctime - 50)]);
+                });
             }
         };
 
         $scope.onSetTime = function(newDate, oldDate) {
-            console.log('onsettime=>',newDate);
+            console.log('onsettime=>', newDate);
             $scope.dateTimePicked = newDate;
         };
 
@@ -93,19 +141,19 @@ angular.module('zestServicesApp')
             minuteStep: 30
         };
 
-        $scope.describeFrequency = function(){
-            if(!$scope.dateTimePicked){
+        $scope.describeFrequency = function() {
+            if (!$scope.dateTimePicked) {
                 return '...'
             }
             var dtp = moment($scope.dateTimePicked);
-            if($scope.frequencySelected.name === 'once'){
+            if ($scope.frequencySelected.name === 'once') {
                 return dtp.format('dddd, MMMM Do YYYY, HH:mm');
-            }else if($scope.frequencySelected.name === 'weekly'){
-                return dtp.format('dddd')+'s at around '+dtp.format('HH:mm');
-            }else if('bi-monthly'){
-                return '1st and 3rd '+dtp.format('dddd')+'s at around '+dtp.format('HH:mm');
-            }else if('monthly'){
-                return '1st '+dtp.format('dddd')+'s at around '+dtp.format('HH:mm');
+            } else if ($scope.frequencySelected.name === 'weekly') {
+                return dtp.format('dddd') + 's at around ' + dtp.format('HH:mm');
+            } else if ('bi-monthly') {
+                return '1st and 3rd ' + dtp.format('dddd') + 's at around ' + dtp.format('HH:mm');
+            } else if ('monthly') {
+                return '1st ' + dtp.format('dddd') + 's at around ' + dtp.format('HH:mm');
             }
         }
 
