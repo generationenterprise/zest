@@ -108,3 +108,12 @@ footer{
     background: #233140;
     color: #fff;
 }
+
+@media screen and (max-width: 768px){
+    #banner {
+        background: url(../../assets/images/living-room-900x509.jpg) no-repeat;
+    }
+    .hero-unit{
+        height: 500px;
+    }
+}

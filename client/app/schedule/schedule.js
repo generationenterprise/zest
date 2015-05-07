@@ -30,8 +30,6 @@ angular.module('zestServicesApp')
             $scope.customer = booking.Customer;
 
             $scope.booking = booking;
-            $scope.booking.date = 'Date';
-            $scope.booking.time = 'Time';
 
 
             $scope.booking.total = function() {
@@ -56,13 +54,13 @@ angular.module('zestServicesApp')
             var reqs = [$scope.frequencies, SchedulingService.fetchOpenings($scope.booking.hours)];
 
             $q.all(reqs).then(function(resps) {
-                $scope.months = resps[1];
+                $scope.months = parseMonths(resps);
                 $scope.loading = false;
             });
         });
 
-        $scope.parseMonths = function(openings){
-
+        $scope.parseMonths = function(resps){
+            console.log('resps=',resps);
         };
 
         $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate) {
@@ -99,7 +97,6 @@ angular.module('zestServicesApp')
             if(!$scope.dateTimePicked){
                 return '...'
             }
-            console.log('fq=',$scope.frequencySelected.name);
             var dtp = moment($scope.dateTimePicked);
             if($scope.frequencySelected.name === 'once'){
                 return dtp.format('dddd, MMMM Do YYYY, HH:mm');
