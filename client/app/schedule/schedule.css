@@ -42,3 +42,17 @@
     width: 320px;
     height: 300px;
 }
+
+.hour.disabled, .minute.disabled{
+    opacity:0.4;
+}
+
+.month.active, .hour.active, .day.active, .minute.active, .datetimepicker table tr td.active.active, .datetimepicker table tr td span.active.active{
+    background:#2c3e50;
+    font-weight: bold;
+    color: #fba819;
+}
+
+.datetimepicker table tr td.active.active:hover, .datetimepicker table tr td span.active.active:hover{
+    background: #2c3e50;
+}

@@ -116,6 +116,7 @@ angular.module('zestServicesApp')
                     var ctime = DISPLAY_MAP[date.display];
 
                     date.selectable = $scope.openings[dt] && (!_.isEmpty($scope.openings[dt][(ctime - 50)]) || !_.isEmpty($scope.openings[dt][ctime]));                    
+
                 });
             }else if($view === 'minute'){
                 _.each($dates, function(date) {
@@ -127,6 +128,7 @@ angular.module('zestServicesApp')
                     var ctime = DISPLAY_MAP[date.display];
 
                     date.selectable = $scope.openings[dt] && !_.isEmpty($scope.openings[dt][(ctime - 50)]);
+
                 });
             }
         };
@@ -149,11 +151,11 @@ angular.module('zestServicesApp')
             if ($scope.frequencySelected.name === 'once') {
                 return dtp.format('dddd, MMMM Do YYYY, HH:mm');
             } else if ($scope.frequencySelected.name === 'weekly') {
-                return dtp.format('dddd') + 's at around ' + dtp.format('HH:mm');
-            } else if ('bi-monthly') {
-                return '1st and 3rd ' + dtp.format('dddd') + 's at around ' + dtp.format('HH:mm');
-            } else if ('monthly') {
-                return '1st ' + dtp.format('dddd') + 's at around ' + dtp.format('HH:mm');
+                return 'Every '+dtp.format('dddd') + ' at ' + dtp.format('HH:mm');
+            } else if ($scope.frequencySelected.name === 'bi-monthly') {
+                return '1st and 3rd ' + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
+            } else if ($scope.frequencySelected.name === 'monthly') {
+                return '1st ' + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
             }
         }
 
