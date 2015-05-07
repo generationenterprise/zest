@@ -8,14 +8,17 @@ var db = require('../../models'),
 /**
  * Given the {YEAR} {MONTH} and {HOURS} this endpoint returns all openings in {MONTH} for bookings of {HOURS} long.
  */
-exports.index = function(req, res) {
-    var YEAR = req.params.year,
-        MONTH = (req.params.month - 1),
-        HOURS = (req.params.hours % 1 === 0) ? req.params.hours : Math.floor(req.params.hours) + 0.5;
+var findAllOpenings = function(YEAR, MONTH, HOURS) {
+    var deferred = Q.defer();
+
+    YEAR = parseInt(YEAR);
+    MONTH = parseInt(MONTH);
+    HOURS = (parseFloat(HOURS) % 1 === 0) ? HOURS : Math.floor(HOURS) + 0.5;
 
     var now = moment(),
         start = moment().year(YEAR).month(MONTH).date(1),
-        end;
+        end,
+        cancel = false;
 
     // If the target month is the current month then add the 3-day wait
     if (now.year() === start.year() && now.month() === start.month()) {
@@ -23,13 +26,15 @@ exports.index = function(req, res) {
         start.add(3, 'days');
         // If the actual start date falls in to next month then the target month has no openings
         if (start.month() !== now.month()) {
-            return res.json(200, []);
+            deferred.resolve({});
+            cancel = true;
         }
     }
 
     // If the start date falls in the past then return no openings
     if (start < now) {
-        return res.json(200, []);
+        deferred.resolve({});
+        cancel = true
     }
 
     // Set the end date to the beginning of next month
@@ -75,29 +80,14 @@ exports.index = function(req, res) {
     };
 
     var doBook = function(employee, type, date, schedule, etime, hours, week, day) {
-        console.log('=======> Booking out time for '+employee.nickName+' ' + type + ': ' + moment(date).format('YYYY-MM-DD (ddd)') + ', et=' + etime + ', h=' + hours + ', w=' + week + ', d=' + day);
+        //console.log('=======> Booking out time for ' + employee.nickName + ' ' + type + ': ' + moment(date).format('YYYY-MM-DD (ddd)') + ', et=' + etime + ', h=' + hours + ', w=' + week + ', d=' + day);
         if (isOpen(schedule, etime, hours)) {
             closeOpening(schedule, etime, hours)
-            console.log('+++++++> Done');
+                //console.log('+++++++> Done');
         } else {
-            console.log('xxxxxxx> Fail');
+            //console.log('xxxxxxx> Fail');
         }
     };
-
-
-
-    db.sequelize.query('SELECT "id", "nickName" FROM "Employees" WHERE "deletedAt" IS NULL').then(function(employees) {
-
-        var promises = [];
-
-        _.each(employees[0], function(employee) {
-            promises.push(findOpenings(employee));
-        });
-
-        Q.all(promises).then(function(results) {
-            res.json(results);
-        });
-    });
 
     var findOpenings = function(employee) {
         employee.openings = createMomthlyShchedule();
@@ -110,8 +100,17 @@ exports.index = function(req, res) {
 
     var removeScheduledOnceBookings = function(employee) {
         var deferred = Q.defer();
-        db.sequelize.query('SELECT * FROM "ScheduledOnceBookings" WHERE "date" >= \'' + start.format('YYYY/MM/DD') + '\' AND "date" < \'' + end.format('YYYY/MM/DD') + '\' AND "EmployeeId" = ' + employee.id).then(function(rows) {
-            _.each(rows[0], function(booking) {
+
+        db.ScheduledOnceBooking.findAll({
+            where: {
+                date: {
+                    gte: start.format('YYYY/MM/DD'),
+                    lt: end.format('YYYY/MM/DD')
+                },
+                EmployeeId: employee.id
+            }
+        }).then(function(bookings) {
+            _.each(bookings, function(booking) {
                 var date = moment(booking.date).format("YYYY-MM-DD"),
                     etime = booking.etime,
                     hours = booking.hours;
@@ -122,13 +121,19 @@ exports.index = function(req, res) {
             });
             deferred.resolve(employee);
         });
+
         return deferred.promise;
     };
 
     var removeScheduledWeeklyBookings = function(employee) {
         var deferred = Q.defer();
-        db.sequelize.query('SELECT * FROM "ScheduledWeeklyBookings" WHERE "EmployeeId" = ' + employee.id).then(function(rows) {
-            _.each(rows[0], function(booking) {
+
+        db.ScheduledWeeklyBooking.findAll({
+            where: {
+                EmployeeId: employee.id
+            }
+        }).then(function(bookings) {
+            _.each(bookings, function(booking) {
                 var runner = moment(start),
                     day = booking.day,
                     etime = booking.etime,
@@ -152,8 +157,13 @@ exports.index = function(req, res) {
 
     var removeScheduledMonthlyBookings = function(employee) {
         var deferred = Q.defer();
-        db.sequelize.query('SELECT * FROM "ScheduledMonthlyBookings" WHERE "EmployeeId" = ' + employee.id).then(function(rows) {
-            _.each(rows[0], function(booking) {
+
+        db.ScheduledMonthlyBooking.findAll({
+            where: {
+                EmployeeId: employee.id
+            }
+        }).then(function(bookings) {
+            _.each(bookings, function(booking) {
                 var runner = moment(start).date(1),
                     week = booking.week,
                     day = booking.day,
@@ -178,8 +188,13 @@ exports.index = function(req, res) {
 
     var removeScheduledBiWeeklyBookings = function(employee) {
         var deferred = Q.defer();
-        db.sequelize.query('SELECT * FROM "ScheduledBiWeeklyBookings" WHERE "EmployeeId" = ' + employee.id).then(function(rows) {
-            _.each(rows[0], function(booking) {
+
+        db.ScheduledBiWeeklyBooking.findAll({
+            where: {
+                EmployeeId: employee.id
+            }
+        }).then(function(bookings) {
+            _.each(bookings, function(booking) {
                 var runner = moment(start).date(1),
                     week = booking.week,
                     day = booking.day,
@@ -221,7 +236,61 @@ exports.index = function(req, res) {
             }
             employee.openings[date] = valids;
         });
-        return employee;
+        return {
+            id: employee.id,
+            openings: employee.openings
+        };
     };
 
+    if(!cancel){
+        db.Employee.findAll({
+            where: {
+                active: true
+            }
+        }).then(function(employees) {
+
+            var promises = [];
+
+            _.each(employees, function(employee) {
+                promises.push(findOpenings(employee));
+            });
+
+            Q.all(promises).then(function(results) {
+                var dates = {};
+                _.each(results, function(emp) {
+                    _.each(_.keys(emp.openings), function(date) {
+                        if (!dates[date]) {
+                            dates[date] = {};
+                        }
+                        _.each(emp.openings[date], function(etime) {
+                            if (!dates[date][etime]) {
+                                dates[date][etime] = [];
+                            }
+                            dates[date][etime].push(emp.id);
+                        });
+                    });
+                });
+                deferred.resolve(dates);
+            });
+        });
+    }
+
+    return deferred.promise;
+
 };
+
+exports.index = function(req, res) {
+    findAllOpenings(req.params.year, (req.params.month-1), req.params.hours).then(function(openings) {
+        res.json(200, openings);
+    });
+};
+
+exports.openings = function(req, res) {
+    var now = moment();
+    var thisMonth = findAllOpenings(now.year(), now.month(), req.params.hours);
+    var nextMonth = findAllOpenings(now.year(), now.month()+1, req.params.hours);
+
+    Q.all([thisMonth, nextMonth]).then(function(results){
+        res.json(200,_.assign(results[0],results[1]));
+    });
+}

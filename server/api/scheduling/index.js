@@ -7,5 +7,6 @@ var auth = require('../../auth/auth.service');
 var router = express.Router();
 
 router.get('/:year/:month/:hours', controller.index);
+router.get('/openings/:hours', controller.openings);
 
 module.exports = router;

@@ -1,5 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
     var Employee = sequelize.define("Employee", {
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
         nickName: {
             type: DataTypes.STRING,
             allowNull: false
