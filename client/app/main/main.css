@@ -2,6 +2,7 @@
     border-bottom: none;
     margin-top: -20px;
     background: url(../../assets/images/living-room-1280x808.jpg) no-repeat;
+    background-color: #bc893c;
 }
 
 #banner h1 {
@@ -87,7 +88,7 @@
     max-height: 147px;
     min-height: 147px;
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
 }
 
 h2.price {

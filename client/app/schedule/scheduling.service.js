@@ -14,6 +14,29 @@ angular.module('zestServicesApp')
                 })
 
                 return deferred.promise;
+            },
+
+            schedule: function(employeeId, booking, frequency, dtp, etime, week){
+                var deferred = $q.defer();
+
+                $http.post('/api/scheduling/complete', {
+                    frequencyName: frequency,
+                    CustomerId: booking.CustomerId,
+                    EmployeeId: employeeId,
+                    BookingId: booking.id,
+                    hours: booking.hours,
+                    date: dtp,
+                    etime: etime,
+                    week: week
+                }).
+                success(function(data) {
+                    deferred.resolve(data);
+                }).
+                error(function(err) {
+                    deferred.reject(err);
+                }.bind(this));
+
+                return deferred.promise;
             }
         };
     });

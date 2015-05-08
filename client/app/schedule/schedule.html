@@ -34,23 +34,6 @@
                             data-ng-model="dateTime" 
                             data-before-render="beforeRender($view, $dates, $leftDate, $upDate, $rightDate)"
                             data-on-set-time="onSetTime(newDate, oldDate)"></datetimepicker>
-            <!--div class="form-item full-width">
-                <select ng-model="booking.frequency" ng-options="frequency as frequency.label for frequency in frequencies track by frequency.id"></select>
-            </div>
-            <div class="form-item full-width">
-                <select class="width-48 pull-left" ng-model="booking.date">
-                    <option>Date</option>
-                    <option ng-repeat="date in dates">
-                        {{date | date:'EEE M/d'}}
-                    </option>
-                </select>
-                <select class="width-48 pull-right" ng-model="booking.time">
-                    <option>Time</option>
-                    <option ng-repeat="time in times">
-                        {{time | date:'HH:mm'}}
-                    </option>
-                </select>
-            </div-->
             <div class="form-item full-width">
                 <div class="form-group">
                     <b>{{describeFrequency()}}</b>

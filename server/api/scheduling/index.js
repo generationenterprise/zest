@@ -8,5 +8,7 @@ var router = express.Router();
 
 router.get('/:year/:month/:hours', controller.index);
 router.get('/openings/:hours', controller.openings);
+router.post('/complete', controller.complete);
+
 
 module.exports = router;

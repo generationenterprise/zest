@@ -1,4 +1,22 @@
 module.exports = function(db) {
+    // --------------  Employees
+    db.Employee.create({
+        nickName: 'Sam',
+        active: false
+    });
+    db.Employee.create({
+        nickName: 'Liz',
+        active: true
+    });
+    db.Employee.create({
+        nickName: 'Joe',
+        active: false
+    });
+    db.Employee.create({
+        nickName: 'Bunmi',
+        active: false
+    });
+    
     // --------------  Booking Types
     db.BookingType.create({
         name: 'cleaning',

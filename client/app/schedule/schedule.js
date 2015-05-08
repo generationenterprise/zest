@@ -134,7 +134,6 @@ angular.module('zestServicesApp')
         };
 
         $scope.onSetTime = function(newDate, oldDate) {
-            console.log('onsettime=>', newDate);
             $scope.dateTimePicked = newDate;
         };
 
@@ -153,9 +152,40 @@ angular.module('zestServicesApp')
             } else if ($scope.frequencySelected.name === 'weekly') {
                 return 'Every '+dtp.format('dddd') + ' at ' + dtp.format('HH:mm');
             } else if ($scope.frequencySelected.name === 'bi-monthly') {
-                return '1st and 3rd ' + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
+                var som = moment(dtp).date(1);
+                var week = 0;
+                for(;som.date() <= dtp.date(); som.add(1,'days')){
+                    if(som.day() === dtp.day()){
+                        week++;                  }
+                }
+                if(week === 1 || week === 3){
+                    $scope.week = 1;
+                    week = '1st and 3rd ';
+                }else{
+                    $scope.week = 2;
+                    week = '2nd and 4th ';
+                }
+                return week + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
             } else if ($scope.frequencySelected.name === 'monthly') {
-                return '1st ' + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
+                var som = moment(dtp).date(1);
+                var week = 0;
+                for(;som.date() <= dtp.date(); som.add(1,'days')){
+                    if(som.day() === dtp.day()){
+                        week++;                   }
+                }
+                $scope.week = week;
+                if(week === 1){
+                    week = '1st ';
+                }else if(week === 2){
+                    week = '2nd ';
+                }else if(week === 3){
+                    week = '3rd ';
+                }else if(week === 4){
+                    week = '4th ';
+                }else {
+                    week = 'Last ';
+                }
+                return week + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
             }
         }
 
@@ -207,15 +237,19 @@ angular.module('zestServicesApp')
         $scope.continue = function() {
             $scope.submitting = true;
             $scope.customer._id = $scope.customer.id;
-            $scope.booking._id = $scope.booking.id;
-            $scope.booking.time = 900;
-            $scope.booking.day = 'Monday';
+
+            var dtp = moment($scope.dateTimePicked);
+            
+            var chour = parseInt(dtp.format('HH')),
+                cmin = parseInt(dtp.format('mm'));
+            var etime = ((chour*100+((cmin === 30)? 50 : 0))-50);
+
+            var employeeId = $scope.openings[dtp.format("YYYY-MM-DD")][etime][0];
 
             var c = Customer.update($scope.customer),
-                b = Booking.update($scope.booking);
+                b = SchedulingService.schedule(employeeId, $scope.booking, $scope.frequencySelected.name, dtp, etime, $scope.week);
 
             $q.all([c, b]).then(function() {
-                console.log('all done');
                 $scope.submitting = false;
             });
 

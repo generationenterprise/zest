@@ -242,7 +242,7 @@ var findAllOpenings = function(YEAR, MONTH, HOURS) {
         };
     };
 
-    if(!cancel){
+    if (!cancel) {
         db.Employee.findAll({
             where: {
                 active: true
@@ -280,7 +280,7 @@ var findAllOpenings = function(YEAR, MONTH, HOURS) {
 };
 
 exports.index = function(req, res) {
-    findAllOpenings(req.params.year, (req.params.month-1), req.params.hours).then(function(openings) {
+    findAllOpenings(req.params.year, (req.params.month - 1), req.params.hours).then(function(openings) {
         res.json(200, openings);
     });
 };
@@ -288,9 +288,82 @@ exports.index = function(req, res) {
 exports.openings = function(req, res) {
     var now = moment();
     var thisMonth = findAllOpenings(now.year(), now.month(), req.params.hours);
-    var nextMonth = findAllOpenings(now.year(), now.month()+1, req.params.hours);
+    var nextMonth = findAllOpenings(now.year(), now.month() + 1, req.params.hours);
 
-    Q.all([thisMonth, nextMonth]).then(function(results){
-        res.json(200,_.assign(results[0],results[1]));
+    Q.all([thisMonth, nextMonth]).then(function(results) {
+        res.json(200, _.assign(results[0], results[1]));
     });
+}
+
+exports.complete = function(req, res) {
+    var frequencyName = req.body.frequencyName,
+        EmployeeId = req.body.EmployeeId,
+        CustomerId = req.body.CustomerId,
+        BookingId = req.body.BookingId,
+        hours = req.body.hours,
+        date = moment(req.body.date),
+        etime = req.body.etime,
+        week = req.body.week;
+
+    if (frequencyName === 'once') {
+        db.ScheduledOnceBooking.create({
+            EmployeeId: EmployeeId,
+            BookingId: BookingId,
+            CustomerId: CustomerId,
+            date: date,
+            etime: etime,
+            hours: hours
+        }).then(function(scheduledBooking) {
+            res.json(200, scheduledBooking);
+        });
+    }else if(frequencyName === 'daily'){
+        db.ScheduledDailyBooking.create({
+            EmployeeId: EmployeeId,
+            BookingId: BookingId,
+            CustomerId: CustomerId,
+            etime: etime,
+            hours: hours
+        }).then(function(scheduledBooking) {
+            res.json(200, scheduledBooking);
+        });
+    } else if(frequencyName === 'weekly'){
+        db.ScheduledWeeklyBooking.create({
+            EmployeeId: EmployeeId,
+            BookingId: BookingId,
+            CustomerId: CustomerId,
+            day: date.day(),
+            etime: etime,
+            hours: hours
+        }).then(function(scheduledBooking) {
+            res.json(200, scheduledBooking);
+        });
+    }else if(frequencyName === 'bi-weekly'){
+        db.ScheduledBiWeeklyBooking.create({
+            EmployeeId: EmployeeId,
+            BookingId: BookingId,
+            CustomerId: CustomerId,
+            week: week,
+            day: date.day(),
+            etime: etime,
+            hours: hours
+        }).then(function(scheduledBooking) {
+            res.json(200, scheduledBooking);
+        });
+
+    }else if(frequencyName === 'monthly'){
+        db.ScheduledMonthlyBooking.create({
+            EmployeeId: EmployeeId,
+            BookingId: BookingId,
+            CustomerId: CustomerId,
+            week: week,
+            day: date.day(),
+            etime: etime,
+            hours: hours
+        }).then(function(scheduledBooking) {
+            res.json(200, scheduledBooking);
+        });
+
+    }else{
+        res.json(400, {message: "Unknown frequencyName"});
+    }
 }
