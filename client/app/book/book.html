@@ -1,4 +1,40 @@
 <div class="container page">
+    <script type="text/ng-template" id="login-modal.html">
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" ng-model="customer.email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" ng-model="password" required>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="continue()">Continue</button>
+            <button class="btn btn-danger" ng-click="reset()">Reset Password</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="register-modal.html">
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" ng-model="customer.email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" ng-model="password" required>
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" name="password" class="form-control" ng-model="passwordConfirm" required>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="continue()">Continue</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
     <div layout="row" layout-sm="column" layout-align="center" layout-margin layout-fill layout-padding>
         <div layout="column" layout-align="top">
             <div>
@@ -12,7 +48,7 @@
             <div class="form-item">
                 <h-number value="cleaning.bathrooms" min="1" max="10" step="1" singular="bathroom" plural="bathrooms"></h-number>
             </div>
-            <div class="form-item"> 
+            <div class="form-item">
                 <div layout="row" layout-sm="row" layout-wrap flex class="extras" layout-align="center center">
                     <div class="extra-item" ng-if="extras.loading === true">
                         <span class="fa fa-spinner fa-spin"></span>
@@ -25,8 +61,8 @@
                 </div>
             </div>
             <div class="form-item">
-                Cleaning will take approximately <b>{{recommendation()}}</b>.<br>
-                Don't worry. You're only charged for the actual lenght of cleaning.
+                Cleaning will take approximately <b>{{recommendation()}}</b>.
+                <br> Don't worry. You're only charged for the actual lenght of cleaning.
             </div>
             <!--div class="form-item">
                 We recommend <b>{{recommendation()}}</b>

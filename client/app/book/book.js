@@ -9,7 +9,7 @@ angular.module('zestServicesApp')
                 controller: 'BookCtrl'
             });
     })
-    .controller('BookCtrl', function($scope, $state, BookingService, Extra) {
+    .controller('BookCtrl', function($scope, $state, BookingService, Extra, $modal) {
 
         $scope.submitting = false;
 
@@ -22,7 +22,6 @@ angular.module('zestServicesApp')
 
         $scope.booking = {
             BookingTypeId: 1,
-            FrequencyId: 1,
             hours: 2,
             active: true,
             paid: false
@@ -91,26 +90,86 @@ angular.module('zestServicesApp')
                 selected: true
             });
             BookingService.contains($scope.customer).then(function(data) {
-                console.log('customer=',data);
-                //if (!data) {
+                if (!data) {
                     console.log('new customer');
-                    var names = $scope.customer.fullName.split(' ');
-                    $scope.customer.lastName = names[names.length-1];
-                    $scope.customer.firstName = names.slice(0, names.length-1).join(' ');
-                    BookingService.register({
-                        customer: $scope.customer,
-                        booking: $scope.booking,
-                        cleaning: $scope.cleaning
-                    }).then(function(booking) {
-                        BookingService.setCurrentBookingId(booking.id);
-                        $state.go('schedule');
-                        $scope.submitting = true;
-                    }).catch(function() {
-                        // HANDLE ERROR
-                    });
-                /*} else {
+                    $scope.doRegister();
+
+                } else {
                     console.log('existing customer');
-                }*/
+                    $scope.doLogin();
+                }
             });
+        };
+
+        $scope.doRegister = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'register-modal.html',
+                controller: 'ModalRegisterCtrl',
+                resolve: {
+                    customer: function() {
+                        return $scope.customer;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(data) {
+
+                var names = $scope.customer.fullName.split(' ');
+                $scope.customer.lastName = names[names.length - 1];
+                $scope.customer.firstName = names.slice(0, names.length - 1).join(' ');
+
+                BookingService.register({
+                    customer: $scope.customer,
+                    booking: $scope.booking,
+                    cleaning: $scope.cleaning
+                }).then(function(booking) {
+                    BookingService.setCurrentBookingId(booking.id);
+                    $state.go('schedule');
+                    $scope.submitting = true;
+                });
+
+            }).finally(function() {
+                $scope.submitting = false;
+            });
+        };
+
+        $scope.doLogin = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'login-modal.html',
+                controller: 'ModalLoginCtrl',
+                resolve: {
+                    customer: function() {
+                        return $scope.customer;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(data) {
+
+            }).finally(function() {
+                $scope.submitting = false;
+            });
+        };
+
+    }).controller('ModalLoginCtrl', function($scope, $modalInstance, customer) {
+        $scope.customer = customer;
+
+        $scope.continue = function() {
+            $modalInstance.close($scope.customer);
+        };
+
+        $scope.reset = function() {
+            $modalInstance.dismiss('cancel');
+        };
+
+    }).controller('ModalRegisterCtrl', function($scope, $modalInstance, customer) {
+        $scope.customer = customer;
+
+        $scope.continue = function() {
+            $modalInstance.close($scope.customer);
+        };
+
+        $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
         };
     });

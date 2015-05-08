@@ -3,8 +3,6 @@
 angular.module('zestServicesApp')
     .factory('BookingService', function Auth($location, $rootScope, $http, Customer, Cleaning, $cookieStore, $q, $localStorage) {
 
-        //var bookingTypes = BookingType.query();
-
         return {
             contains: function(customer) {
                 var deferred = $q.defer();
