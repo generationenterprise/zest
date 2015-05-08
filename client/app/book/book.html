@@ -99,7 +99,7 @@
             <button type="button" class="btn btn-primary submit" disabled ng-if="submitting">
                 <span class="fa fa-spinner fa-spin"></span> Registering...
             </button>
-            <button type="button" class="btn btn-primary submit" ng-click="continue()" ng-disabled="validator.disable()" ng-if="!submitting">
+            <button type="button" class="btn btn-success submit" ng-click="continue()" ng-disabled="validator.disable()" ng-if="!submitting">
                 <span ng-if="!validator.disable()">Schedule</span>
                 <span ng-if="validator.disable()">{{validator.message()}}</span>
             </button>
