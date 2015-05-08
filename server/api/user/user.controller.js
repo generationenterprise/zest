@@ -46,7 +46,8 @@ exports.create = function(req, res, next) {
         };
         db.Customer.create(customerObject).then(function(customer) {
             res.json({
-                token: token
+                token: token,
+                CustomerId: customer.id
             });
         })
     });
