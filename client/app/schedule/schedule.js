@@ -151,7 +151,7 @@ angular.module('zestServicesApp')
                 return dtp.format('dddd, MMMM Do YYYY, HH:mm');
             } else if ($scope.frequencySelected.name === 'weekly') {
                 return 'Every '+dtp.format('dddd') + ' at ' + dtp.format('HH:mm');
-            } else if ($scope.frequencySelected.name === 'bi-monthly') {
+            } else if ($scope.frequencySelected.name === 'bi-weekly') {
                 var som = moment(dtp).date(1);
                 var week = 0;
                 for(;som.date() <= dtp.date(); som.add(1,'days')){
