@@ -12,6 +12,7 @@ angular.module('zestServicesApp')
         Auth.createUser({
           name: $scope.user.name,
           email: $scope.user.email,
+          phone: $scope.user.phone,
           password: $scope.user.password
         })
         .then( function() {

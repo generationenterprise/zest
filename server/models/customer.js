@@ -2,30 +2,23 @@ module.exports = function(sequelize, DataTypes) {
     var Customer = sequelize.define("Customer", {
         uid: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
-        username: {
+        email: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
+        },
+        mobilePhone: {
+            type: DataTypes.BIGINT,
+            allowNull: false
         },
         firstName: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        lastName: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
+        lastName: DataTypes.STRING,
         company: DataTypes.STRING,
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         homePhone: DataTypes.BIGINT,
-        mobilePhone: {
-            type: DataTypes.BIGINT,
-            allowNull: false
-        },
         address: DataTypes.TEXT,
         city: DataTypes.STRING,
         state: DataTypes.STRING,

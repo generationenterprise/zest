@@ -8,12 +8,30 @@
 
         <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted,
                                             'has-error': form.name.$invalid && submitted }">
-          <label>Name</label>
+          <label>Full Name</label>
 
           <input type="text" name="name" class="form-control" ng-model="user.name"
                  required/>
           <p class="help-block" ng-show="form.name.$error.required && submitted">
-            A name is required
+            A full name is required
+          </p>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-success': form.phone.$valid && submitted,
+                                            'has-error': form.phone.$invalid && submitted }">
+          <label>Mobile Phone</label>
+
+          <input type="phone" name="phone" class="form-control" ng-model="user.phone"
+                 required
+                 mongoose-error/>
+          <p class="help-block" ng-show="form.phone.$error.phone && submitted">
+            Doesn't look like a valid phone.
+          </p>
+          <p class="help-block" ng-show="form.phone.$error.required && submitted">
+            What's your phone number?
+          </p>
+          <p class="help-block" ng-show="form.phone.$error.mongoose">
+            {{ errors.phone }}
           </p>
         </div>
 
