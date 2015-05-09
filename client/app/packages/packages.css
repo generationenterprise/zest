@@ -1,8 +1,8 @@
 #banner-commercial {
     border-bottom: none;
     margin-top: -20px;
-    background: url(../../assets/images/office-1280x846.jpg) no-repeat;
-    background-color: #bc893c;
+    background: url(../../assets/images/office-1200x738.jpg) no-repeat;
+    background-color: #D8D8D8;
 }
 
 #banner-commercial h1 {
@@ -16,7 +16,6 @@
     font-size: 20px;
     width: 250px;
     font-weight: normal;
-    xbackground: #fba819;
 }
 
 .hero-unit {
