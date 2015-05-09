@@ -44,8 +44,8 @@ module.exports = function(db) {
         rate: 40
     });
     db.Frequency.create({
-        name: 'bi-monthly',
-        description: 'Bi-Monthly',
+        name: 'bi-weekly',
+        description: 'Bi-Weekly',
         rate: 45
     });
     db.Frequency.create({

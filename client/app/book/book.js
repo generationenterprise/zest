@@ -111,7 +111,6 @@ angular.module('zestServicesApp')
             });
             if (Auth.isLoggedIn()) {
                 $scope.doChoose();
-
             } else {
                 BookingService.contains($scope.customer).then(function(data) {
                     if (!data) {
@@ -139,6 +138,20 @@ angular.module('zestServicesApp')
             });
 
             modalInstance.result.then(function(data) {
+
+                var names = $scope.customer.fullName.split(' ');
+                $scope.customer.id = Auth.getCustomerId();
+                $scope.customer.firstName = names.slice(0, names.length - 1).join(' ');
+                $scope.customer.lastName = names[names.length - 1];
+
+                BookingService.register({
+                    customer: $scope.customer,
+                    booking: $scope.booking,
+                    cleaning: $scope.cleaning
+                }).then(function(booking) {
+                    BookingService.setCurrentBookingId(booking.id);
+                    $state.go('schedule');
+                });
 
             }).finally(function() {
                 $scope.submitting = false;

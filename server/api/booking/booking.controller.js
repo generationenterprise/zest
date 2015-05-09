@@ -5,49 +5,59 @@ var db = require('../../models'),
     Q = require('q');
 
 exports.index = function(req, res) {
-    db.Booking.findAll({
-    }).then(function(bookings) {
+    db.Booking.findAll({}).then(function(bookings) {
         res.json(200, bookings);
     });
 };
 
 exports.register = function(req, res) {
-    // Create customer
-    var customerQ = db.Customer.create(req.body.customer).then(function(customer) {
-        req.body.booking.CustomerId = customer.id;
-        // Create booking
-        var bookingQ = db.Booking.create(req.body.booking).then(function(booking) {
-            req.body.cleaning.BookingId = booking.id;
-            // Create cleaning
-            var cleaningQ = db.Cleaning.create(req.body.cleaning).then(function(cleaning) {
-                var traillingQs = [];
-                // Set pets
-                if (req.body.cleaning.pets) {
-                    req.body.cleaning.pets.CleaningId = cleaning.id;
-                    var petQ = db.Pet.create(req.body.cleaning.pets);
-                    traillingQs.push(petQ);
-                }
-                // Set extras
-                if (req.body.cleaning.extras) {
-                    var extras = [];
-                    _.each(req.body.cleaning.extras, function(extra) {
-                        var x = db.Extra.build(extra);
-                        x.CleaningId = cleaning.id;
-                        extras.push(x);
-                    })
-                    var extraQ = cleaning.setExtras(extras);
-                    traillingQs.push(extraQ);
-                }
-                // Trainling promisses
-                Q.all(traillingQs).then(function(qs) {
-                    return res.json(200, booking);
-                });
-
-            });
-        }).catch(function(err) {
-            return res.json(500, err);
+    if (!req.body.customer.id) {
+        return res.json(400, {
+            message: "CustomerID required"
         });
+    }
+    // Find customer
+    db.Customer.find(req.body.customer.id).then(function(customer) {
+        // Update customer
+        customer.updateAttributes(req.body).then(function(customer) {
+            // Create booking
+            req.body.booking.CustomerId = customer.id;
+            var bookingQ = db.Booking.create(req.body.booking).then(function(booking) {
+                req.body.cleaning.BookingId = booking.id;
+                // Create cleaning
+                var cleaningQ = db.Cleaning.create(req.body.cleaning).then(function(cleaning) {
+                    var traillingQs = [];
+                    // Set pets
+                    if (req.body.cleaning.pets) {
+                        req.body.cleaning.pets.CleaningId = cleaning.id;
+                        var petQ = db.Pet.create(req.body.cleaning.pets);
+                        traillingQs.push(petQ);
+                    }
+                    // Set extras
+                    if (req.body.cleaning.extras) {
+                        var extras = [];
+                        _.each(req.body.cleaning.extras, function(extra) {
+                            var x = db.Extra.build(extra);
+                            x.CleaningId = cleaning.id;
+                            extras.push(x);
+                        })
+                        var extraQ = cleaning.setExtras(extras);
+                        traillingQs.push(extraQ);
+                    }
+                    // Trainling promisses
+                    Q.all(traillingQs).then(function(qs) {
+                        return res.json(200, booking);
+                    });
+
+                });
+            }).catch(function(err) {
+                return res.json(500, err);
+            });
+        }).error(function(error) {
+            return res.json(500, error);
+        })
     });
+
 };
 
 exports.show = function(req, res) {
