@@ -1,8 +1,10 @@
 <script type="text/ng-template" id="login-modal.html">
     <div class="modal-body">
         <div ng-if="error" class="alert alert-warning" role="alert">{{error}}</div>
+        <div ng-if="didReset" class="alert alert-success" role="alert">Check your email for the reset code.</div>
         <div class="form-group">
-            <label>Password</label>
+            <label ng-if="!didReset">Password</label>
+            <label ng-if="didReset">Reset Code</label>
             <input type="password" name="password" class="form-control" ng-model="password" required>
         </div>
     </div>
@@ -43,7 +45,10 @@
                 <h1>Home Cleaning</h1></div>
             <div ng-include="'app/book/checklists.html'" hide-sm></div>
         </div>
-        <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="booking-form-container md-card-shadow">
+        <div ng-if="loading" layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="booking-form-container md-card-shadow">
+            <span class="fa fa-spinner fa-spin"></span>
+        </div>
+        <div ng-if="!loading" layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="booking-form-container md-card-shadow">
             <div class="form-item">
                 <h-number value="cleaning.bedrooms" min="1" max="10" step="1" singular="bedroom" plural="bedrooms"></h-number>
             </div>
@@ -64,7 +69,8 @@
                 </div>
             </div>
             <div class="form-item">
-                Cleaning will take approximately <b>{{recommendation()}}</b>.<br>
+                Cleaning will take approximately <b>{{recommendation()}}</b>.
+                <br>
                 <br> Don't worry. You're only charged for the actual lenght of cleaning.
             </div>
             <!--div class="form-item">

@@ -9,16 +9,27 @@ angular.module('zestServicesApp')
                 controller: 'BookCtrl'
             });
     })
-    .controller('BookCtrl', function($scope, $state, BookingService, Extra, $modal, Auth, $localStorage) {
+    .controller('BookCtrl', function($scope, $state, BookingService, Extra, $modal, Auth, $localStorage, Customer, $q) {
 
         $scope.submitting = false;
+        $scope.loading = true;
 
-        // TODO: Remove all
         $scope.customer = {
-            email: 'brices@gmail.com',
-            fullName: 'Sam Brice',
-            mobilePhone: '2345678900'
+            email: '',
+            fullName: '',
+            mobilePhone: ''
         };
+
+        var loaders = [];
+
+        if (Auth.isLoggedIn()) {
+            $scope.customer = Customer.get({
+                id: Auth.getCustomerId()
+            },function(customer){
+                $scope.customer.fullName = customer.firstName+ ' '+customer.lastName;
+            });
+            loaders.push($scope.customer);
+        }
 
         $scope.booking = {
             BookingTypeId: 1,
@@ -35,8 +46,14 @@ angular.module('zestServicesApp')
         $scope.extras = {
             loading: true
         };
-        Extra.query(function(extras) {
+        var extras = Extra.query(function(extras) {
             $scope.extras = extras;
+        });
+
+        loaders.push(extras);
+
+        $q.all(loaders).then(function(resps){
+            $scope.loading = false;
         });
 
         $scope.recommendedHours = function() {
@@ -58,11 +75,14 @@ angular.module('zestServicesApp')
         };
 
         var isValidFullName = function() {
-            return $scope.customer.fullName.split(' ').length >= 2;
+            return $scope.customer.fullName && $scope.customer.fullName.split(' ').length >= 2;
         };
 
         var isValidMobile = function() {
-            return $scope.customer.mobilePhone.replace(/\D/g, '').length >= 10;
+            if(_.isString($scope.customer.mobilePhone)){
+                $scope.customer.mobilePhone = $scope.customer.mobilePhone.replace(/\D/g, '');
+            }
+            return $scope.customer.mobilePhone && (''+$scope.customer.mobilePhone).length >= 10;
         };
 
         $scope.validator = {
@@ -198,7 +218,10 @@ angular.module('zestServicesApp')
         };
 
         $scope.reset = function() {
-            $modalInstance.dismiss('cancel');
+            $scope.error = "";
+            Auth.resetPassword(customer.email).then(function(data) {
+                $scope.didReset = true;
+            });
         };
 
     }).controller('ModalRegisterCtrl', function($scope, $modalInstance, customer, Auth) {
@@ -223,8 +246,8 @@ angular.module('zestServicesApp')
         $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
         };
+
     }).controller('ModalChooseCtrl', function($scope, $modalInstance, customer, $state) {
-        $scope.customer = customer;
 
         $scope.createNew = function() {
             $modalInstance.close(customer);
@@ -232,10 +255,6 @@ angular.module('zestServicesApp')
 
         $scope.modifyExisting = function() {
             $state.go('bookings');
-            $modalInstance.dismiss('cancel');
-        };
-
-        $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
         };
     });

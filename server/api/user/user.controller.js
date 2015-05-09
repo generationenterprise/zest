@@ -118,3 +118,17 @@ exports.me = function(req, res, next) {
 exports.authCallback = function(req, res, next) {
     res.redirect('/');
 };
+
+/**
+ * Resets the password for a given email/username
+ */
+exports.reset = function(req, res, next) {
+    var email = req.body.email;
+    User.findOne({
+        email: email
+    }, '-salt -hashedPassword', function(err, user) { 
+        if (err) return next(err);
+        if (!user) return res.json(401);
+        res.json(user);
+    });
+};

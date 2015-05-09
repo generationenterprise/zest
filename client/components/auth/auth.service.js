@@ -26,6 +26,7 @@ angular.module('zestServicesApp')
         }).
         success(function(data) {
           $cookieStore.put('token', data.token);
+          $cookieStore.put('CustomerId', data.CustomerId);
           currentUser = User.get();
           deferred.resolve(data);
           return cb();
@@ -46,6 +47,7 @@ angular.module('zestServicesApp')
        */
       logout: function() {
         $cookieStore.remove('token');
+        $cookieStore.remove('CustomerId');
         currentUser = {};
       },
 
@@ -62,6 +64,7 @@ angular.module('zestServicesApp')
         return User.save(user,
           function(data) {
             $cookieStore.put('token', data.token);
+            $cookieStore.put('CustomerId', data.CustomerId);
             currentUser = User.get();
             return cb(user);
           },
@@ -141,6 +144,32 @@ angular.module('zestServicesApp')
        */
       getToken: function() {
         return $cookieStore.get('token');
+      },
+
+      /**
+       * Get Customer Id
+       */
+      getCustomerId: function() {
+        return $cookieStore.get('CustomerId');
+      },
+
+      /**
+       * Resets password for a given email
+       */
+      resetPassword: function(email) {
+        var deferred = $q.defer();
+
+        $http.post('/api/users/reset', {
+          email: email
+        }).
+        success(function(data) {
+          deferred.resolve(data);
+        }).
+        error(function(err) {
+          deferred.reject(err);
+        }.bind(this));
+
+        return deferred.promise;
       }
     };
   });
