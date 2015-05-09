@@ -1,0 +1,78 @@
+
+.includes {
+    width: 800px;
+}
+
+.includes .checklist {
+    width: 400px;
+}
+
+.booking-form-container {
+    min-width: 300px;
+}
+
+.booking-form-container .form-item {
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.booking-form-container .form-item .comment {
+    text-align: left;
+    padding-top: 10px;
+    line-height: 15px;
+}
+
+.booking-form-container .submit {
+    width: 95%;
+    margin-top: 20px;
+}
+
+.extra-item {
+    border: 1px solid #233140;
+    background: #233140;
+    color:#fff;
+    margin: 2px;
+    height: 110px;
+    width: 90px;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.extra-item:hover{    
+    background: #2c3e50;
+    cursor:pointer;
+}
+
+.extra-item img {
+    display: block;
+    height: 60px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.extra-item .fa-spinner {
+    line-height: 90px;
+}
+
+.extra-item.selected {
+    xcolor: #5cb85c;
+    font-weight: bold;
+    color: #fba819;
+}
+
+.pets-describe {
+    margin-top: 10px;
+}
+
+.submit .fa-caret-right {
+    margin-top: 3px;
+}
+
+.checklist ul{
+    margin-left: -15px;
+    color:#fba819;
+}
+.checklist .description{
+    color:#000;
+}

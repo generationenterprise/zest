@@ -1,17 +1,17 @@
-#banner {
+#banner-commercial {
     border-bottom: none;
     margin-top: -20px;
-    background: url(../../assets/images/living-room-1280x808.jpg) no-repeat;
+    background: url(../../assets/images/office-1280x846.jpg) no-repeat;
     background-color: #bc893c;
 }
 
-#banner h1 {
+#banner-commercial h1 {
     font-size: 60px;
     line-height: 1;
     letter-spacing: -1px;
 }
 
-#banner button{
+#banner-commercial button{
     padding:15px;
     font-size: 20px;
     width: 250px;
@@ -103,13 +103,4 @@ h2.price {
 .z-999 {
     z-index: 999;
     background: #fff;
-}
-
-@media screen and (max-width: 768px){
-    #banner {
-        background: url(../../assets/images/living-room-900x509.jpg) no-repeat;
-    }
-    .hero-unit{
-        height: 500px;
-    }
 }
