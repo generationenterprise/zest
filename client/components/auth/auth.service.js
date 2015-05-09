@@ -27,6 +27,7 @@ angular.module('zestServicesApp')
         success(function(data) {
           $cookieStore.put('token', data.token);
           $cookieStore.put('CustomerId', data.CustomerId);
+          $cookieStore.put('hasBookings', data.hasBookings);
           currentUser = User.get();
           deferred.resolve(data);
           return cb();
@@ -48,6 +49,7 @@ angular.module('zestServicesApp')
       logout: function() {
         $cookieStore.remove('token');
         $cookieStore.remove('CustomerId');
+        $cookieStore.remove('hasBookings');
         currentUser = {};
       },
 
@@ -65,6 +67,7 @@ angular.module('zestServicesApp')
           function(data) {
             $cookieStore.put('token', data.token);
             $cookieStore.put('CustomerId', data.CustomerId);
+            $cookieStore.put('hasBookings', data.hasBookings);
             currentUser = User.get();
             return cb(user);
           },
@@ -151,6 +154,13 @@ angular.module('zestServicesApp')
        */
       getCustomerId: function() {
         return $cookieStore.get('CustomerId');
+      },
+
+      /**
+       * Does the customer have saved bookings
+       */
+      hasBookings: function() {
+        return $cookieStore.get('hasBookings');
       },
 
       /**

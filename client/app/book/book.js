@@ -25,8 +25,8 @@ angular.module('zestServicesApp')
         if (Auth.isLoggedIn()) {
             $scope.customer = Customer.get({
                 id: Auth.getCustomerId()
-            },function(customer){
-                $scope.customer.fullName = customer.firstName+ ' '+customer.lastName;
+            }, function(customer) {
+                $scope.customer.fullName = customer.firstName + ' ' + customer.lastName;
             });
             loaders.push($scope.customer);
         }
@@ -52,7 +52,7 @@ angular.module('zestServicesApp')
 
         loaders.push(extras);
 
-        $q.all(loaders).then(function(resps){
+        $q.all(loaders).then(function(resps) {
             $scope.loading = false;
         });
 
@@ -79,10 +79,10 @@ angular.module('zestServicesApp')
         };
 
         var isValidMobile = function() {
-            if(_.isString($scope.customer.mobilePhone)){
+            if (_.isString($scope.customer.mobilePhone)) {
                 $scope.customer.mobilePhone = $scope.customer.mobilePhone.replace(/\D/g, '');
             }
-            return $scope.customer.mobilePhone && (''+$scope.customer.mobilePhone).length >= 10;
+            return $scope.customer.mobilePhone && ('' + $scope.customer.mobilePhone).length >= 10;
         };
 
         $scope.validator = {
@@ -109,12 +109,13 @@ angular.module('zestServicesApp')
             $scope.cleaning.extras = _.where($scope.extras, {
                 selected: true
             });
-            if (Auth.isLoggedIn()) {
+            if (Auth.isLoggedIn() && Auth.hasBookings() === false) {
+                $scope.doBooking();
+            } else if (Auth.isLoggedIn() && (Auth.hasBookings() !== false)) {
                 $scope.doChoose();
             } else {
                 BookingService.contains($scope.customer).then(function(data) {
                     if (!data) {
-                        console.log('new customer');
                         $scope.doRegister();
 
                     } else {
@@ -123,6 +124,24 @@ angular.module('zestServicesApp')
                 });
 
             }
+        };
+
+        $scope.doBooking = function() {
+
+            var names = $scope.customer.fullName.split(' ');
+            $scope.customer.id = Auth.getCustomerId();
+            $scope.customer.firstName = names.slice(0, names.length - 1).join(' ');
+            $scope.customer.lastName = names[names.length - 1];
+
+            BookingService.register({
+                customer: $scope.customer,
+                booking: $scope.booking,
+                cleaning: $scope.cleaning
+            }).then(function(booking) {
+                BookingService.setCurrentBookingId(booking.id);
+                $state.go('schedule');
+            });
+
         };
 
         $scope.doChoose = function() {
@@ -138,20 +157,7 @@ angular.module('zestServicesApp')
             });
 
             modalInstance.result.then(function(data) {
-
-                var names = $scope.customer.fullName.split(' ');
-                $scope.customer.id = Auth.getCustomerId();
-                $scope.customer.firstName = names.slice(0, names.length - 1).join(' ');
-                $scope.customer.lastName = names[names.length - 1];
-
-                BookingService.register({
-                    customer: $scope.customer,
-                    booking: $scope.booking,
-                    cleaning: $scope.cleaning
-                }).then(function(booking) {
-                    BookingService.setCurrentBookingId(booking.id);
-                    $state.go('schedule');
-                });
+                $scope.doBooking();
 
             }).finally(function() {
                 $scope.submitting = false;
@@ -207,7 +213,9 @@ angular.module('zestServicesApp')
             });
 
             modalInstance.result.then(function(data) {
-                $scope.doChoose();
+                if (Auth.hasBookings()) {
+                    $scope.doChoose();
+                }
                 $localStorage.popupLogin = false;
 
             }).finally(function() {

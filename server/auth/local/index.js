@@ -4,6 +4,7 @@ var express = require('express');
 var passport = require('passport');
 var auth = require('../auth.service');
 var db = require('../../models');
+var _ = require('lodash');
 
 var router = express.Router();
 
@@ -18,13 +19,20 @@ router.post('/', function(req, res, next) {
         var token = auth.signToken(user._id, user.role);
 
         db.Customer.find({
-            where: db.Sequelize.or({
+            where: {
                 email: user.email
-            })
+            }
         }).then(function(customer) {
-            res.json({
-                CustomerId: customer.id,
-                token: token
+            db.Booking.find({
+                where: {
+                    CustomerId: customer.id
+                }
+            }).then(function(booking) {
+                res.json({
+                    CustomerId: customer.id,
+                    hasBookings: !_.isEmpty(booking),
+                    token: token
+                });
             });
         });
 

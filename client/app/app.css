@@ -44,8 +44,9 @@ select option{
     display: inline;
 }
 
-.xcontainer.page{
-    margin-top: -35px
+.container.page{
+    min-height: 500px;
+    xmargin-top: -35px
 }
 
 .btn-primary {
