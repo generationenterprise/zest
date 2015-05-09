@@ -19,7 +19,8 @@ exports.register = function(req, res) {
     // Find customer
     db.Customer.find(req.body.customer.id).then(function(customer) {
         // Update customer
-        customer.updateAttributes(req.body).then(function(customer) {
+        delete req.body.customer.email;
+        customer.updateAttributes(req.body.customer).then(function(customer) {
             // Create booking
             req.body.booking.CustomerId = customer.id;
             var bookingQ = db.Booking.create(req.body.booking).then(function(booking) {

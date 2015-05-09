@@ -84,8 +84,8 @@
                         <div class="input-group-addon">&nbsp;<span class="fa fa-user" />&nbsp;</div>
                         <input type="text" class="form-control" ng-model="customer.fullName" placeholder="Your First and Last Names">
                     </div>
-                    <br>
-                    <div class="input-group">
+                    <br ng-if="!isLoggedIn()">
+                    <div class="input-group" ng-if="!isLoggedIn()">
                         <div class="input-group-addon">&nbsp;<span class="fa fa-envelope-o" />&nbsp;</div>
                         <input type="text" class="form-control" ng-model="customer.email" placeholder="Email Address">
                     </div>
@@ -98,7 +98,7 @@
             </div>
             <div class="form-item">
                 Do you have any pets?
-                <div class="btn-group" style="width:100%">
+                <div class="btn-group" style="width:100%;margin-top:10px">
                     <label class="btn btn-primary" ng-model="cleaning.pets.cats" btn-checkbox style="width:34%">Cats</label>
                     <label class="btn btn-primary" ng-model="cleaning.pets.dogs" btn-checkbox style="width:34%">Dogs</label>
                     <label class="btn btn-primary" ng-model="cleaning.pets.other" btn-checkbox style="width:32%">Other</label>

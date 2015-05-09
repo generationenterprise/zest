@@ -22,6 +22,8 @@ angular.module('zestServicesApp')
 
         var loaders = [];
 
+        $scope.isLoggedIn = Auth.isLoggedIn;
+
         if (Auth.isLoggedIn()) {
             $scope.customer = Customer.get({
                 id: Auth.getCustomerId()
@@ -178,21 +180,7 @@ angular.module('zestServicesApp')
             });
 
             modalInstance.result.then(function(data) {
-                console.log('doRegister.data=', data);
-
-                /*var names = $scope.customer.fullName.split(' ');
-                $scope.customer.firstName = names.slice(0, names.length - 1).join(' ');
-                $scope.customer.lastName = names[names.length - 1];
-
-                BookingService.register({
-                    customer: $scope.customer,
-                    booking: $scope.booking,
-                    cleaning: $scope.cleaning
-                }).then(function(booking) {
-                    BookingService.setCurrentBookingId(booking.id);
-                    $state.go('schedule');
-                    $scope.submitting = true;
-                });*/
+                $scope.doBooking();
 
             }).finally(function() {
                 $scope.submitting = false;
