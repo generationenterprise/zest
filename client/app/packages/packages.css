@@ -40,7 +40,7 @@
     border-top: 1px solid #E5E5E5;
 }
 
-.packages md-card {
+.xpackages md-card {
     padding: 20px;
     text-align: center;
     z-index: 99999;
@@ -54,35 +54,35 @@
     text-transform: uppercase;
 }
 
-.packages.values md-card p {
+.xpackages.values md-card p {
     height: 50px;
 }
 
-.packages.values md-card {
+.xpackages.values md-card {
     height: 300px;
     max-width: 260px;
     min-width: 250px;
 }
 
-.packages.commercial md-card p {
+.xpackages.commercial md-card p {
     height: 110px;
 }
 
-.packages.commercial md-card {
+.xpackages.commercial md-card {
     height: 450px;
     max-width: 260px;
     min-width: 250px;
 }
 
-.packages.home md-card {
+.xpackages.home md-card {
     height: 450px;
 }
 
-.packages.home md-card p {
+.xpackages.home md-card p {
     height: 70px;
 }
 
-.packages img {
+.xpackages img {
     max-width: 220px;
     max-height: 147px;
     min-height: 147px;

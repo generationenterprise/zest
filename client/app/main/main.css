@@ -69,8 +69,7 @@
     height: 110px;
 }
 
-.packages.commercial md-card {
-    height: 450px;
+.xpackages.commercial md-card {
     max-width: 260px;
     min-width: 250px;
 }
@@ -83,7 +82,7 @@
     height: 70px;
 }
 
-.packages img {
+.xpackages img {
     max-width: 220px;
     max-height: 147px;
     min-height: 147px;
