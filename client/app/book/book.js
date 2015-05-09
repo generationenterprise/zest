@@ -113,10 +113,11 @@ angular.module('zestServicesApp')
             });
 
             modalInstance.result.then(function(data) {
+                console.log('data=', data);
 
-                var names = $scope.customer.fullName.split(' ');
-                $scope.customer.lastName = names[names.length - 1];
+                /*var names = $scope.customer.fullName.split(' ');
                 $scope.customer.firstName = names.slice(0, names.length - 1).join(' ');
+                $scope.customer.lastName = names[names.length - 1];
 
                 BookingService.register({
                     customer: $scope.customer,
@@ -126,7 +127,7 @@ angular.module('zestServicesApp')
                     BookingService.setCurrentBookingId(booking.id);
                     $state.go('schedule');
                     $scope.submitting = true;
-                });
+                });*/
 
             }).finally(function() {
                 $scope.submitting = false;
@@ -162,11 +163,19 @@ angular.module('zestServicesApp')
             $modalInstance.dismiss('cancel');
         };
 
-    }).controller('ModalRegisterCtrl', function($scope, $modalInstance, customer) {
+    }).controller('ModalRegisterCtrl', function($scope, $modalInstance, customer, Auth) {
         $scope.customer = customer;
 
         $scope.continue = function() {
-            $modalInstance.close($scope.customer);
+            Auth.createUser({
+                    name: $scope.fullName,
+                    email: customer.email,
+                    phone: customer.mobilePhone,
+                    password: $scope.password
+                })
+                .then(function(data) {
+                    $modalInstance.close(data);
+                })
         };
 
         $scope.cancel = function() {

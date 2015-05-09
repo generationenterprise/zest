@@ -17,10 +17,6 @@
 <script type="text/ng-template" id="register-modal.html">
     <div class="modal-body">
         <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" class="form-control" ng-model="customer.email" required>
-        </div>
-        <div class="form-group">
             <label>Password</label>
             <input type="password" name="password" class="form-control" ng-model="password" required>
         </div>
@@ -30,7 +26,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-success" ng-click="continue()">Continue</button>
+        <button class="btn btn-success" ng-click="continue()" ng-if="password===passwordConfirm">Register</button>
         <button class="btn btn-default" ng-click="cancel()">Cancel</button>
     </div>
 </script>
@@ -49,7 +45,7 @@
                 <h-number value="cleaning.bathrooms" min="1" max="10" step="1" singular="bathroom" plural="bathrooms"></h-number>
             </div>
             <div class="form-item">
-                <h5>Extras</h5>
+                <h5>Cleaning Extras</h5>
                 <div layout="row" layout-sm="row" layout-wrap flex class="extras" layout-align="center center">
                     <div class="extra-item" ng-if="extras.loading === true">
                         <span class="fa fa-spinner fa-spin"></span>
@@ -97,7 +93,7 @@
                 </div>
                 <input ng-if="cleaning.pets.cats || cleaning.pets.dogs || cleaning.pets.other" type="text" class="form-control pets-describe" ng-model="cleaning.pets.description" placeholder="Describe eg. Black cat, white cat">
             </div>
-            <button type="button" class="btn btn-primary submit" disabled ng-if="submitting">
+            <button type="button" class="btn btn-success submit" disabled ng-if="submitting">
                 <span class="fa fa-spinner fa-spin"></span> Registering...
             </button>
             <button type="button" class="btn btn-success submit" ng-click="continue()" ng-disabled="validator.disable()" ng-if="!submitting">
