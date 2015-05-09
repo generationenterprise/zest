@@ -9,7 +9,7 @@ angular.module('zestServicesApp')
                 controller: 'BookCtrl'
             });
     })
-    .controller('BookCtrl', function($scope, $state, BookingService, Extra, $modal) {
+    .controller('BookCtrl', function($scope, $state, BookingService, Extra, $modal, Auth, $localStorage) {
 
         $scope.submitting = false;
 
@@ -89,22 +89,28 @@ angular.module('zestServicesApp')
             $scope.cleaning.extras = _.where($scope.extras, {
                 selected: true
             });
-            BookingService.contains($scope.customer).then(function(data) {
-                if (!data) {
-                    console.log('new customer');
-                    $scope.doRegister();
+            if (Auth.isLoggedIn()) {
+                $scope.doChoose();
 
-                } else {
-                    console.log('existing customer');
-                    $scope.doLogin();
-                }
-            });
+            } else {
+                BookingService.contains($scope.customer).then(function(data) {
+                    if (!data) {
+                        console.log('new customer');
+                        $scope.doRegister();
+
+                    } else {
+                        $scope.doLogin();
+                    }
+                });
+
+            }
         };
 
-        $scope.doRegister = function() {
+        $scope.doChoose = function() {
             var modalInstance = $modal.open({
-                templateUrl: 'register-modal.html',
-                controller: 'ModalRegisterCtrl',
+                templateUrl: 'choose-modal.html',
+                controller: 'ModalChooseCtrl',
+                backdrop: 'static',
                 resolve: {
                     customer: function() {
                         return $scope.customer;
@@ -113,7 +119,27 @@ angular.module('zestServicesApp')
             });
 
             modalInstance.result.then(function(data) {
-                console.log('data=', data);
+
+            }).finally(function() {
+                $scope.submitting = false;
+            });
+
+        };
+
+        $scope.doRegister = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'register-modal.html',
+                controller: 'ModalRegisterCtrl',
+                backdrop: 'static',
+                resolve: {
+                    customer: function() {
+                        return $scope.customer;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(data) {
+                console.log('doRegister.data=', data);
 
                 /*var names = $scope.customer.fullName.split(' ');
                 $scope.customer.firstName = names.slice(0, names.length - 1).join(' ');
@@ -135,9 +161,11 @@ angular.module('zestServicesApp')
         };
 
         $scope.doLogin = function() {
+            $localStorage.popupLogin = true;
             var modalInstance = $modal.open({
                 templateUrl: 'login-modal.html',
                 controller: 'ModalLoginCtrl',
+                backdrop: 'static',
                 resolve: {
                     customer: function() {
                         return $scope.customer;
@@ -146,17 +174,27 @@ angular.module('zestServicesApp')
             });
 
             modalInstance.result.then(function(data) {
+                $scope.doChoose();
+                $localStorage.popupLogin = false;
 
             }).finally(function() {
                 $scope.submitting = false;
+                $localStorage.popupLogin = false;
             });
         };
 
-    }).controller('ModalLoginCtrl', function($scope, $modalInstance, customer) {
-        $scope.customer = customer;
-
+    }).controller('ModalLoginCtrl', function($scope, $modalInstance, customer, Auth) {
         $scope.continue = function() {
-            $modalInstance.close($scope.customer);
+            Auth.login({
+                    email: customer.email,
+                    password: $scope.password
+                })
+                .then(function(data) {
+                    $modalInstance.close(data);
+                })
+                .catch(function(err) {
+                    $scope.error = err.message;
+                });
         };
 
         $scope.reset = function() {
@@ -166,9 +204,13 @@ angular.module('zestServicesApp')
     }).controller('ModalRegisterCtrl', function($scope, $modalInstance, customer, Auth) {
         $scope.customer = customer;
 
+        $scope.isValid = function() {
+            return ($scope.password && $scope.password === $scope.passwordConfirm);
+        };
+
         $scope.continue = function() {
             Auth.createUser({
-                    name: $scope.fullName,
+                    name: customer.fullName,
                     email: customer.email,
                     phone: customer.mobilePhone,
                     password: $scope.password
@@ -176,6 +218,21 @@ angular.module('zestServicesApp')
                 .then(function(data) {
                     $modalInstance.close(data);
                 })
+        };
+
+        $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+        };
+    }).controller('ModalChooseCtrl', function($scope, $modalInstance, customer, $state) {
+        $scope.customer = customer;
+
+        $scope.createNew = function() {
+            $modalInstance.close(customer);
+        };
+
+        $scope.modifyExisting = function() {
+            $state.go('bookings');
+            $modalInstance.dismiss('cancel');
         };
 
         $scope.cancel = function() {

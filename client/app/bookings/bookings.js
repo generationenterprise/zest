@@ -12,31 +12,26 @@ angular.module('zestServicesApp')
     .controller('BookingsCtrl', function($scope, $state, BookingsService, Extra, $modal) {
 
         $scope.messages = [{
-            face: imagePath,
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
             notes: " I'll be in your neighborhood doing errands"
         }, {
-            face: imagePath,
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
             notes: " I'll be in your neighborhood doing errands"
         }, {
-            face: imagePath,
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
             notes: " I'll be in your neighborhood doing errands"
         }, {
-            face: imagePath,
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
             notes: " I'll be in your neighborhood doing errands"
         }, {
-            face: imagePath,
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
