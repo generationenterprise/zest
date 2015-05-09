@@ -3,22 +3,22 @@
         <div layout="column" layout-align="top">
             <div>
                 <h2>Confirm Your Booking</h2></div>
-            <div class="schedule-estimate-container" layout="column">
-                <div>
-                    <span class="pull-left">{{booking.hours}} {{booking.unit}} cleaning, {{booking.currency}}{{booking.rate}}/{{booking.unit}}</span>
-                    <span class="pull-right">{{booking.currency}}{{booking.hours*booking.rate}}
+            <div class="schedule-estimate-container md-card-shadow" layout="column">
+                <div ng-if="!loading">
+                    <span class="pull-left">{{booking.hours}} hour cleaning (₦{{frequencySelected.rate}}/hour)</span>
+                    <span class="pull-right">₦{{(booking.hours*frequencySelected.rate).toFixed(1)}}</span>
                 </div>
-                <div ng-repeat="extra in booking.extras">
-                    <span class="pull-left">+{{extra.name}}</span>
-                    <span class="pull-right">{{booking.currency}}{{extra.price}}</span>
+                <div ng-repeat="extra in booking.Cleaning.Extras" ng-if="!loading">
+                    <span class="pull-left">+{{extra.description}}</span>
+                    <span class="pull-right">₦{{extra.rate.toFixed(1)}}</span>
                 </div>
-                <div>
+                <div ng-if="!loading" style="font-weight:bold">
                     <span class="pull-left">TOTAL</span>
-                    <span class="pull-right">{{booking.total()}}</span>
+                    <span class="pull-right">₦{{booking.total().toFixed(1)}}</span>
                 </div>
             </div>
         </div>
-        <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="confirm-form-container">
+        <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="confirm-form-container md-card-shadow">
             <div class="form-item full-width">
                 <input type="text" class="form-control" ng-model="card.number" placeholder="Credit Card Number">
                 <br>
@@ -33,7 +33,7 @@
                 <p class="comment"><span class="fa fa-lock display-inline" />&nbsp;&nbsp; For your protection we have secured this form with 256-bit SSL encryption.</p>
                 <p class="comment"><span class="fa fa-check display-inline" />&nbsp;&nbsp; You will not be charged until your appointment is complete.</p>
             </div>
-            <button type="button" class="btn btn-primary submit" ng-click="continue()">Book</button>
+            <button type="button" class="btn btn-success submit" ng-click="continue()">Book</button>
         </div>
     </div>
 </div>

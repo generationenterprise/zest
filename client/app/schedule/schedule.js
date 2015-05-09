@@ -115,10 +115,10 @@ angular.module('zestServicesApp')
                     var dt = d.format('YYYY-MM-DD');
                     var ctime = DISPLAY_MAP[date.display];
 
-                    date.selectable = $scope.openings[dt] && (!_.isEmpty($scope.openings[dt][(ctime - 50)]) || !_.isEmpty($scope.openings[dt][ctime]));                    
+                    date.selectable = $scope.openings[dt] && (!_.isEmpty($scope.openings[dt][(ctime - 50)]) || !_.isEmpty($scope.openings[dt][ctime]));
 
                 });
-            }else if($view === 'minute'){
+            } else if ($view === 'minute') {
                 _.each($dates, function(date) {
                     var d = new Date();
                     d.setTime(date.utcDateValue);
@@ -150,18 +150,19 @@ angular.module('zestServicesApp')
             if ($scope.frequencySelected.name === 'once') {
                 return dtp.format('dddd, MMMM Do YYYY, HH:mm');
             } else if ($scope.frequencySelected.name === 'weekly') {
-                return 'Every '+dtp.format('dddd') + ' at ' + dtp.format('HH:mm');
+                return 'Every ' + dtp.format('dddd') + ' at ' + dtp.format('HH:mm');
             } else if ($scope.frequencySelected.name === 'bi-weekly') {
                 var som = moment(dtp).date(1);
                 var week = 0;
-                for(;som.date() <= dtp.date(); som.add(1,'days')){
-                    if(som.day() === dtp.day()){
-                        week++;                  }
+                for (; som.date() <= dtp.date(); som.add(1, 'days')) {
+                    if (som.day() === dtp.day()) {
+                        week++;
+                    }
                 }
-                if(week === 1 || week === 3){
+                if (week === 1 || week === 3) {
                     $scope.week = 1;
                     week = '1st and 3rd ';
-                }else{
+                } else {
                     $scope.week = 2;
                     week = '2nd and 4th ';
                 }
@@ -169,20 +170,21 @@ angular.module('zestServicesApp')
             } else if ($scope.frequencySelected.name === 'monthly') {
                 var som = moment(dtp).date(1);
                 var week = 0;
-                for(;som.date() <= dtp.date(); som.add(1,'days')){
-                    if(som.day() === dtp.day()){
-                        week++;                   }
+                for (; som.date() <= dtp.date(); som.add(1, 'days')) {
+                    if (som.day() === dtp.day()) {
+                        week++;
+                    }
                 }
                 $scope.week = week;
-                if(week === 1){
+                if (week === 1) {
                     week = '1st ';
-                }else if(week === 2){
+                } else if (week === 2) {
                     week = '2nd ';
-                }else if(week === 3){
+                } else if (week === 3) {
                     week = '3rd ';
-                }else if(week === 4){
+                } else if (week === 4) {
                     week = '4th ';
-                }else {
+                } else {
                     week = 'Last ';
                 }
                 return week + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
@@ -239,20 +241,21 @@ angular.module('zestServicesApp')
             $scope.customer._id = $scope.customer.id;
 
             var dtp = moment($scope.dateTimePicked);
-            
+
             var chour = parseInt(dtp.format('HH')),
                 cmin = parseInt(dtp.format('mm'));
-            var etime = ((chour*100+((cmin === 30)? 50 : 0))-50);
+            var etime = ((chour * 100 + ((cmin === 30) ? 50 : 0)) - 50);
 
             var employeeId = $scope.openings[dtp.format("YYYY-MM-DD")][etime][0];
 
             var c = Customer.update($scope.customer),
-                b = SchedulingService.schedule(employeeId, $scope.booking, $scope.frequencySelected.name, dtp, etime, $scope.week);
+                b = SchedulingService.schedule(employeeId, $scope.booking, $scope.frequencySelected, dtp, etime, $scope.week);
 
             $q.all([c, b]).then(function() {
                 $scope.submitting = false;
+
+                $state.go('confirm');
             });
 
-            //$state.go('confirm');
         };
     });

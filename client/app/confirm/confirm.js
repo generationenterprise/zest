@@ -9,38 +9,38 @@ angular.module('zestServicesApp')
                 controller: 'ConfirmCtrl'
             });
     })
-    .controller('ConfirmCtrl', function($scope, $state) {
+    .controller('ConfirmCtrl', function($scope, $state, Booking, BookingService) {
 
-        $scope.booking = {
-            hours: 3,
-            unit: 'hour',
-            currency: 'N',
-            rate: 35,
-            extras: [{
-                name: 'Garden',
-                price: 20
-            }],
-            total: (function(_) {
-                return function() {
-                    return this.currency + '' + ((this.hours * this.rate) + _.sum(_.pluck(this.extras, 'price')));
-                };
-            })(_)
-        };
+        $scope.loading = true;
 
-        $scope.items = [{name: 'one', age: 30 },{ name: 'two', age: 27 },{ name: 'three', age: 50 }];
+        $scope.booking = Booking.get({
+            id: BookingService.getCurrentBookingId()
+        }, function(booking) {
+            $scope.booking = booking;
 
-        console.log('m=',moment().year());
+            $scope.booking.total = function() {
+                var extras = 0;
+                if ($scope.booking.Cleaning.Extras) {
+                    extras = _.sum(_.pluck($scope.booking.Cleaning.Extras, 'rate'));
+                    _.each($scope.booking.Cleaning.Extras, function(extra) {
+                        extra.rate = parseInt(extra.rate);
+                    });
+                }
+                return ($scope.booking.hours * $scope.booking.Cleaning.Frequency.rate) + extras;
+            };
+            $scope.loading = false;
+        });
 
         $scope.card = {
-          number: '',
-          month: 1,
-          months: (function(_){
-            return _.range(1,13);
-          })(_),
-          year: moment().year(),
-          years: (function(_, y){
-            return _.range(y, y+10);
-          })(_, moment().year())
+            number: '',
+            month: 1,
+            months: (function(_) {
+                return _.range(1, 13);
+            })(_),
+            year: moment().year(),
+            years: (function(_, y) {
+                return _.range(y, y + 10);
+            })(_, moment().year())
         };
 
         $scope.continue = function() {

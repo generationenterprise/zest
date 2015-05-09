@@ -1,5 +1,5 @@
 .confirm-estimate-container{
-    border: 1px solid black;
+    xborder: 1px solid black;
     min-width: 300px;
     margin-bottom: 15px;
     font-size: 12px;
@@ -7,7 +7,7 @@
 }
 
 .confirm-form-container{
-    border: 1px solid black;
+    xborder: 1px solid black;
     min-width: 300px;
     max-width: 600px;
     z-index: 999;

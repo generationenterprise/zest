@@ -297,73 +297,85 @@ exports.openings = function(req, res) {
 
 exports.complete = function(req, res) {
     var frequencyName = req.body.frequencyName,
+        FrequencyId = req.body.FrequencyId,
         EmployeeId = req.body.EmployeeId,
         CustomerId = req.body.CustomerId,
         BookingId = req.body.BookingId,
+        CleaningId = req.body.CleaningId,
         hours = req.body.hours,
         date = moment(req.body.date),
         etime = req.body.etime,
         week = req.body.week;
 
-    if (frequencyName === 'once') {
-        db.ScheduledOnceBooking.create({
-            EmployeeId: EmployeeId,
-            BookingId: BookingId,
-            CustomerId: CustomerId,
-            date: date,
-            etime: etime,
-            hours: hours
-        }).then(function(scheduledBooking) {
-            res.json(200, scheduledBooking);
-        });
-    }else if(frequencyName === 'daily'){
-        db.ScheduledDailyBooking.create({
-            EmployeeId: EmployeeId,
-            BookingId: BookingId,
-            CustomerId: CustomerId,
-            etime: etime,
-            hours: hours
-        }).then(function(scheduledBooking) {
-            res.json(200, scheduledBooking);
-        });
-    } else if(frequencyName === 'weekly'){
-        db.ScheduledWeeklyBooking.create({
-            EmployeeId: EmployeeId,
-            BookingId: BookingId,
-            CustomerId: CustomerId,
-            day: date.day(),
-            etime: etime,
-            hours: hours
-        }).then(function(scheduledBooking) {
-            res.json(200, scheduledBooking);
-        });
-    }else if(frequencyName === 'bi-weekly'){
-        db.ScheduledBiWeeklyBooking.create({
-            EmployeeId: EmployeeId,
-            BookingId: BookingId,
-            CustomerId: CustomerId,
-            week: week,
-            day: date.day(),
-            etime: etime,
-            hours: hours
-        }).then(function(scheduledBooking) {
-            res.json(200, scheduledBooking);
-        });
+    db.Cleaning.find(CleaningId).then(function(cleaning) {
+        cleaning.updateAttributes({
+            FrequencyId: FrequencyId
+        }).then(function(cleaning) {
 
-    }else if(frequencyName === 'monthly'){
-        db.ScheduledMonthlyBooking.create({
-            EmployeeId: EmployeeId,
-            BookingId: BookingId,
-            CustomerId: CustomerId,
-            week: week,
-            day: date.day(),
-            etime: etime,
-            hours: hours
-        }).then(function(scheduledBooking) {
-            res.json(200, scheduledBooking);
-        });
+            if (frequencyName === 'once') {
+                db.ScheduledOnceBooking.create({
+                    EmployeeId: EmployeeId,
+                    BookingId: BookingId,
+                    CustomerId: CustomerId,
+                    date: date,
+                    etime: etime,
+                    hours: hours
+                }).then(function(scheduledBooking) {
+                    res.json(200, scheduledBooking);
+                });
+            } else if (frequencyName === 'daily') {
+                db.ScheduledDailyBooking.create({
+                    EmployeeId: EmployeeId,
+                    BookingId: BookingId,
+                    CustomerId: CustomerId,
+                    etime: etime,
+                    hours: hours
+                }).then(function(scheduledBooking) {
+                    res.json(200, scheduledBooking);
+                });
+            } else if (frequencyName === 'weekly') {
+                db.ScheduledWeeklyBooking.create({
+                    EmployeeId: EmployeeId,
+                    BookingId: BookingId,
+                    CustomerId: CustomerId,
+                    day: date.day(),
+                    etime: etime,
+                    hours: hours
+                }).then(function(scheduledBooking) {
+                    res.json(200, scheduledBooking);
+                });
+            } else if (frequencyName === 'bi-weekly') {
+                db.ScheduledBiWeeklyBooking.create({
+                    EmployeeId: EmployeeId,
+                    BookingId: BookingId,
+                    CustomerId: CustomerId,
+                    week: week,
+                    day: date.day(),
+                    etime: etime,
+                    hours: hours
+                }).then(function(scheduledBooking) {
+                    res.json(200, scheduledBooking);
+                });
 
-    }else{
-        res.json(400, {message: "Unknown frequencyName"});
-    }
+            } else if (frequencyName === 'monthly') {
+                db.ScheduledMonthlyBooking.create({
+                    EmployeeId: EmployeeId,
+                    BookingId: BookingId,
+                    CustomerId: CustomerId,
+                    week: week,
+                    day: date.day(),
+                    etime: etime,
+                    hours: hours
+                }).then(function(scheduledBooking) {
+                    res.json(200, scheduledBooking);
+                });
+
+            } else {
+                res.json(400, {
+                    message: "Unknown frequencyName"
+                });
+            }
+        })
+    });
+
 }

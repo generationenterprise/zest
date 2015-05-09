@@ -20,10 +20,12 @@ angular.module('zestServicesApp')
                 var deferred = $q.defer();
 
                 $http.post('/api/scheduling/complete', {
-                    frequencyName: frequency,
+                    frequencyName: frequency.name,
                     CustomerId: booking.CustomerId,
                     EmployeeId: employeeId,
                     BookingId: booking.id,
+                    FrequencyId: frequency.id,
+                    CleaningId: booking.Cleaning.id,
                     hours: booking.hours,
                     date: dtp,
                     etime: etime,

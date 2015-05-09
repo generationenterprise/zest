@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        total: DataTypes.DECIMAL(10,2),
         paid: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
