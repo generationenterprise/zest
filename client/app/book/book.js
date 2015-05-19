@@ -100,7 +100,7 @@ angular.module('zestServicesApp')
                     msg = 'Enter a vali email.';
                 }
                 if (!isValidFullName()) {
-                    msg = 'Enter your full name.';
+                    msg = 'Enter your first and last name.';
                 }
                 return msg;
             }
