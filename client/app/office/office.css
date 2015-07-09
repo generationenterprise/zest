@@ -1,0 +1,105 @@
+#banner-commercial {
+    border-bottom: none;
+    margin-top: -20px;
+    background: url(../../assets/images/office-1200x738.jpg) no-repeat;
+    background-color: #D8D8D8;
+}
+
+#banner-commercial h1 {
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+#banner-commercial button{
+    padding:15px;
+    font-size: 20px;
+    width: 250px;
+    font-weight: normal;
+}
+
+.hero-unit {
+    position: relative;
+    padding: 30px 15px;
+    color: #F5F5F5;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    background: #4393B9;
+    height:650px;
+}
+
+.lead {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.footer {
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 70px;
+    border-top: 1px solid #E5E5E5;
+}
+
+.xpackages md-card {
+    padding: 20px;
+    text-align: center;
+    z-index: 99999;
+}
+
+.priced md-card {
+    padding-top: 5px;
+}
+
+.priced md-card button {
+    text-transform: uppercase;
+}
+
+.xpackages.values md-card p {
+    height: 50px;
+}
+
+.xpackages.values md-card {
+    height: 300px;
+    max-width: 260px;
+    min-width: 250px;
+}
+
+.xpackages.commercial md-card p {
+    height: 110px;
+}
+
+.xpackages.commercial md-card {
+    height: 450px;
+    max-width: 260px;
+    min-width: 250px;
+}
+
+.xpackages.home md-card {
+    height: 450px;
+}
+
+.xpackages.home md-card p {
+    height: 70px;
+}
+
+.xpackages img {
+    max-width: 220px;
+    max-height: 147px;
+    min-height: 147px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2.price {
+    color: green;
+}
+
+.z-99 {
+    z-index: 99;
+    background: #fff;
+}
+
+.z-999 {
+    z-index: 999;
+    background: #fff;
+}

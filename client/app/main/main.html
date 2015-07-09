@@ -2,10 +2,16 @@
     <div class="container">
         <h1>Zest your life!</h1>
         <p class="lead">Trusted and trained expert cleaners for your home or office.</p>
-        <button type="button" class="btn btn-success" ui-sref="book">Book a Cleaning</button>
+        <button type="button" class="btn btn-success" ng-click="book()" ng-if="!choosing">Book a Cleaning</button>
+        <span ng-if="choosing">
+            <button type="button" class="btn btn-success" ui-sref="book">Home Cleaning</button>
+            <br>
+            <br>
+            <button type="button" class="btn btn-info" ui-sref="office">Office Cleaning</button>
+        </span>
         <br>
         <br>
-        <button type="button" class="btn btn-primary" ui-sref="packages">View Packages</button>
+        <button type="button" class="btn btn-primary" ui-sref="services">All Services</button>
     </div>
 </header>
 <div class="container packages values">
@@ -35,7 +41,7 @@
 </div>
 <div class="container packages commercial priced" style="background:#f4f4f4">
     <div layout="row" layout-align="center">
-        <h2>Zest helps you get back to enjoying life!</h2>
+        <h2>How Zest Works</h2>
     </div>
     <div layout="row" layout-sm="column" layout-margin layout-fill layout-padding>
         <div flex>
@@ -90,14 +96,18 @@
             <md-card class="z-999">
                 <h3>BUNMI, Lagos</h3>
                 <br>
-                <i class="fa fa-quote-left" style="color:#5cb85c"></i><p style="font-size:20px">By far the best home cleaning I’ve ever had! The cleaner was on-time, professional and left my place spotless!</p><br><i class="fa fa-quote-right" style="color:#5cb85c"></i>
+                <i class="fa fa-quote-left" style="color:#5cb85c"></i>
+                <p style="font-size:20px">By far the best home cleaning I’ve ever had! The cleaner was on-time, professional and left my place spotless!</p>
+                <br><i class="fa fa-quote-right" style="color:#5cb85c"></i>
             </md-card>
         </div>
         <div flex>
             <md-card class="z-999">
                 <h3>ONYEKA, Victoria Island</h3>
                 <br>
-                <i class="fa fa-quote-left" style="color:#5cb85c"></i><p style="font-size:20px">Handy is a no-brainer. Super easy to use, amazing service and now I have a sparkling apartment. It’s a real life saver!</p><br><i class="fa fa-quote-right" style="color:#5cb85c"></i>
+                <i class="fa fa-quote-left" style="color:#5cb85c"></i>
+                <p style="font-size:20px">Handy is a no-brainer. Super easy to use, amazing service and now I have a sparkling apartment. It’s a real life saver!</p>
+                <br><i class="fa fa-quote-right" style="color:#5cb85c"></i>
             </md-card>
         </div>
     </div>

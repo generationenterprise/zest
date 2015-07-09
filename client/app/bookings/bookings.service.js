@@ -17,5 +17,19 @@ angular.module('zestServicesApp')
 
                 return deferred.promise;
             }
+
+            all: function(){
+                var deferred = $q.defer();
+
+                $http.get('/api/customers/contains', customer).
+                success(function(data) {
+                    deferred.resolve(data);
+                }).
+                error(function(err) {
+                    deferred.reject(err);
+                }.bind(this));
+
+                return deferred.promise;
+            }
         };
     });
