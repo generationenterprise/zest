@@ -9,9 +9,5 @@ angular.module('zestServicesApp')
                 controller: 'MainCtrl'
             });
     })
-    .controller('MainCtrl', function($scope) {
-        $scope.choosing = false;
-        $scope.book = function() {
-            $scope.choosing = true;
-        }
+    .controller('MainCtrl', function() {
     });

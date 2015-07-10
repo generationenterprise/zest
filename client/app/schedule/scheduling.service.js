@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('zestServicesApp')
-    .factory('SchedulingService', function Auth($location, $rootScope, $http, Customer, Cleaning, $cookieStore, $q, $localStorage) {
+    .factory('SchedulingService', function Auth($location, $rootScope, $http, Customer, Cleaning, $cookieStore, $q) {
 
         //var bookingTypes = BookingType.query();
 
@@ -11,7 +11,7 @@ angular.module('zestServicesApp')
 
                 $http.get('/api/scheduling/openings/'+hours).then(function(resp){
                 	deferred.resolve(resp.data);
-                })
+                });
 
                 return deferred.promise;
             },

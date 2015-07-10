@@ -54,7 +54,7 @@ angular.module('zestServicesApp')
 
         loaders.push(extras);
 
-        $q.all(loaders).then(function(resps) {
+        $q.all(loaders).then(function() {
             $scope.loading = false;
         });
 
@@ -158,7 +158,7 @@ angular.module('zestServicesApp')
                 }
             });
 
-            modalInstance.result.then(function(data) {
+            modalInstance.result.then(function() {
                 $scope.doBooking();
 
             }).finally(function() {
@@ -179,7 +179,7 @@ angular.module('zestServicesApp')
                 }
             });
 
-            modalInstance.result.then(function(data) {
+            modalInstance.result.then(function() {
                 $scope.doBooking();
 
             }).finally(function() {
@@ -200,7 +200,7 @@ angular.module('zestServicesApp')
                 }
             });
 
-            modalInstance.result.then(function(data) {
+            modalInstance.result.then(function() {
                 if (Auth.hasBookings()) {
                     $scope.doChoose();
                 }
@@ -227,8 +227,8 @@ angular.module('zestServicesApp')
         };
 
         $scope.reset = function() {
-            $scope.error = "";
-            Auth.resetPassword(customer.email).then(function(data) {
+            $scope.error = '';
+            Auth.resetPassword(customer.email).then(function() {
                 $scope.didReset = true;
             });
         };
@@ -249,7 +249,7 @@ angular.module('zestServicesApp')
                 })
                 .then(function(data) {
                     $modalInstance.close(data);
-                })
+                });
         };
 
         $scope.cancel = function() {

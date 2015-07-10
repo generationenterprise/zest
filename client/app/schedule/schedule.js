@@ -21,7 +21,7 @@ angular.module('zestServicesApp')
                 name: val
             });
         };
-        $scope.setFrequency('once');;
+        $scope.setFrequency('once');
 
         $scope.booking = Booking.get({
             id: BookingService.getCurrentBookingId()
@@ -57,7 +57,7 @@ angular.module('zestServicesApp')
 
             var reqs = [$scope.frequencies, $scope.openings];
 
-            $q.all(reqs).then(function(resps) {
+            $q.all(reqs).then(function() {
                 $scope.loading = false;
             });
         });
@@ -69,28 +69,28 @@ angular.module('zestServicesApp')
         $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate) {
             var now = moment();
             var DISPLAY_MAP = {
-                "8:00 AM": 800,
-                "8:30 AM": 850,
-                "9:00 AM": 900,
-                "9:30 AM": 950,
-                "10:00 AM": 1000,
-                "10:30 AM": 1050,
-                "11:00 AM": 1100,
-                "11:30 AM": 1150,
-                "12:00 PM": 1200,
-                "12:30 PM": 1250,
-                "1:00 PM": 1300,
-                "1:30 PM": 1350,
-                "2:00 PM": 1400,
-                "2:30 PM": 1450,
-                "3:00 PM": 1500,
-                "3:30 PM": 1550,
-                "4:00 PM": 1600,
-                "4:30 PM": 1650,
-                "5:00 PM": 1700,
-                "5:30 PM": 1750,
-                "6:00 PM": 1800,
-                "6:30 PM": 1850
+                '8:00 AM': 800,
+                '8:30 AM': 850,
+                '9:00 AM': 900,
+                '9:30 AM': 950,
+                '10:00 AM': 1000,
+                '10:30 AM': 1050,
+                '11:00 AM': 1100,
+                '11:30 AM': 1150,
+                '12:00 PM': 1200,
+                '12:30 PM': 1250,
+                '1:00 PM': 1300,
+                '1:30 PM': 1350,
+                '2:00 PM': 1400,
+                '2:30 PM': 1450,
+                '3:00 PM': 1500,
+                '3:30 PM': 1550,
+                '4:00 PM': 1600,
+                '4:30 PM': 1650,
+                '5:00 PM': 1700,
+                '5:30 PM': 1750,
+                '6:00 PM': 1800,
+                '6:30 PM': 1850
             };
 
             if ($view === 'month') {
@@ -133,7 +133,7 @@ angular.module('zestServicesApp')
             }
         };
 
-        $scope.onSetTime = function(newDate, oldDate) {
+        $scope.onSetTime = function(newDate) {
             $scope.dateTimePicked = newDate;
         };
 
@@ -144,7 +144,7 @@ angular.module('zestServicesApp')
 
         $scope.describeFrequency = function() {
             if (!$scope.dateTimePicked) {
-                return '...'
+                return '...';
             }
             var dtp = moment($scope.dateTimePicked);
             if ($scope.frequencySelected.name === 'once') {
@@ -168,28 +168,28 @@ angular.module('zestServicesApp')
                 }
                 return week + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
             } else if ($scope.frequencySelected.name === 'monthly') {
-                var som = moment(dtp).date(1);
-                var week = 0;
-                for (; som.date() <= dtp.date(); som.add(1, 'days')) {
-                    if (som.day() === dtp.day()) {
-                        week++;
+                var somx = moment(dtp).date(1);
+                var weekx = 0;
+                for (; somx.date() <= dtp.date(); somx.add(1, 'days')) {
+                    if (somx.day() === dtp.day()) {
+                        weekx++;
                     }
                 }
-                $scope.week = week;
-                if (week === 1) {
-                    week = '1st ';
-                } else if (week === 2) {
-                    week = '2nd ';
-                } else if (week === 3) {
-                    week = '3rd ';
-                } else if (week === 4) {
-                    week = '4th ';
+                $scope.week = weekx;
+                if (weekx === 1) {
+                    weekx = '1st ';
+                } else if (weekx === 2) {
+                    weekx = '2nd ';
+                } else if (weekx === 3) {
+                    weekx = '3rd ';
+                } else if (weekx === 4) {
+                    weekx = '4th ';
                 } else {
-                    week = 'Last ';
+                    weekx = 'Last ';
                 }
-                return week + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
+                return weekx + dtp.format('dddd') + 's at ' + dtp.format('HH:mm');
             }
-        }
+        };
 
         var isValidDateTime = function() {
             return $scope.dateTimePicked;
@@ -246,7 +246,7 @@ angular.module('zestServicesApp')
                 cmin = parseInt(dtp.format('mm'));
             var etime = ((chour * 100 + ((cmin === 30) ? 50 : 0)) - 50);
 
-            var employeeId = $scope.openings[dtp.format("YYYY-MM-DD")][etime][0];
+            var employeeId = $scope.openings[dtp.format('YYYY-MM-DD')][etime][0];
 
             var c = Customer.update($scope.customer),
                 b = SchedulingService.schedule(employeeId, $scope.booking, $scope.frequencySelected, dtp, etime, $scope.week);

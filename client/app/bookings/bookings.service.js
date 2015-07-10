@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('zestServicesApp')
-    .factory('BookingsService', function Auth($location, $rootScope, $http, Customer, Cleaning, $cookieStore, $q, $localStorage) {
+    .factory('BookingsService', function Auth($location, $rootScope, $http, Customer, Cleaning, $cookieStore, $q) {
 
         return {
             contains: function(customer) {
@@ -16,9 +16,9 @@ angular.module('zestServicesApp')
                 }.bind(this));
 
                 return deferred.promise;
-            }
+            },
 
-            all: function(){
+            all: function(customer){
                 var deferred = $q.defer();
 
                 $http.get('/api/customers/contains', customer).

@@ -11,31 +11,33 @@ angular.module('zestServicesApp')
     })
     .controller('BookingsCtrl', function($scope, $state, BookingsService, Extra, $modal) {
 
+        console.log('jshin:',$scope,$state, BookingsService, Extra, $modal);
+
         $scope.messages = [{
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
-            notes: " I'll be in your neighborhood doing errands"
+            notes: ' In your neighborhood doing errands'
         }, {
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
-            notes: " I'll be in your neighborhood doing errands"
+            notes: ' In your neighborhood doing errands'
         }, {
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
-            notes: " I'll be in your neighborhood doing errands"
+            notes: ' In your neighborhood doing errands'
         }, {
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
-            notes: " I'll be in your neighborhood doing errands"
+            notes: ' In your neighborhood doing errands'
         }, {
             what: 'Brunch this weekend?',
             who: 'Min Li Chan',
             when: '3:08PM',
-            notes: " I'll be in your neighborhood doing errands"
+            notes: ' In your neighborhood doing errands'
         }];
 
     });
