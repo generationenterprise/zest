@@ -11,7 +11,7 @@ angular.module('zestServicesApp')
     })
     .controller('BookingsCtrl', function($scope, $state, BookingsService, Extra, $modal) {
 
-        console.log('jshin:',$scope,$state, BookingsService, Extra, $modal);
+        //console.log('jshint:',$scope,$state, BookingsService, Extra, $modal);
 
         $scope.messages = [{
             what: 'Brunch this weekend?',

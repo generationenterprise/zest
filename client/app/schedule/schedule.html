@@ -9,8 +9,13 @@
                     <span class="pull-right">₦{{(booking.hours*frequencySelected.rate).toFixed(1)}}</span>
                 </div>
                 <div ng-repeat="extra in booking.Cleaning.Extras" ng-if="!loading">
-                    <span class="pull-left">+{{extra.description}}</span>
-                    <span class="pull-right">₦{{extra.rate.toFixed(1)}}</span>
+                    <span class="pull-left">+{{extra.description}} <span ng-if="extra.variable">(₦{{extra.rate}}/bedroom)</span></span>
+                    <span class="pull-right" ng-if="!extra.variable">₦{{extra.rate.toFixed(1)}}</span>
+                    <span class="pull-right" ng-if="extra.variable">₦{{(extra.rate*booking.Cleaning.bedrooms).toFixed(1)}}</span>
+                </div>
+                <div ng-if="!loading && selectedZone.rate > 0">
+                    <span class="pull-left">+{{customer.neighborhood}} transport</span>
+                    <span class="pull-right">₦{{selectedZone.rate.toFixed(1)}}</span>
                 </div>
                 <div ng-if="!loading" style="font-weight:bold">
                     <span class="pull-left">TOTAL</span>
@@ -40,10 +45,16 @@
                     <br><br>
                     <input type="text" class="form-control" ng-model="customer.address" placeholder="Street Address">
                     <br>
-                    <input type="text" class="form-control" ng-model="customer.city" placeholder="City">
-                    <br>
-                    <input type="text" class="form-control display-inline pull-left width-48" ng-model="customer.state" placeholder="State">
-                    <input type="text" class="form-control display-inline pull-right width-48" ng-model="customer.postcode" placeholder="Code">
+                    <!--input type="text" class="form-control" ng-model="customer.city" placeholder="City">
+                    <br-->
+                    <input type="text" class="form-control display-inline pull-left width-48" ng-model="customer.city" placeholder="City">
+                    <!--input type="text" class="form-control display-inline pull-right width-48" ng-model="customer.neighborhood" placeholder="Neighborhood"-->
+                    <select class="form-control display-inline pull-right width-48"
+                            ng-change="setNeighborhood()"
+                            ng-model="customer.neighborhood">
+                        <option value="" disabled selected>Select Neighborhood</option>
+                        <option ng-repeat="neighborhood in neighborhoods">{{neighborhood}}</option>
+                    </select>
                 </div>
             </div>
             <br>

@@ -33,14 +33,21 @@ angular.module('zestServicesApp')
 
 
             $scope.booking.total = function() {
-                var extras = 0;
+                var extras = 0, transport = 0, bedrooms = $scope.booking.Cleaning.bedrooms;
                 if ($scope.booking.Cleaning.Extras) {
-                    extras = _.sum(_.pluck($scope.booking.Cleaning.Extras, 'rate'));
-                    _.each($scope.booking.Cleaning.Extras, function(extra) {
+                    _.each($scope.booking.Cleaning.Extras, function(extra){
                         extra.rate = parseInt(extra.rate);
+                        if(extra.variable){
+                            extras += extra.rate*bedrooms;
+                        }else{
+                            extras += extra.rate;
+                        }
                     });
                 }
-                return ($scope.booking.hours * $scope.frequencySelected.rate) + extras;
+                if($scope.selectedZone){
+                    transport = $scope.selectedZone.rate;
+                }
+                return ($scope.booking.hours * $scope.frequencySelected.rate) + extras + transport;
             };
 
             $scope.frequencies = Frequency.query(function(frequencies) {
@@ -58,12 +65,50 @@ angular.module('zestServicesApp')
             var reqs = [$scope.frequencies, $scope.openings];
 
             $q.all(reqs).then(function() {
+                $scope.customer.neighborhood = $scope.customer.neighborhood || '';
+                $scope.setNeighborhood();
                 $scope.loading = false;
             });
         });
 
-        $scope.parseMonths = function(resps) {
-            console.log('resps=', resps);
+        var zones = [{
+            name: 'Lagos Island',
+            neighborhoods: ['Victoria Island', 'Ikoyi', 'Obalende', 'Marina'],
+            rate: 0
+        }, {
+            name: 'Island 1',
+            neighborhoods: ['Lekki', 'Ajah', 'Victoria Garden City'],
+            rate: 860
+        }, {
+            name: 'Mainland 1',
+            neighborhoods: ['Yaba', 'Surulere', 'Ebute-metta', 'Somolu', 'Mushin'],
+            rate: 0
+        }, {
+            name: 'Mainland 2',
+            neighborhoods: ['Ikeja', 'Maryland', 'Bariga', 'Gbagada', 'Oworonshoki', 'Anthony', 'Ilupeju', 'Ogudu'],
+            rate: 0
+        }, {
+            name: 'Mainland 3',
+            neighborhoods: ['Apapa', 'Ajeromi-Ifelodun', 'Ajegunle'],
+            rate: 0
+        }, {
+            name: 'Mainland 4',
+            neighborhoods: ['Festac', 'Mile 2', 'Amuwo Odofin'],
+            rate: 0
+        }];
+
+        $scope.neighborhoods = ['Neighborhood'];
+        _.each(zones, function(zone){
+            _.each(zone.neighborhoods, function(val){
+                $scope.neighborhoods.push(val);
+            });
+        });
+        $scope.neighborhoods = $scope.neighborhoods.sort();
+
+        $scope.setNeighborhood = function(){
+            $scope.selectedZone = _.find(zones, function(zone){
+                return (zone.neighborhoods.indexOf($scope.customer.neighborhood) !== -1);
+            });
         };
 
         $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate) {
@@ -144,7 +189,7 @@ angular.module('zestServicesApp')
 
         $scope.describeFrequency = function() {
             if (!$scope.dateTimePicked) {
-                return '...';
+                return 'No Date/Time Selected.';
             }
             var dtp = moment($scope.dateTimePicked);
             if ($scope.frequencySelected.name === 'once') {
@@ -211,20 +256,27 @@ angular.module('zestServicesApp')
             return $scope.customer.postcode && $scope.customer.postcode.length >= 2;
         };
 
+        var isValidNeighborhood = function(){
+            return $scope.customer.neighborhood;
+        };
+
         $scope.validator = {
             disable: function() {
-                return !isValidCode() || !isValidState() || !isValidCity() || !isValidAddress() || !isValidDateTime();
+                return !isValidNeighborhood() /*!isValidCode() || !isValidState()*/ || !isValidCity() || !isValidAddress() || !isValidDateTime();
             },
             message: function() {
                 var msg = '';
-                if (!isValidCode()) {
+                if (!isValidNeighborhood()) {
+                    msg = 'Select a Neighborhood.';
+                }
+                /*if (!isValidCode()) {
                     msg = 'Enter a valid Postal Code.';
                 }
                 if (!isValidState()) {
                     msg = 'Enter a valid State.';
-                }
+                }*/
                 if (!isValidCity()) {
-                    msg = 'Enter a vali City.';
+                    msg = 'Enter a valid City.';
                 }
                 if (!isValidAddress()) {
                     msg = 'Enter your street address.';
@@ -247,6 +299,12 @@ angular.module('zestServicesApp')
             var etime = ((chour * 100 + ((cmin === 30) ? 50 : 0)) - 50);
 
             var employeeId = $scope.openings[dtp.format('YYYY-MM-DD')][etime][0];
+
+            $scope.booking.total = $scope.booking.total();
+            $scope.booking._id = $scope.booking.id;
+            $scope.booking.$update(function(){
+                console.log('booking updated');
+            });
 
             var c = Customer.update($scope.customer),
                 b = SchedulingService.schedule(employeeId, $scope.booking, $scope.frequencySelected, dtp, etime, $scope.week);

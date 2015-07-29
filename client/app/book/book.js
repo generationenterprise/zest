@@ -59,12 +59,7 @@ angular.module('zestServicesApp')
         });
 
         $scope.recommendedHours = function() {
-            var hours = 2;
-            hours += ($scope.cleaning.bedrooms - 1) * 0.5;
-            hours += ($scope.cleaning.bathrooms - 1) * 0.5;
-            if ($scope.booking.manual !== true) {
-                $scope.booking.hours = hours;
-            }
+            var hours = (2 +($scope.cleaning.bedrooms+$scope.cleaning.bathrooms-2)*0.5);
             return hours;
         };
         $scope.recommendation = function() {
@@ -77,7 +72,7 @@ angular.module('zestServicesApp')
         };
 
         var isValidFullName = function() {
-            return $scope.customer.fullName && $scope.customer.fullName.split(' ').length >= 2;
+            return $scope.customer.fullName;// && $scope.customer.fullName.split(' ').length >= 2;
         };
 
         var isValidMobile = function() {

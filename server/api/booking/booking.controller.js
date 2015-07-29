@@ -76,7 +76,7 @@ exports.show = function(req, res) {
 };
 
 exports.create = function(req, res) {
-    db.Booking.create(req.body).success(function(booking) {
+    db.Booking.create(req.body).then(function(booking) {
         return res.json(200, booking)
     }).error(function(error) {
         return res.json(500, error);
@@ -85,7 +85,7 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
     db.Booking.find(req.body.id).then(function(booking) {
-        booking.updateAttributes(req.body).success(function(booking) {
+        booking.updateAttributes(req.body).then(function(booking) {
             return res.json(200, booking);
         }).error(function(error) {
             return res.json(500, error);
@@ -95,7 +95,7 @@ exports.update = function(req, res) {
 
 exports.destroy = function(req, res) {
     db.Booking.find(req.body.id).then(function(booking) {
-        booking.destroy(req.body).success(function(booking) {
+        booking.destroy(req.body).then(function(booking) {
             return res.json(200, booking);
         }).error(function(error) {
             return res.json(500, error);

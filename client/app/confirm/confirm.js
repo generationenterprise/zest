@@ -17,19 +17,11 @@ angular.module('zestServicesApp')
             id: BookingService.getCurrentBookingId()
         }, function(booking) {
             $scope.booking = booking;
-
-            $scope.booking.total = function() {
-                var extras = 0;
-                if ($scope.booking.Cleaning.Extras) {
-                    extras = _.sum(_.pluck($scope.booking.Cleaning.Extras, 'rate'));
-                    _.each($scope.booking.Cleaning.Extras, function(extra) {
-                        extra.rate = parseInt(extra.rate);
-                    });
-                }
-                return ($scope.booking.hours * $scope.booking.Cleaning.Frequency.rate) + extras;
-            };
+            
             $scope.loading = false;
         });
+
+        $scope._ = _;
 
         $scope.card = {
             number: '',
@@ -44,6 +36,10 @@ angular.module('zestServicesApp')
         };
 
         $scope.continue = function() {
-            $state.go('checkout');
+            $scope.booking._id = BookingService.getCurrentBookingId();
+            $scope.booking.total = $scope.booking.total();
+            $scope.booking.$update(function(booking){
+                $state.go('checkout');
+            });
         };
     });

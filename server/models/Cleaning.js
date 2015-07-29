@@ -12,6 +12,12 @@
                  min: 1
              }
          },
+         transportation: {
+             type: DataTypes.DECIMAL(10, 2),
+             validate: {
+                 min: 1
+             }
+         },
          kitchens: DataTypes.DECIMAL(10, 2),
          others: DataTypes.DECIMAL(10, 2),
          instructions: DataTypes.STRING,

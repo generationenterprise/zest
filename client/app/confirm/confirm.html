@@ -2,24 +2,37 @@
     <div layout="row" layout-sm="column" layout-align="center" layout-margin layout-fill layout-padding>
         <div layout="column" layout-align="top">
             <div>
-                <h2>Confirm Your Booking</h2></div>
+                <h2>Booking Confirmed</h2></div>
             <div class="schedule-estimate-container md-card-shadow" layout="column">
-                <div ng-if="!loading">
+                <!--div ng-if="!loading">
                     <span class="pull-left">{{booking.hours}} hour cleaning (₦{{booking.Cleaning.Frequency.rate}}/hour)</span>
                     <span class="pull-right">₦{{(booking.hours*booking.Cleaning.Frequency.rate).toFixed(1)}}</span>
                 </div>
                 <div ng-repeat="extra in booking.Cleaning.Extras" ng-if="!loading">
                     <span class="pull-left">+{{extra.description}}</span>
                     <span class="pull-right">₦{{extra.rate.toFixed(1)}}</span>
-                </div>
+                </div-->
                 <div ng-if="!loading" style="font-weight:bold">
                     <span class="pull-left">TOTAL</span>
-                    <span class="pull-right">₦{{booking.total().toFixed(1)}}</span>
+                    <span class="pull-right">₦{{booking.total.toFixed(1)}}</span>
                 </div>
             </div>
         </div>
         <div layout="column" layout-align="space-around center" layout-margin layout-fill layout-padding class="confirm-form-container md-card-shadow">
-            <div class="form-item full-width">
+                <ul class="list-group" style="width:100%">
+                  <li class="list-group-item"><b>Service:</b> Cleaning</li>
+                  <li class="list-group-item"><b>Frequency:</b> {{booking.Cleaning.Frequency.description}}</li>
+                  <li class="list-group-item"><b>Hours:</b> {{booking.hours}}</li>
+                  <li class="list-group-item"><b>Bedrooms:</b> {{booking.Cleaning.bedrooms}}</li>
+                  <li class="list-group-item"><b>Bathrooms:</b> {{booking.Cleaning.bathrooms}}</li>
+                  <li class="list-group-item"><b>Extras:</b> {{_.pluck(booking.Cleaning.Extras, 'description').join(', ')}}</li>
+                  <li class="list-group-item"><b>Neighborhood:</b> {{booking.Customer.neighborhood}}</li>
+                </ul>
+                <span style="padding:15px">
+                    <b>Thank you for booking with Zest!</b><br><br>
+                    A professional will follow up to confirm your booking and you can pay after your service is complete.
+                </span>
+            <!--div class="form-item full-width">
                 <input type="text" class="form-control" ng-model="card.number" placeholder="Credit Card Number">
                 <br>
                 <select ng-model="card.month" ng-options="month for month in card.months" class="width-48 pull-left">
@@ -33,7 +46,7 @@
                 <p class="comment"><span class="fa fa-lock display-inline" />&nbsp;&nbsp; For your protection we have secured this form with 256-bit SSL encryption.</p>
                 <p class="comment"><span class="fa fa-check display-inline" />&nbsp;&nbsp; You will not be charged until your appointment is complete.</p>
             </div>
-            <button type="button" class="btn btn-success submit" ng-click="continue()">Book</button>
+            <button type="button" class="btn btn-success submit" ng-click="continue()">Book</button-->
         </div>
     </div>
 </div>

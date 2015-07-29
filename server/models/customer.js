@@ -21,6 +21,7 @@ module.exports = function(sequelize, DataTypes) {
         homePhone: DataTypes.BIGINT,
         address: DataTypes.TEXT,
         city: DataTypes.STRING,
+        neighborhood: DataTypes.STRING,
         state: DataTypes.STRING,
         postcode: DataTypes.STRING,
         referrer: DataTypes.STRING,
