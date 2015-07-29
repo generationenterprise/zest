@@ -124,7 +124,6 @@ angular.module('zestServicesApp')
                         $scope.doLogin();
                     }
                 });
-
             }
         };
 
