@@ -92,7 +92,7 @@ angular.module('zestServicesApp')
                     msg = 'Enter a valid phone.';
                 }
                 if (!isValidEmail()) {
-                    msg = 'Enter a vali email.';
+                    msg = 'Enter a valid email.';
                 }
                 if (!isValidFullName()) {
                     msg = 'Enter your first and last name.';

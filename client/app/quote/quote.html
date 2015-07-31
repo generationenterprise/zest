@@ -19,17 +19,17 @@
                     <br>
                     <div class="input-group">
                         <div class="input-group-addon">&nbsp;<span class="fa fa-user" />&nbsp;</div>
-                        <input type="text" class="form-control" ng-model="quote.fullName" placeholder="Your First and Last Names">
+                        <input type="text" class="form-control" ng-model="quote.fullName" placeholder="Your Full Name">
                     </div>
                     <br>
                     <div class="input-group" ng-if="!isLoggedIn()">
                         <div class="input-group-addon">&nbsp;<span class="fa fa-envelope-o" />&nbsp;</div>
-                        <input type="email" class="form-control" ng-model="quote.email" placeholder="Email Address">
+                        <input type="email" class="form-control" ng-model="quote.email" placeholder="Email Address" ng-blur="checkEmail()">
                     </div>
                     <br>
                     <div class="input-group">
                         <div class="input-group-addon">&nbsp;&nbsp;<span class="fa fa-phone" />&nbsp;</div>
-                        <input type="number" class="form-control" ng-model="quote.mobilePhone" placeholder="Mobile Phone Number">
+                        <input type="number" class="form-control" ng-model="quote.mobilePhone" placeholder="Mobile Phone Number" ng-blur="checkPhone()">
                     </div>
                     <br>
                     <div class="input-group">
@@ -37,16 +37,23 @@
                         <input type="text" class="form-control" ng-model="quote.location" placeholder="Address">
                     </div>
                     <br>
-                    <h5>Best Time to Call You:</h5>
-                    <textarea class="form-control" rows="1" style="resize:none" ng-model="quote.bestTime"></textarea>
+                    <h5>Best time to reach you:</h5>
+                    <textarea class="form-control" rows="1" style="resize:none" ng-model="quote.bestTime" placeholder="Mornings, 9:30 AM"></textarea>
                     <br>
-                    <h5>Describe Your Home or Office:</h5>
-                    <textarea class="form-control" rows="4" style="resize:none" ng-model="quote.description"></textarea>
+                    <h5>Describe your <u>place</u> and explain the <u>service</u> you'd like:</h5>
+                    <textarea class="form-control" rows="4" style="resize:none" ng-model="quote.description" placeholder="Medium sized building, 3 floors, 30,000 sqr meters. Need full cleaning and fumigation."></textarea>
                 </div>
-            </div>       
+            </div>
+            <center><span style="display:block;margin-bottom:15px">
+                <div class="alert alert-info">All fields above are required.</div>
+                <div class="alert alert-danger" ng-if="emailError || phoneError">
+                    <span ng-if="emailError">{{emailError}}</span>
+                    <br ng-if="emailError && phoneError">
+                    <span ng-if="phoneError">{{phoneError}}</span>
+                </div>
+            </center>
             <button type="button" class="btn btn-success submit" ng-if="!submitting" ng-disabled="!isValid()" ng-click="request()">
-                <span ng-if="isValid()">Request Quote</span>
-                <span ng-if="!isValid()">All Fields Above are Required</span>
+                <span>Request Quote</span>
             </button>
             <button type="button" class="btn btn-success submit" disabled ng-if="submitting">
                 <span class="fa fa-spinner fa-spin"></span> Submitting...

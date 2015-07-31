@@ -302,8 +302,9 @@ angular.module('zestServicesApp')
 
             $scope.booking.total = $scope.booking.total();
             $scope.booking._id = $scope.booking.id;
+            $scope.booking.confirmed = true;
             $scope.booking.$update(function(){
-                console.log('booking updated');
+                
             });
 
             var c = Customer.update($scope.customer),

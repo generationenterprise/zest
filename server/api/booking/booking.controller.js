@@ -2,7 +2,8 @@
 
 var db = require('../../models'),
     _ = require('lodash'),
-    Q = require('q');
+    Q = require('q'),
+    sendgrid = require('sendgrid')(process.env.SENDGRID_USERNAME, process.env.SENDGRID_PASSWORD);
 
 exports.index = function(req, res) {
     db.Booking.findAll({}).then(function(bookings) {
@@ -86,6 +87,28 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
     db.Booking.find(req.body.id).then(function(booking) {
         booking.updateAttributes(req.body).then(function(booking) {
+            if (booking.confirmed) {
+
+                var keys = _.keys(booking) ;
+                var out = [];
+                _.each(keys, function(key){
+                    out.push(key+': '+booking[key]);
+                });
+                out.push('url: http://http://zest-services.herokuapp.com/api/bookings/'+booking.id);
+
+                sendgrid.send({
+                    to: ['brices@gmail.com', '0x360z@gmail.com'],
+                    from: quote.email,
+                    subject: 'Zest - Booking Confirmed ('+booking.id+')',
+                    text: out.join('----')
+                }, function(err, json) {
+                    if (err) {
+                        return res.json(500, json);
+                    }
+                    return res.json(200, booking);
+                });
+
+            }
             return res.json(200, booking);
         }).error(function(error) {
             return res.json(500, error);

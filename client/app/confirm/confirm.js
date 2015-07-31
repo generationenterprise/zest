@@ -38,6 +38,7 @@ angular.module('zestServicesApp')
         $scope.continue = function() {
             $scope.booking._id = BookingService.getCurrentBookingId();
             $scope.booking.total = $scope.booking.total();
+            $scope.booking.confirmed = true;
             $scope.booking.$update(function(booking){
                 $state.go('checkout');
             });
