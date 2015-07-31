@@ -114,6 +114,8 @@ angular.module('zestServicesApp')
         $scope.beforeRender = function($view, $dates, $leftDate, $upDate, $rightDate) {
             var now = moment();
             var DISPLAY_MAP = {
+                '7:00 AM': 700,
+                '7:30 AM': 750,
                 '8:00 AM': 800,
                 '8:30 AM': 850,
                 '9:00 AM': 900,
@@ -130,12 +132,12 @@ angular.module('zestServicesApp')
                 '2:30 PM': 1450,
                 '3:00 PM': 1500,
                 '3:30 PM': 1550,
-                '4:00 PM': 1600,
+                '4:00 PM': 1600/*,
                 '4:30 PM': 1650,
                 '5:00 PM': 1700,
                 '5:30 PM': 1750,
                 '6:00 PM': 1800,
-                '6:30 PM': 1850
+                '6:30 PM': 1850*/
             };
 
             if ($view === 'month') {
@@ -149,7 +151,7 @@ angular.module('zestServicesApp')
             } else if ($view === 'day') {
                 _.each($dates, function(date) {
                     var d = moment(date.utcDateValue);
-                    date.selectable = ((d > moment(now).add(2, 'days')) && (d.day() !== 6) && (now.diff(d, 'months') >= -1));
+                    date.selectable = ((d > moment(now).add(2, 'days')) && (d.day() !== 5) && (now.diff(d, 'months') >= -1));
                 });
             } else if ($view === 'hour') {
                 _.each($dates, function(date) {
