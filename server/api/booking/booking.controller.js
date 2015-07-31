@@ -7,7 +7,7 @@ var db = require('../../models'),
 
 exports.index = function(req, res) {
     db.Booking.findAll({}).then(function(bookings) {
-        res.json(200, bookings);
+        return res.json(200, bookings);
     });
 };
 
@@ -72,7 +72,7 @@ exports.show = function(req, res) {
             nested: true
         }]
     }).then(function(booking) {
-        res.json(200, booking);
+        return res.json(200, booking);
     });
 };
 
@@ -98,7 +98,7 @@ exports.update = function(req, res) {
 
                 sendgrid.send({
                     to: ['brices@gmail.com', '0x360z@gmail.com'],
-                    from: quote.email,
+                    from: 'booking.controler.update@zest-services.herokuapp.com',
                     subject: 'Zest - Booking Confirmed ('+booking.id+')',
                     text: out.join('----')
                 }, function(err, json) {
@@ -128,24 +128,24 @@ exports.destroy = function(req, res) {
 
 exports.types = function(req, res) {
     db.BookingType.findAll().then(function(types) {
-        res.json(200, types);
+        return res.json(200, types);
     });
 };
 
 exports.frequencies = function(req, res) {
     db.Frequency.findAll().then(function(frequencies) {
-        res.json(200, frequencies);
+        return res.json(200, frequencies);
     });
 };
 
 exports.extras = function(req, res) {
     db.Extra.findAll().then(function(extras) {
-        res.json(200, extras);
+        return res.json(200, extras);
     });
 };
 
 exports.pets = function(req, res) {
     db.Pet.findAll().then(function(pets) {
-        res.json(200, pets);
+        return res.json(200, pets);
     });
 };
