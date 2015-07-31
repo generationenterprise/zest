@@ -42,7 +42,7 @@ var findAllOpenings = function(YEAR, MONTH, HOURS) {
 
     // Returns an hourly schedule array
     var createHourlySchedule = function(day) {
-        var hours = [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450, 1500, 1550, 1600, 1650, 1700, 1750, 1800, 1850];
+        var hours = [650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450, 1500, 1550];
         return hours;
     };
 
@@ -51,8 +51,8 @@ var findAllOpenings = function(YEAR, MONTH, HOURS) {
         var openings = {};
         var runner = moment(start);
         for (; runner < end; runner.add(1, 'days')) {
-            // Ignore Sundays
-            if (runner.day() !== 0) {
+            // Ignore Sundays and Saturdays
+            if (runner.day() !== 0 && runner.day() !== 1) {
                 var d = runner.format("YYYY-MM-DD");
                 openings[d] = createHourlySchedule();
             }
