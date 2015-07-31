@@ -91,17 +91,17 @@ exports.update = function(req, res) {
 
                 var bookingj = booking.toJSON();
 
-                var keys = _.keys(bookingj) ;
+                var keys = _.keys(bookingj);
                 var out = [];
-                _.each(keys, function(key){
-                    out.push('<b>'+key+'</b>: '+bookingj[key]);
+                _.each(keys, function(key) {
+                    out.push('<b>' + key + '</b>: ' + bookingj[key]);
                 });
-                out.push('Booking: http://http://zest-services.herokuapp.com/api/bookings/'+bookingj.id);
+                out.push('Booking: http://zest-services.herokuapp.com/viewer/' + bookingj.id);
 
                 sendgrid.send({
-                    to: ['brices@gmail.com', '0x360z@gmail.com'],
+                    to: ['technology@generationenterprise.org'],
                     from: 'booking.controler.update@zest-services.herokuapp.com',
-                    subject: 'Zest - Booking Confirmed ('+bookingj.id+')',
+                    subject: 'Zest - Booking Confirmed (' + bookingj.id + ')',
                     html: out.join('<br>')
                 }, function(err, json) {
                     if (err) {
@@ -110,8 +110,10 @@ exports.update = function(req, res) {
                     return res.json(200, booking);
                 });
 
+            } else {
+                return res.json(200, booking);
             }
-            return res.json(200, booking);
+
         }).error(function(error) {
             return res.json(500, error);
         })

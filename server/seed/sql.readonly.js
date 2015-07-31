@@ -36,14 +36,14 @@ module.exports = function(db) {
         name: 'cleaning',
         description: 'Cleaning service'
     });
-    db.BookingType.create({
+    /*db.BookingType.create({
         name: 'fumigation',
         description: 'Fumigation service'
     });
     db.BookingType.create({
         name: 'ac',
         description: 'Air-conditioning service'
-    });
+    });*/
 
     // --------------  Frequencies
     db.Frequency.create({

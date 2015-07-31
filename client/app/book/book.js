@@ -109,7 +109,9 @@ angular.module('zestServicesApp')
             if (Auth.isLoggedIn() && Auth.hasBookings() === false) {
                 $scope.doBooking();
             } else if (Auth.isLoggedIn() && (Auth.hasBookings() !== false)) {
-                $scope.doChoose();
+                $scope.doBooking();                                
+                // TODO: reste to add chosing
+                //$scope.doChoose();
             } else {
                 BookingService.contains($scope.customer).then(function(data) {
                     if (!data) {
@@ -195,9 +197,11 @@ angular.module('zestServicesApp')
             });
 
             modalInstance.result.then(function() {
-                if (Auth.hasBookings()) {
-                    $scope.doChoose();
-                }
+                $scope.doBooking();                                
+                // TODO: reste to add chosing
+                //if (Auth.hasBookings()) {
+                //    $scope.doChoose();
+                //}
                 $localStorage.popupLogin = false;
 
             }).finally(function() {

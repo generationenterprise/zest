@@ -9,7 +9,8 @@ angular.module('zestServicesApp', [
         'angularNumberPicker',
         'ngSanitize',
         'ui.bootstrap.datetimepicker',
-        'ui.router'
+        'ui.router',
+        'jsonFormatter'
     ])
     .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
         $urlRouterProvider

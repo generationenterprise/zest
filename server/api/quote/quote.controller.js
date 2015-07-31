@@ -18,10 +18,10 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
     db.ServiceQuoteRequest.create(req.body).then(function(quote) {
         sendgrid.send({
-            to: ['brices@gmail.com','0x360z@gmail.com'],
+            to: ['technology@generationenterprise.org'],
             from: quote.email,
             subject: 'Zest - Quote Request: '+quote.type,
-            text: '<b>Type</b>: '+quote.type+' <br> '+
+            html: '<b>Type</b>: '+quote.type+' <br> '+
                   '<b>Full Name</b>: '+quote.fullName+' <br> '+
                   '<b>Email</b>: '+quote.email+' <br> '+
                   '<b>Mobile Phone</b>: '+quote.mobilePhone+' <br> '+

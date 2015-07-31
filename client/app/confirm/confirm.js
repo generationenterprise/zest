@@ -16,6 +16,7 @@ angular.module('zestServicesApp')
         $scope.booking = Booking.get({
             id: BookingService.getCurrentBookingId()
         }, function(booking) {
+            booking.total = parseFloat(booking.total);
             $scope.booking = booking;
             
             $scope.loading = false;
@@ -23,24 +24,7 @@ angular.module('zestServicesApp')
 
         $scope._ = _;
 
-        $scope.card = {
-            number: '',
-            month: 1,
-            months: (function(_) {
-                return _.range(1, 13);
-            })(_),
-            year: moment().year(),
-            years: (function(_, y) {
-                return _.range(y, y + 10);
-            })(_, moment().year())
-        };
-
         $scope.continue = function() {
-            $scope.booking._id = BookingService.getCurrentBookingId();
-            $scope.booking.total = $scope.booking.total();
-            $scope.booking.confirmed = true;
-            $scope.booking.$update(function(booking){
-                $state.go('checkout');
-            });
+            //$state.go('checkout');
         };
     });
