@@ -22,7 +22,7 @@ exports.contains = function(req, res) {
 
 exports.show = function(req, res) {
     db.Customer.find(req.params.id).then(function(booking) {
-        res.json(200, booking);
+        return res.json(200, booking);
     });
 };
 

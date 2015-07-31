@@ -21,14 +21,14 @@ exports.create = function(req, res) {
             to: ['brices@gmail.com','0x360z@gmail.com'],
             from: quote.email,
             subject: 'Zest - Quote Request: '+quote.type,
-            text: 'Type: '+quote.type+' -- '+
-                  'Full Name: '+quote.fullName+' -- '+
-                  'Email: '+quote.email+' -- '+
-                  'Mobile Phone: '+quote.mobilePhone+' -- '+
-                  'Location: '+quote.location+' -- '+
-                  'Best Time:'+quote.bestTime+' -- '+
-                  'Description: '+quote.description+' -- '+
-                  'Notes:'+quote.notes
+            text: '<b>Type</b>: '+quote.type+' <br> '+
+                  '<b>Full Name</b>: '+quote.fullName+' <br> '+
+                  '<b>Email</b>: '+quote.email+' <br> '+
+                  '<b>Mobile Phone</b>: '+quote.mobilePhone+' <br> '+
+                  '<b>Location</b>: '+quote.location+' <br> '+
+                  '<b>Best Time</b>:'+quote.bestTime+' <br> '+
+                  '<b>Description</b>: '+quote.description+' <br> '+
+                  '<b>Notes</b>:'+quote.notes
         }, function(err, json) {
             if (err) {
                 return res.json(500, json);

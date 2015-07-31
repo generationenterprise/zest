@@ -290,30 +290,40 @@ angular.module('zestServicesApp')
 
         $scope.continue = function() {
             $scope.submitting = true;
-            $scope.customer._id = $scope.customer.id;
 
-            var dtp = moment($scope.dateTimePicked);
+            var wait = [];
 
+            var C = Customer.get({
+                id: $scope.booking.Customer.id
+            }, function(customer) {
+                C._id = C.id;
+                C.address = $scope.customer.address;
+                C.city = $scope.customer.city;
+                C.neighborhood = $scope.customer.neighborhood;
+                wait.push(C.$update());
+            });
+
+            var B = Booking.get({
+                id: BookingService.getCurrentBookingId()
+            }, function(booking) {
+                B._id = B.id;
+                B.total = $scope.booking.total();
+                B.confirmed = true;
+                wait.push(B.$update());
+            });
+
+            var dtp = moment($scope.dateTimePicked);            
             var chour = parseInt(dtp.format('HH')),
                 cmin = parseInt(dtp.format('mm'));
             var etime = ((chour * 100 + ((cmin === 30) ? 50 : 0)) - 50);
-
             var employeeId = $scope.openings[dtp.format('YYYY-MM-DD')][etime][0];
+            var S = SchedulingService.schedule(employeeId, $scope.booking, $scope.frequencySelected, dtp, etime, $scope.week);
 
-            $scope.booking.total = $scope.booking.total();
-            $scope.booking._id = $scope.booking.id;
-            $scope.booking.confirmed = true;
-            $scope.booking.$update(function(){
-                
-            });
-
-            var c = Customer.update($scope.customer),
-                b = SchedulingService.schedule(employeeId, $scope.booking, $scope.frequencySelected, dtp, etime, $scope.week);
-
-            $q.all([c, b]).then(function() {
-                $scope.submitting = false;
-
-                $state.go('confirm');
+            $q.all([C, B, S]).then(function(){
+                $q.all(wait).then(function(){
+                    $state.go('confirm');
+                    $scope.submitting = false;
+                })
             });
 
         };

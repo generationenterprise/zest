@@ -89,18 +89,20 @@ exports.update = function(req, res) {
         booking.updateAttributes(req.body).then(function(booking) {
             if (booking.confirmed) {
 
-                var keys = _.keys(booking) ;
+                var bookingj = booking.toJSON();
+
+                var keys = _.keys(bookingj) ;
                 var out = [];
                 _.each(keys, function(key){
-                    out.push(key+': '+booking[key]);
+                    out.push('<b>'+key+'</b>: '+bookingj[key]);
                 });
-                out.push('url: http://http://zest-services.herokuapp.com/api/bookings/'+booking.id);
+                out.push('Booking: http://http://zest-services.herokuapp.com/api/bookings/'+bookingj.id);
 
                 sendgrid.send({
                     to: ['brices@gmail.com', '0x360z@gmail.com'],
                     from: 'booking.controler.update@zest-services.herokuapp.com',
-                    subject: 'Zest - Booking Confirmed ('+booking.id+')',
-                    text: out.join('----')
+                    subject: 'Zest - Booking Confirmed ('+bookingj.id+')',
+                    html: out.join('<br>')
                 }, function(err, json) {
                     if (err) {
                         return res.json(500, json);
