@@ -98,17 +98,17 @@ exports.update = function(req, res) {
                 });
                 out.push('Booking: http://zest-services.herokuapp.com/viewer/' + bookingj.id);
 
-                sendgrid.send({
+                /*sendgrid.send({
                     to: ['technology@generationenterprise.org'],
                     from: 'booking.controler.update@zest-services.herokuapp.com',
                     subject: 'Zest - Booking Confirmed (' + bookingj.id + ')',
                     html: out.join('<br>')
                 }, function(err, json) {
                     if (err) {
-                        return res.json(500, json);
-                    }
+                        return res.json(500, err);
+                    }*/
                     return res.json(200, booking);
-                });
+                //});
 
             } else {
                 return res.json(200, booking);

@@ -9,7 +9,7 @@ angular.module('zestServicesApp')
                 controller: 'ScheduleCtrl'
             });
     })
-    .controller('ScheduleCtrl', function($scope, $state, BookingService, SchedulingService, Booking, Frequency, Customer, $q) {
+    .controller('ScheduleCtrl', function($scope, $state, BookingService, SchedulingService, Booking, Frequency, Customer, $q, $modal) {
 
         $scope.loading = true;
         $scope.submitting = false;
@@ -250,13 +250,13 @@ angular.module('zestServicesApp')
             return $scope.customer.city && $scope.customer.city.length >= 2;
         };
 
-        var isValidState = function() {
+        /*var isValidState = function() {
             return $scope.customer.state && $scope.customer.state.length >= 2;
         };
 
         var isValidCode = function() {
             return $scope.customer.postcode && $scope.customer.postcode.length >= 2;
-        };
+        };*/
 
         var isValidNeighborhood = function(){
             return $scope.customer.neighborhood;
@@ -297,7 +297,7 @@ angular.module('zestServicesApp')
 
             var C = Customer.get({
                 id: $scope.booking.Customer.id
-            }, function(customer) {
+            }, function() {
                 C._id = C.id;
                 C.address = $scope.customer.address;
                 C.city = $scope.customer.city;
@@ -307,7 +307,7 @@ angular.module('zestServicesApp')
 
             var B = Booking.get({
                 id: BookingService.getCurrentBookingId()
-            }, function(booking) {
+            }, function() {
                 B._id = B.id;
                 B.total = $scope.booking.total();
                 B.confirmed = true;
@@ -325,7 +325,19 @@ angular.module('zestServicesApp')
                 $q.all(wait).then(function(){
                     $state.go('confirm');
                     $scope.submitting = false;
-                })
+                });
+            }).catch(function(resp){
+                var modalInstance = $modal.open({
+                templateUrl: '<div class="modal-body"><div class="alert alert-warning" role="alert">{{error}}</div></div>',
+                backdrop: 'static',
+                resolve: {
+                    error: function() {
+                        return resp;
+                    }
+                }
+            });
+            }).finally(function(){
+                $scope.submitting = false;
             });
 
         };

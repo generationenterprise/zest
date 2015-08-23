@@ -29,9 +29,9 @@ angular.module('zestServicesApp')
         $scope.request = function() {
             var quote = new Quote($scope.quote);
             $scope.submitting = true;
-            quote.$save(function(quote) {
+            quote.$save(function() {
                 $scope.done = true;
-            })
+            });
         };
 
         $scope.checkEmail = function() {

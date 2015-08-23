@@ -4,14 +4,18 @@
             <div>
                 <h2>Booking Confirmed</h2></div>
             <div class="schedule-estimate-container md-card-shadow" layout="column">
-                <!--div ng-if="!loading">
+                <div ng-if="!loading">
                     <span class="pull-left">{{booking.hours}} hour cleaning (₦{{booking.Cleaning.Frequency.rate}}/hour)</span>
                     <span class="pull-right">₦{{(booking.hours*booking.Cleaning.Frequency.rate).toFixed(1)}}</span>
                 </div>
                 <div ng-repeat="extra in booking.Cleaning.Extras" ng-if="!loading">
                     <span class="pull-left">+{{extra.description}}</span>
                     <span class="pull-right">₦{{extra.rate.toFixed(1)}}</span>
-                </div-->
+                </div>
+                <div ng-if="selectedZone.rate > 0">
+                    <span class="pull-left">+{{booking.Customer.neighborhood}} transport</span>
+                    <span class="pull-right">₦{{selectedZone.rate.toFixed(1)}}</span>
+                </div>
                 <div ng-if="!loading" style="font-weight:bold">
                     <span class="pull-left">TOTAL</span>
                     <span class="pull-right">₦{{booking.total.toFixed(1)}}</span>

@@ -8,6 +8,6 @@ module.exports = {
     uri: 'mongodb://localhost/zestcleaning-dev'
   },
 
-  seedDB: false,
-  force: false
+  seedDB: true,
+  force: true
 };

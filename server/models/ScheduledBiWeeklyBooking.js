@@ -21,8 +21,8 @@ module.exports = function(sequelize, DataTypes) {
         etime: {
             type: DataTypes.INTEGER,
             validate: {
-                min: 750,
-                max: 1800
+                min: 0,
+                max: 2400
             }
         },
         hours: {

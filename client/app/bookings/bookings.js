@@ -9,7 +9,7 @@ angular.module('zestServicesApp')
                 controller: 'BookingsCtrl'
             });
     })
-    .controller('BookingsCtrl', function($scope, $state, BookingsService, Extra, $modal) {
+    .controller('BookingsCtrl', function($scope/*, $state, BookingsService, Extra, $modal*/) {
 
         //console.log('jshint:',$scope,$state, BookingsService, Extra, $modal);
 

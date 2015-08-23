@@ -18,19 +18,5 @@ angular.module('zestServicesApp')
             $scope.booking = booking;
             $scope.loading = false;
         });
-
-        $scope.data = {
-            "name": "Json Explorer",
-            "qty": 10,
-            "has_data": true,
-            "arr": [
-                10,
-                "str", {
-                    "nested": "object"
-                }
-            ],
-            "obj": {
-                "hello": "world"
-            }
-        };
+        
     });
