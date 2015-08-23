@@ -1,5 +1,5 @@
 'use strict';
 
-angular.module('zestServicesApp')
+angular.module('zestServicesApp',['angulike'])
   .controller('FooterCtrl', function () {
   });

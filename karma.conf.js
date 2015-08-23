@@ -24,6 +24,7 @@ module.exports = function(config) {
       'client/bower_components/ngstorage/ngStorage.js',
       'client/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
       'client/bower_components/json-formatter/dist/json-formatter.js',
+      'client/bower_components/angulike/angulike.js',
       'client/app/app.js',
       'client/app/app.coffee',
       'client/app/**/*.js',
